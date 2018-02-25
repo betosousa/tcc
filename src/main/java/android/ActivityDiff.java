@@ -13,7 +13,15 @@ public class ActivityDiff {
 	private List<Activity> added = new ArrayList<>();
 	private List<Activity> removed = new ArrayList<>();
 	
+	private List<Activity> committed = new ArrayList<>();
+	private List<Activity> beforeCommit = new ArrayList<>();
+	
 	public ActivityDiff(List<Modification> modifications){
+		parseDiff(modifications);
+		fillAddedAndRemoved();
+	}
+	
+	private void parseDiff(List<Modification> modifications){
 		String newFile = "";
 		StringBuilder oldFile = new StringBuilder();
 		for (Modification mod : modifications) {
@@ -79,8 +87,31 @@ public class ActivityDiff {
 				break;
 			}
 		}
-		this.added = ActivityDiffParser.parseActivityList(newFile);
-		this.removed = ActivityDiffParser.parseActivityList(oldFile.toString());
+		this.committed = ActivityDiffParser.parseActivityList(newFile);
+		this.beforeCommit = ActivityDiffParser.parseActivityList(oldFile.toString());
+	}
+	
+	private void fillAddedAndRemoved(){
+		if (committed.size() > 0 || beforeCommit.size() > 0) {
+			for (Activity activity : committed) {
+				if (!beforeCommit.contains(activity)) {
+					added.add(activity);
+				}
+			}
+			for (Activity activity : beforeCommit) {
+				if (!committed.contains(activity)) {
+					removed.add(activity);
+				}
+			}
+		}
+	}
+
+	public List<Activity> getCommited() {
+		return committed;
+	}
+
+	public List<Activity> getBeforeCommit() {
+		return beforeCommit;
 	}
 
 	public List<Activity> getAdded() {

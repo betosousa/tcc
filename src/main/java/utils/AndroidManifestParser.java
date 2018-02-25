@@ -64,13 +64,17 @@ public class AndroidManifestParser extends DefaultHandler {
 	}
 	
 	public static AndroidManifest parse(String manifestPath){
-		try {
-			AndroidManifestParser mParser = new AndroidManifestParser();
-			SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-			parser.parse(new FileInputStream(new File(manifestPath)), mParser);
-			return mParser.androidManifest;
-		} catch (ParserConfigurationException | SAXException | IOException e) {
-			e.printStackTrace();
+		if (manifestPath != null && !manifestPath.isEmpty()) {
+			try {
+				AndroidManifestParser mParser = new AndroidManifestParser();
+				SAXParser parser = SAXParserFactory.newInstance()
+						.newSAXParser();
+				parser.parse(new FileInputStream(new File(manifestPath)),
+						mParser);
+				return mParser.androidManifest;
+			} catch (ParserConfigurationException | SAXException | IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}

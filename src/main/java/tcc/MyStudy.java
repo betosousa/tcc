@@ -11,11 +11,9 @@ import visitors.ConcreteAndroidVisitor;
 
 public class MyStudy implements Study {
 	
-	public static final String REPOSITORY_PATH = "D:\\10p\\android\\projetoif710";//"D:/9p/P3/tarefa01-betosousa";
+	//https://github.com/betosousa/fooAndroidManifest
+	public static final String REPOSITORY_PATH = "D:\\11p\\TCC\\fooAndroidManifest";
 	public static final String OUTPUT_PATH = "D:\\11p\\TCC\\outputs\\";
-	
-	public static final String P3 = "D:/9p/P3/tarefa01-betosousa";
-	public static final String APS = "C:/Users/Beto/Documents/aps";
 	
 	public static void main(String[] args) {
 		System.out.println("Start-Main");

@@ -5,7 +5,7 @@ add = []
 rem = []
 dates = []
 
-f = open('input.csv', 'r')
+f = open('androidDriller.csv', 'r')
 for line in f:
 	commit = line.split(',')
 	add.append(int(commit[0]))

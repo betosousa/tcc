@@ -19,7 +19,7 @@ data = [addBar, remBar]
 
 layout = graph.Layout(
 	title = 'Activities Commit History',
-	barmode='group',
+	barmode = 'relative',
 	)
 
 figure = graph.Figure(data = data, layout = layout)

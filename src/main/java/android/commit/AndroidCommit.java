@@ -1,5 +1,8 @@
 package android.commit;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import interfaces.IPermissionAnalyzer;
 
 import org.repodriller.domain.Commit;
@@ -17,19 +20,27 @@ public class AndroidCommit extends Commit {
 	private String androidManifestCode;
 	private IPermissionAnalyzer permissionAnalyzer;
 	private AndroidManifest androidManifest;
-	private String manifestPath;
 	private ActivityDiff activityDiff;
+	private Map<String, String> manifestsMap;
+	private String path;
 
-	public AndroidCommit(Commit commit, String apkFilePath,
-			String androidManifest, String manifestPath) {
+	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
 				commit.getDate(), commit.getAuthorTimeZone(), commit.getCommitterDate(),
 				commit.getCommitterTimeZone(), commit.getMsg(), commit.getParent(), 
 				commit.isMerge(), commit.getBranches(), commit.isInMainBranch());
+		
 		this.apkFilePath = apkFilePath;
 		this.permissionAnalyzer = new PermissionAnalyzerWrapper();
-		this.androidManifestCode = androidManifest;
-		this.manifestPath = manifestPath;
+		this.manifestsMap =  manifestsMap;
+		this.path = path;
+		
+		if (manifestsMap != null && manifestsMap.entrySet().size() == 1) {
+			for(Entry<String, String> entry : manifestsMap.entrySet()){
+				this.androidManifestCode = entry.getValue();
+			}
+		}
+		
 		this.addModifications(commit.getModifications());
 	}
 
@@ -45,17 +56,25 @@ public class AndroidCommit extends Commit {
 	}
 
 	public AndroidManifest getAndroidManifest() {
-		if (androidManifest == null) {
-			androidManifest = AndroidManifestParser.parse(manifestPath);
+		if (androidManifest == null && androidManifestCode != null) {
+			androidManifest = AndroidManifestParser.parse(androidManifestCode);
 		}
 		return androidManifest;
 	}
 	
 	public ActivityDiff getActivityDiff(){
 		if(activityDiff == null){
-			activityDiff = new ActivityDiff(getModifications());
+			activityDiff = new ActivityDiff(getModifications(), manifestsMap, path);
 		}
 		return activityDiff;
+	}
+
+	public Map<String, String> getManifestsMap() {
+		return manifestsMap;
+	}
+
+	public void setManifestsMap(Map<String, String> manifestsMap) {
+		this.manifestsMap = manifestsMap;
 	}
 
 }

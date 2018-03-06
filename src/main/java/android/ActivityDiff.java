@@ -1,14 +1,22 @@
 package android;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.repodriller.domain.Modification;
 
-import android.data.Activity;
 import utils.ActivityDiffParser;
+import android.data.Activity;
 
 public class ActivityDiff {
+	
+	private static final String NULL_PATH = "/dev/null";
+	
+	private String path;
 	
 	private List<Activity> added = new ArrayList<>();
 	private List<Activity> removed = new ArrayList<>();
@@ -16,26 +24,33 @@ public class ActivityDiff {
 	private List<Activity> committed = new ArrayList<>();
 	private List<Activity> beforeCommit = new ArrayList<>();
 	
-	public ActivityDiff(List<Modification> modifications){
+	private Map<String, String> committedManifests = new HashMap<>();
+	private Map<String, String> beforeCommitManifests = new HashMap<>();
+	
+	public ActivityDiff(List<Modification> modifications, Map<String, String> manifestsMap, String path){
+		this.path = path + File.separator;
+		if (manifestsMap != null) {
+			this.committedManifests = new HashMap<String, String>(manifestsMap);
+			this.beforeCommitManifests = new HashMap<String, String>(manifestsMap);
+		}
 		parseDiff(modifications);
+		fillBeforeAndCommitted();
 		fillAddedAndRemoved();
 	}
 	
 	private void parseDiff(List<Modification> modifications){
-		String newFile = "";
-		StringBuilder oldFile = new StringBuilder();
 		for (Modification mod : modifications) {
 			if(mod.fileNameEndsWith(AndroidManifest.FILE_NAME)){
-				
-				String[] lines = mod.getDiff().split("\n");
+				StringBuilder oldFile = new StringBuilder();
+				StringBuilder oldLines = new StringBuilder();
 				boolean diffFlag = false;
 				int count = 0;
 				int n = 0;
 				int qtdLines = 0;
 				int srcLineIndex = 0;
-				StringBuilder oldLines = new StringBuilder();
+				String[] lines = mod.getDiff().split("\n");
 				// source file after commit
-				newFile = mod.getSourceCode();
+				String newFile = mod.getSourceCode();
 				String[] sourceLines = newFile.split("\n");
 				
 				// run through modified lines
@@ -83,12 +98,32 @@ public class ActivityDiff {
 				for(int i = n; i < sourceLines.length; i++){
 					oldFile.append(sourceLines[i]+"\n");
 				}
-				//TODO: Consider multiple manifests
-				break;
+				
+				String newPath = path + mod.getNewPath().replace("/", File.separator);
+				
+				beforeCommitManifests.remove(newPath);
+				
+				if (!mod.getOldPath().equals(NULL_PATH)) {
+					beforeCommitManifests.put(path + mod.getOldPath().replace("/", File.separator), oldFile.toString());
+				}
+				if (!mod.getNewPath().equals(NULL_PATH)) {
+					committedManifests.put(newPath, newFile);
+				} else {
+					committedManifests.remove(newPath);
+				}
 			}
 		}
-		this.committed = ActivityDiffParser.parseActivityList(newFile);
-		this.beforeCommit = ActivityDiffParser.parseActivityList(oldFile.toString());
+	}
+	
+	private void fillActivityList(Collection<String> manifests, List<Activity> activities){
+		for (String manifest : manifests){
+			activities.addAll(ActivityDiffParser.parseActivityList(manifest));
+		}
+	}
+	
+	private void fillBeforeAndCommitted(){
+		fillActivityList(beforeCommitManifests.values(), beforeCommit);
+		fillActivityList(committedManifests.values(), committed);
 	}
 	
 	private void fillAddedAndRemoved(){

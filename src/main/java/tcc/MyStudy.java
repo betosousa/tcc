@@ -12,7 +12,7 @@ import visitors.ConcreteAndroidVisitor;
 public class MyStudy implements Study {
 	
 	//https://github.com/betosousa/fooAndroidManifest
-	public static final String REPOSITORY_PATH = "D:\\11p\\TCC\\fooAndroidManifest";
+	public static final String REPOSITORY_PATH = "D:\\11p\\TCC\\repos\\fooAndroidManifest";
 	public static final String OUTPUT_PATH = "D:\\11p\\TCC\\workspace\\tcc\\plots\\";
 	
 	public static void main(String[] args) {

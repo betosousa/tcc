@@ -1,6 +1,8 @@
 package visitors;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.repodriller.domain.Commit;
 import org.repodriller.persistence.PersistenceMechanism;
@@ -12,7 +14,8 @@ import android.AndroidManifest;
 import android.commit.AndroidCommit;
 
 public abstract class AndroidVisitor implements CommitVisitor {
-
+	
+	
 	public abstract void androidProcess(SCMRepository repo,
 			AndroidCommit commit, PersistenceMechanism writer);
 
@@ -20,8 +23,7 @@ public abstract class AndroidVisitor implements CommitVisitor {
 	public void process(SCMRepository repo, Commit commit,
 			PersistenceMechanism writer) {
 		String apkFilePath = "";
-		String androidManifest = "";
-		String androidManifestPath = "";
+		Map<String, String> manifests = new HashMap<>();
 		try {
 			//System.out.print("\nAndroidVisitor");
 			repo.getScm().checkout(commit.getHash());
@@ -32,9 +34,9 @@ public abstract class AndroidVisitor implements CommitVisitor {
 					apkFilePath = repoFile.getFile().getAbsolutePath();
 				//	System.out.print(" apk");
 				} else if (repoFile.fileNameEndsWith(AndroidManifest.FILE_NAME)) {
-					androidManifest = repoFile.getSourceCode();
-					androidManifestPath = repoFile.getFile().getAbsolutePath();
+					manifests.put(repoFile.getFile().getPath(), repoFile.getSourceCode());
 					//System.out.print(" manifest");
+					repo.getPath();
 				}
 			}
 		} catch(Exception e){ 
@@ -43,8 +45,7 @@ public abstract class AndroidVisitor implements CommitVisitor {
 			repo.getScm().reset();
 		}
 		//System.out.print(" AndroidVisitor end");
-		androidProcess(repo, new AndroidCommit(commit, apkFilePath,
-				androidManifest, androidManifestPath), writer);
+		androidProcess(repo, new AndroidCommit(commit, apkFilePath, manifests, repo.getPath()), writer);
 	}
 
 }

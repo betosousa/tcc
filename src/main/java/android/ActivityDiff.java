@@ -117,7 +117,10 @@ public class ActivityDiff {
 	
 	private void fillActivityList(Collection<String> manifests, List<Activity> activities){
 		for (String manifest : manifests){
-			activities.addAll(ActivityDiffParser.parseActivityList(manifest));
+			for(Activity activity : ActivityDiffParser.parseActivityList(manifest)){
+				if(!activities.contains(activity))
+					activities.add(activity);
+			}
 		}
 	}
 	

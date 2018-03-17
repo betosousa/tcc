@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import android.AndroidManifest;
 import android.data.Component;
 
 public abstract class ComponentDiff {
@@ -23,20 +24,20 @@ public abstract class ComponentDiff {
 	}
 	
 	private void fillBeforeAndCommitted(){
-		fillList(manifestDiff.getBeforeCommitManifests().values(), beforeCommit);
-		fillList(manifestDiff.getCommittedManifests().values(), committed);
+		fillList(manifestDiff.getBeforeCommittAndroidManifests(), beforeCommit);
+		fillList(manifestDiff.getCommittedAndroidManifests(), committed);
 	}
 	
-	private void fillList(Collection<String> manifests, List<Component> components){
-		for (String manifest : manifests){
-			for(Component component : parseComponents(manifest)){
+	private void fillList(Collection<AndroidManifest> manifests, List<Component> components){
+		for (AndroidManifest manifest : manifests){
+			for(Component component : getComponents(manifest)){
 				if(!components.contains(component))
 					components.add(component);
 			}
 		}
 	}
 	
-	protected abstract <T extends Component> List<T> parseComponents(String manifest);
+	protected abstract <T extends Component> List<T> getComponents(AndroidManifest manifest);
 	
 	private void fillAddedAndRemoved(){
 		if (committed.size() > 0 || beforeCommit.size() > 0) {

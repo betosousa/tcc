@@ -2,8 +2,9 @@ package android.diff;
 
 import java.util.List;
 
-import utils.ActivityDiffParser;
+import android.AndroidManifest;
 import android.data.Activity;
+import android.data.ComponentType;
 
 public class ActivityDiff extends ComponentDiff {
 	
@@ -13,8 +14,8 @@ public class ActivityDiff extends ComponentDiff {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected List<Activity> parseComponents(String manifest) {
-		return ActivityDiffParser.parseActivityList(manifest);
+	protected List<Activity> getComponents(AndroidManifest manifest) {
+		return manifest.getComponents(ComponentType.ACTIVITY);
 	}	
 }
 

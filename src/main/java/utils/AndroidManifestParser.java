@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class AndroidManifestParser extends DefaultHandler {
 				AndroidManifestParser mParser = new AndroidManifestParser();
 				SAXParser parser = SAXParserFactory.newInstance()
 						.newSAXParser();
-				parser.parse(new FileInputStream(manifestSrc),
+				parser.parse(new ByteArrayInputStream(manifestSrc.getBytes()) ,
 						mParser);
 				return mParser.androidManifest;
 			} catch (ParserConfigurationException | SAXException | IOException e) {

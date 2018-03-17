@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import android.data.Application;
 import android.data.Component;
+import android.data.ComponentType;
 import android.data.IntentFilter;
 
 public class AndroidManifest {
@@ -28,4 +30,11 @@ public class AndroidManifest {
 		this.intentFilters = new HashMap<String, List<IntentFilter>>();
 		this.application = new Application();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Component> List<T> getComponents(ComponentType type){
+		return (List<T>) components.stream()
+				.filter(c -> c.type.equals(type)).collect(Collectors.toList());
+	}
+	
 }

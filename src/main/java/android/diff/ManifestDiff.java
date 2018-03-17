@@ -1,12 +1,14 @@
 package android.diff;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.repodriller.domain.Modification;
 
+import utils.AndroidManifestParser;
 import android.AndroidManifest;
 
 public class ManifestDiff {
@@ -16,6 +18,9 @@ public class ManifestDiff {
 	private Map<String, String> committedManifests = new HashMap<>();
 	private Map<String, String> beforeCommitManifests = new HashMap<>();
 	
+	private List<AndroidManifest> committedAndroidManifests = new ArrayList<>();
+	private List<AndroidManifest> beforeCommitAndroidManifests = new ArrayList<>();
+	
 	public ManifestDiff(List<Modification> modifications, Map<String, String> manifestsMap, String path){
 		this.path = path + File.separator;
 		if (manifestsMap != null) {
@@ -23,6 +28,7 @@ public class ManifestDiff {
 			this.beforeCommitManifests = new HashMap<String, String>(manifestsMap);
 		}
 		parseDiff(modifications);
+		parseManifests();
 	}
 	
 	private void parseDiff(List<Modification> modifications){
@@ -101,20 +107,22 @@ public class ManifestDiff {
 			}
 		}
 	}
-
-	public Map<String, String> getCommittedManifests() {
-		return committedManifests;
+	
+	private void parseManifests(){
+		for(String manifestCode : beforeCommitManifests.values()){
+			beforeCommitAndroidManifests.add(AndroidManifestParser.parse(manifestCode));
+		}
+		
+		for(String manifestCode : committedManifests.values()){
+			committedAndroidManifests.add(AndroidManifestParser.parse(manifestCode));
+		}
 	}
-
-	public void setCommittedManifests(Map<String, String> committedManifests) {
-		this.committedManifests = committedManifests;
+	
+	public List<AndroidManifest> getCommittedAndroidManifests() {
+		return committedAndroidManifests;
 	}
-
-	public Map<String, String> getBeforeCommitManifests() {
-		return beforeCommitManifests;
-	}
-
-	public void setBeforeCommitManifests(Map<String, String> beforeCommitManifests) {
-		this.beforeCommitManifests = beforeCommitManifests;
+	
+	public List<AndroidManifest> getBeforeCommittAndroidManifests() {
+		return beforeCommitAndroidManifests;
 	}
 }

@@ -10,6 +10,7 @@ import org.repodriller.domain.Commit;
 import utils.AndroidManifestParser;
 import android.ActivityDiff;
 import android.AndroidManifest;
+import android.ManifestDiff;
 import android.permission.PermissionMap;
 import android.permission.wrapper.PermissionAnalyzerWrapper;
 
@@ -23,6 +24,7 @@ public class AndroidCommit extends Commit {
 	private ActivityDiff activityDiff;
 	private Map<String, String> manifestsMap;
 	private String path;
+	private ManifestDiff manifestDiff;
 
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
@@ -44,6 +46,13 @@ public class AndroidCommit extends Commit {
 		this.addModifications(commit.getModifications());
 	}
 
+	private ManifestDiff getManifestDiff(){
+		if(manifestDiff == null){
+			manifestDiff = new ManifestDiff(getModifications(), manifestsMap, path);
+		}
+		return manifestDiff;
+	}
+	
 	public PermissionMap getPermissionMap() {
 		if (permissionMap == null) {
 			permissionMap = new PermissionMap(permissionAnalyzer.generateJSON(apkFilePath));
@@ -64,7 +73,7 @@ public class AndroidCommit extends Commit {
 	
 	public ActivityDiff getActivityDiff(){
 		if(activityDiff == null){
-			activityDiff = new ActivityDiff(getModifications(), manifestsMap, path);
+			activityDiff = new ActivityDiff(getManifestDiff());
 		}
 		return activityDiff;
 	}
@@ -76,5 +85,6 @@ public class AndroidCommit extends Commit {
 	public void setManifestsMap(Map<String, String> manifestsMap) {
 		this.manifestsMap = manifestsMap;
 	}
-
+	
+	
 }

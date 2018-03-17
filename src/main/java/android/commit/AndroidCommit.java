@@ -8,9 +8,9 @@ import interfaces.IPermissionAnalyzer;
 import org.repodriller.domain.Commit;
 
 import utils.AndroidManifestParser;
-import android.ActivityDiff;
 import android.AndroidManifest;
-import android.ManifestDiff;
+import android.diff.ActivityDiff;
+import android.diff.ManifestDiff;
 import android.permission.PermissionMap;
 import android.permission.wrapper.PermissionAnalyzerWrapper;
 

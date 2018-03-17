@@ -5,8 +5,8 @@ import java.text.SimpleDateFormat;
 import org.repodriller.persistence.PersistenceMechanism;
 import org.repodriller.scm.SCMRepository;
 
-import android.ActivityDiff;
 import android.commit.AndroidCommit;
+import android.diff.ActivityDiff;
 
 public class ConcreteAndroidVisitor extends AndroidVisitor {
 

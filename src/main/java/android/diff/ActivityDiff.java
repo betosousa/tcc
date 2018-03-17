@@ -1,4 +1,4 @@
-package android;
+package android.diff;
 
 import java.util.ArrayList;
 import java.util.Collection;

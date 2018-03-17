@@ -1,4 +1,4 @@
-package android;
+package android.diff;
 
 import java.io.File;
 import java.util.HashMap;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.repodriller.domain.Modification;
+
+import android.AndroidManifest;
 
 public class ManifestDiff {
 	private static final String NULL_PATH = "/dev/null";

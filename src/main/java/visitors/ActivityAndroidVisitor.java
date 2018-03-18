@@ -5,28 +5,23 @@ import java.text.SimpleDateFormat;
 import org.repodriller.persistence.PersistenceMechanism;
 import org.repodriller.scm.SCMRepository;
 
+import utils.Strings;
 import android.commit.AndroidCommit;
 import android.diff.ActivityDiff;
 
-public class ConcreteAndroidVisitor extends AndroidVisitor {
+public class ActivityAndroidVisitor extends AndroidVisitor {
 
 	@Override
 	public void androidProcess(SCMRepository repo, AndroidCommit commit,
 			PersistenceMechanism writer) {
-		System.out.print(" Concrete");
+		System.out.print(" Activity");
 		ActivityDiff activityDiff = commit.getActivityDiff(); 
-		//writer.write(commit.getHash(), 
-				//"Added: " + activityDiff.getAdded().size(),
-				//"Removed: " + activityDiff.getRemoved().size(),
-				//commit.getAndroidManifest().toString(), 
-				//commit.getPermissionMap().toString(), 
-				//"/n/n");
 		
 		writer.write(activityDiff.getAdded().size(),
 				activityDiff.getRemoved().size(),
-				new SimpleDateFormat("yyyy/MM/dd-hh:mm:ss").format(commit.getDate().getTime()));
+				new SimpleDateFormat(Strings.DATE_FORMAT).format(commit.getDate().getTime()));
 		
-		System.out.print(" Concrete end");
+		System.out.print(" Activity end");
 	}
 
 }

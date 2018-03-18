@@ -7,7 +7,8 @@ import org.repodriller.filter.range.Commits;
 import org.repodriller.persistence.csv.CSVFile;
 import org.repodriller.scm.GitRepository;
 
-import visitors.ConcreteAndroidVisitor;
+import visitors.ActivityAndroidVisitor;
+import visitors.ServiceAndroidVisitor;
 
 public class MyStudy implements Study {
 	
@@ -26,8 +27,9 @@ public class MyStudy implements Study {
 		new RepositoryMining()
 				.in(GitRepository.singleProject(REPOSITORY_PATH))
 				.through(Commits.all())
-				// .process(new XmlParserVisitor(), new CSVFile(XmlParserVisitor.FILE_NAME))
-				.process(new ConcreteAndroidVisitor(), new CSVFile(OUTPUT_PATH + "androidDriller.csv")).mine();
+				.process(new ActivityAndroidVisitor(), new CSVFile(OUTPUT_PATH + "activityDriller.csv"))
+				.process(new ServiceAndroidVisitor(), new CSVFile(OUTPUT_PATH + "serviceDriller.csv"))
+				.mine();
 		System.out.println("\nEnd-Execute");
 	}
 	

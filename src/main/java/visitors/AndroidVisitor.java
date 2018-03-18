@@ -10,6 +10,7 @@ import org.repodriller.scm.CommitVisitor;
 import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCMRepository;
 
+import utils.Strings;
 import android.AndroidManifest;
 import android.commit.AndroidCommit;
 
@@ -25,26 +26,21 @@ public abstract class AndroidVisitor implements CommitVisitor {
 		String apkFilePath = "";
 		Map<String, String> manifests = new HashMap<>();
 		try {
-			//System.out.print("\nAndroidVisitor");
 			repo.getScm().checkout(commit.getHash());
 			List<RepositoryFile> files = repo.getScm().files();
-			//System.out.print(" checkout");
 			for (RepositoryFile repoFile : files) {
-				if (repoFile.fileNameEndsWith("apk")) {
+				if (repoFile.fileNameEndsWith(Strings.APK)) {
 					apkFilePath = repoFile.getFile().getAbsolutePath();
-				//	System.out.print(" apk");
 				} else if (repoFile.fileNameEndsWith(AndroidManifest.FILE_NAME)) {
 					manifests.put(repoFile.getFile().getPath(), repoFile.getSourceCode());
-					//System.out.print(" manifest");
 					repo.getPath();
 				}
 			}
 		} catch(Exception e){ 
-			throw new RuntimeException("Error", e);
+			throw new RuntimeException(Strings.ERROR, e);
 		} finally {
 			repo.getScm().reset();
 		}
-		//System.out.print(" AndroidVisitor end");
 		androidProcess(repo, new AndroidCommit(commit, apkFilePath, manifests, repo.getPath()), writer);
 	}
 

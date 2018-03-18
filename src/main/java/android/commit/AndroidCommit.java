@@ -11,6 +11,7 @@ import utils.AndroidManifestParser;
 import android.AndroidManifest;
 import android.diff.ActivityDiff;
 import android.diff.ManifestDiff;
+import android.diff.ServiceDiff;
 import android.permission.PermissionMap;
 import android.permission.wrapper.PermissionAnalyzerWrapper;
 
@@ -21,10 +22,11 @@ public class AndroidCommit extends Commit {
 	private String androidManifestCode;
 	private IPermissionAnalyzer permissionAnalyzer;
 	private AndroidManifest androidManifest;
-	private ActivityDiff activityDiff;
 	private Map<String, String> manifestsMap;
 	private String path;
 	private ManifestDiff manifestDiff;
+	private ActivityDiff activityDiff;
+	private ServiceDiff serviceDiff;
 
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
@@ -63,6 +65,11 @@ public class AndroidCommit extends Commit {
 	public String getAndroidManifestCode() {
 		return androidManifestCode;
 	}
+	
+	
+	public Map<String, String> getManifestsMap() {
+		return manifestsMap;
+	}
 
 	public AndroidManifest getAndroidManifest() {
 		if (androidManifest == null && androidManifestCode != null) {
@@ -77,14 +84,12 @@ public class AndroidCommit extends Commit {
 		}
 		return activityDiff;
 	}
-
-	public Map<String, String> getManifestsMap() {
-		return manifestsMap;
-	}
-
-	public void setManifestsMap(Map<String, String> manifestsMap) {
-		this.manifestsMap = manifestsMap;
-	}
 	
+	public ServiceDiff getServiceDiff(){
+		if(serviceDiff == null){
+			serviceDiff = new ServiceDiff(getManifestDiff());
+		}
+		return serviceDiff;
+	}
 	
 }

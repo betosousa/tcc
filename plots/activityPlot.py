@@ -28,3 +28,4 @@ def plot_history(component_type):
 if __name__ == '__main__':
 	plot_history('activity')
 	plot_history('service')
+	plot_history('broadcastReceiver')

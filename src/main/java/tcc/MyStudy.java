@@ -8,6 +8,7 @@ import org.repodriller.persistence.csv.CSVFile;
 import org.repodriller.scm.GitRepository;
 
 import visitors.ActivityAndroidVisitor;
+import visitors.BroadcastReceiverAndroidVisitor;
 import visitors.ServiceAndroidVisitor;
 
 public class MyStudy implements Study {
@@ -29,6 +30,7 @@ public class MyStudy implements Study {
 				.through(Commits.all())
 				.process(new ActivityAndroidVisitor(), new CSVFile(OUTPUT_PATH + "activityDriller.csv"))
 				.process(new ServiceAndroidVisitor(), new CSVFile(OUTPUT_PATH + "serviceDriller.csv"))
+				.process(new BroadcastReceiverAndroidVisitor(), new CSVFile(OUTPUT_PATH + "broadcastReceiverDriller.csv"))
 				.mine();
 		System.out.println("\nEnd-Execute");
 	}

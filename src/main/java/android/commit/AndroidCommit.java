@@ -10,6 +10,7 @@ import org.repodriller.domain.Commit;
 import utils.AndroidManifestParser;
 import android.AndroidManifest;
 import android.diff.ActivityDiff;
+import android.diff.BroadcastReceiverDiff;
 import android.diff.ManifestDiff;
 import android.diff.ServiceDiff;
 import android.permission.PermissionMap;
@@ -27,6 +28,7 @@ public class AndroidCommit extends Commit {
 	private ManifestDiff manifestDiff;
 	private ActivityDiff activityDiff;
 	private ServiceDiff serviceDiff;
+	private BroadcastReceiverDiff broadcastReceiverDiff;
 
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
@@ -92,4 +94,10 @@ public class AndroidCommit extends Commit {
 		return serviceDiff;
 	}
 	
+	public BroadcastReceiverDiff getBroadcastReceiverDiff(){
+		if(broadcastReceiverDiff == null){
+			broadcastReceiverDiff = new BroadcastReceiverDiff(getManifestDiff());
+		}
+		return broadcastReceiverDiff;
+	}
 }

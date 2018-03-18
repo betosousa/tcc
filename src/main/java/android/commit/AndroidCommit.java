@@ -11,6 +11,7 @@ import utils.AndroidManifestParser;
 import android.AndroidManifest;
 import android.diff.ActivityDiff;
 import android.diff.BroadcastReceiverDiff;
+import android.diff.ContentProviderDiff;
 import android.diff.ManifestDiff;
 import android.diff.ServiceDiff;
 import android.permission.PermissionMap;
@@ -29,6 +30,7 @@ public class AndroidCommit extends Commit {
 	private ActivityDiff activityDiff;
 	private ServiceDiff serviceDiff;
 	private BroadcastReceiverDiff broadcastReceiverDiff;
+	private ContentProviderDiff contentProviderDiff;
 
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
@@ -100,4 +102,12 @@ public class AndroidCommit extends Commit {
 		}
 		return broadcastReceiverDiff;
 	}
+	
+	public ContentProviderDiff getContentProviderDiff(){
+		if(contentProviderDiff == null){
+			contentProviderDiff = new ContentProviderDiff(getManifestDiff());
+		}
+		return contentProviderDiff;
+	}
+	
 }

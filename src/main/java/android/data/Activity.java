@@ -67,10 +67,33 @@ public class Activity extends Component {
 	@Override
 	protected boolean hasExclusiveAttributesModifications(Component other) {
 		Activity otherActivity = (Activity) other;
-		return this.allowEmbedded != otherActivity.allowEmbedded ||
-				this.allowTaskReparenting != otherActivity.allowTaskReparenting ||
-				this.alwaysRetainTaskState != otherActivity.alwaysRetainTaskState || 
-				this.autoRemoveFromRecents != otherActivity.autoRemoveFromRecents;
+		return this.allowEmbedded != otherActivity.allowEmbedded
+				|| this.allowTaskReparenting != otherActivity.allowTaskReparenting
+				|| this.alwaysRetainTaskState != otherActivity.alwaysRetainTaskState
+				|| this.autoRemoveFromRecents != otherActivity.autoRemoveFromRecents
+				|| this.clearTaskOnLaunch != otherActivity.clearTaskOnLaunch
+				|| this.excludeFromRecents != otherActivity.excludeFromRecents
+				|| this.finishOnTaskLaunch != otherActivity.finishOnTaskLaunch
+				|| this.hardwareAccelerated != otherActivity.hardwareAccelerated
+				|| this.multiprocess != otherActivity.multiprocess
+				|| this.noHistory != otherActivity.noHistory
+				|| this.relinquishTaskIdentity != otherActivity.relinquishTaskIdentity
+				|| this.stateNotNeeded != otherActivity.stateNotNeeded
+				|| !this.banner.equals(otherActivity.banner)
+				|| !this.configChanges.equals(otherActivity.configChanges)
+				|| !this.documentLaunchMode
+						.equals(otherActivity.documentLaunchMode)
+				|| !this.launchMode.equals(otherActivity.launchMode)
+				|| this.maxRecents != otherActivity.maxRecents
+				|| !this.parentActivityName
+						.equals(otherActivity.parentActivityName)
+				|| !this.screenOrientation
+						.equals(otherActivity.screenOrientation)
+				|| !this.taskAffinity.equals(otherActivity.taskAffinity)
+				|| !this.theme.equals(otherActivity.theme)
+				|| !this.uiOptions.equals(otherActivity.uiOptions)
+				|| !this.windowSoftInputMode
+						.equals(otherActivity.windowSoftInputMode);
 	}
 
 }

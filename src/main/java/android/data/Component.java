@@ -53,7 +53,7 @@ public abstract class Component
 	
 	private boolean hasGeneralAttributesModifications(Component other) {
 		return this.enabled != other.enabled || this.exported != other.exported
-//				|| !this.intentFilters.equals(other.intentFilters)
+				|| !this.intentFilters.equals(other.intentFilters)
 				|| !this.label.equals(other.label)
 				|| !this.permission.equals(other.permission)
 				|| !this.process.equals(other.process);

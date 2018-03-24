@@ -1,27 +1,21 @@
 package visitors;
 
-import java.text.SimpleDateFormat;
-
-import org.repodriller.persistence.PersistenceMechanism;
-import org.repodriller.scm.SCMRepository;
-
-import utils.Strings;
 import android.commit.AndroidCommit;
-import android.diff.ActivityDiff;
+import android.diff.ComponentDiff;
 
-public class ActivityAndroidVisitor extends AndroidVisitor {
+public class ActivityAndroidVisitor extends ComponentAndroidVisitor {
+
+	
+	@Override
+	protected String getComponentName() {
+		return "Activity";
+	}
 
 	@Override
-	public void androidProcess(SCMRepository repo, AndroidCommit commit,
-			PersistenceMechanism writer) {
-		System.out.print(" Activity");
-		ActivityDiff activityDiff = commit.getActivityDiff(); 
-		
-		writer.write(activityDiff.getAdded().size(),
-				activityDiff.getRemoved().size(),
-				new SimpleDateFormat(Strings.DATE_FORMAT).format(commit.getDate().getTime()));
-		
-		System.out.print(" Activity end");
+	protected ComponentDiff getComponentDiff(AndroidCommit commit) {
+		return commit.getActivityDiff();
 	}
+
+	
 
 }

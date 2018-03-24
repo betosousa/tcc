@@ -12,5 +12,10 @@ public class BroadcastReceiver extends Component {
 		return "";
 	}
 
+	@Override
+	protected boolean hasExclusiveAttributesModifications(Component other) {
+		return false;
+	}
+
 }
 

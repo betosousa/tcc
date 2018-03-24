@@ -12,21 +12,14 @@ public class Activity extends Component {
 	public boolean clearTaskOnLaunch = false;	
 	public String configChanges = NOT_SET;
 	public String documentLaunchMode = "none";
-//	boolean enabled;
 	public boolean excludeFromRecents = false;
-//	boolean exported;
 	public boolean finishOnTaskLaunch = false;
 	public boolean hardwareAccelerated = false;
-//	public String icon = NOT_SET;
-//	String label;
 	public String launchMode = "standard";
 	public int maxRecents = 16;
 	public boolean multiprocess = false;
-//	String name;
 	public boolean noHistory = false;
 	public String parentActivityName = NOT_SET;
-//	String permission;
-//	String process;
 	public boolean relinquishTaskIdentity = false;
 	public String screenOrientation = "unspecified";
 	public boolean stateNotNeeded = false;
@@ -69,6 +62,15 @@ public class Activity extends Component {
         builder.append(String.format("WindowSoftInputMode: %s\n", windowSoftInputMode));		
         builder.append("\n");
 		return builder.toString();
+	}
+
+	@Override
+	protected boolean hasExclusiveAttributesModifications(Component other) {
+		Activity otherActivity = (Activity) other;
+		return this.allowEmbedded != otherActivity.allowEmbedded ||
+				this.allowTaskReparenting != otherActivity.allowTaskReparenting ||
+				this.alwaysRetainTaskState != otherActivity.alwaysRetainTaskState || 
+				this.autoRemoveFromRecents != otherActivity.autoRemoveFromRecents;
 	}
 
 }

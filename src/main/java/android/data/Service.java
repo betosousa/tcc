@@ -19,5 +19,11 @@ public class Service extends Component {
 		return sb.toString();
 	}
 
+	@Override
+	protected boolean hasExclusiveAttributesModifications(Component other) {
+		Service otherService = (Service) other;
+		return this.isolatedProcess != otherService.isolatedProcess;
+	}
+
 }
 

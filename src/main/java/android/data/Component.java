@@ -50,6 +50,25 @@ public abstract class Component
         
         return builder.toString();
     }
+	
+	private boolean hasGeneralAttributesModifications(Component other) {
+		return this.enabled != other.enabled || this.exported != other.exported
+//				|| !this.intentFilters.equals(other.intentFilters)
+				|| !this.label.equals(other.label)
+				|| !this.permission.equals(other.permission)
+				|| !this.process.equals(other.process);
+	}
+	
+	protected abstract boolean hasExclusiveAttributesModifications(Component other);
+	
+	public boolean isModificationOf(Component other) {
+		boolean isModification = false;
+		if (this.equals(other)) {
+			isModification = hasGeneralAttributesModifications(other)
+					|| hasExclusiveAttributesModifications(other);
+		}
+		return isModification;
+	}
 
 	@Override
 	public int hashCode() {

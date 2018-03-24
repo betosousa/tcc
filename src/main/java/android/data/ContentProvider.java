@@ -4,20 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ContentProvider extends Component {
-	//TODO remove commented attributes, since they belong in Component class
 	public List<String> authorities;
-	//public android:enabled	["true" | "false"]
-	//public android:exported	["true" | "false"]
 	
 	public boolean exportedWasSetted;
 	
 	public boolean grantUriPermissions = false;
 	public int initOrder;
-	//public android:label	"string resource"
 	public boolean multiprocess = false;
-	//public android:name	"string"
-	//public android:permission	"string"
-	//public android:process	"string"
 	public String readPermission = NOT_SET;
 	public boolean syncable = false;
 	public String writePermission = NOT_SET;
@@ -55,5 +48,12 @@ public class ContentProvider extends Component {
         builder.append(String.format("WritePermission: %s\n", writePermission));
 
 		return builder.toString();
+	}
+
+
+	@Override
+	protected boolean hasExclusiveAttributesModifications(Component other) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

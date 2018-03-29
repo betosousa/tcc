@@ -33,3 +33,5 @@ if __name__ == '__main__':
 	plot_history('service')
 	plot_history('broadcastReceiver')
 	plot_history('contentProvider')
+	plot_history('permission')
+	plot_history('usesPermission')

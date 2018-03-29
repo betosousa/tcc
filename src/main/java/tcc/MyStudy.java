@@ -10,7 +10,9 @@ import org.repodriller.scm.GitRepository;
 import visitors.ActivityAndroidVisitor;
 import visitors.BroadcastReceiverAndroidVisitor;
 import visitors.ContentProviderAndroidVisitor;
+import visitors.PermissionAndroidVisitor;
 import visitors.ServiceAndroidVisitor;
+import visitors.UsesPermissionAndroidVisitor;
 
 public class MyStudy implements Study {
 	
@@ -33,6 +35,8 @@ public class MyStudy implements Study {
 				.process(new ServiceAndroidVisitor(), new CSVFile(OUTPUT_PATH + "serviceDriller.csv"))
 				.process(new BroadcastReceiverAndroidVisitor(), new CSVFile(OUTPUT_PATH + "broadcastReceiverDriller.csv"))
 				.process(new ContentProviderAndroidVisitor(), new CSVFile(OUTPUT_PATH + "contentProviderDriller.csv"))
+				.process(new PermissionAndroidVisitor(), new CSVFile(OUTPUT_PATH + "permissionDriller.csv"))
+				.process(new UsesPermissionAndroidVisitor(), new CSVFile(OUTPUT_PATH + "usesPermissionDriller.csv"))
 				.mine();
 		System.out.println("\nEnd-Execute");
 	}

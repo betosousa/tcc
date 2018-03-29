@@ -1,9 +1,9 @@
 package android.commit;
 
+import interfaces.IPermissionAnalyzer;
+
 import java.util.Map;
 import java.util.Map.Entry;
-
-import interfaces.IPermissionAnalyzer;
 
 import org.repodriller.domain.Commit;
 
@@ -13,7 +13,9 @@ import android.diff.ActivityDiff;
 import android.diff.BroadcastReceiverDiff;
 import android.diff.ContentProviderDiff;
 import android.diff.ManifestDiff;
+import android.diff.PermissionDiff;
 import android.diff.ServiceDiff;
+import android.diff.UsesPermissionDiff;
 import android.permission.PermissionMap;
 import android.permission.wrapper.PermissionAnalyzerWrapper;
 
@@ -31,7 +33,9 @@ public class AndroidCommit extends Commit {
 	private ServiceDiff serviceDiff;
 	private BroadcastReceiverDiff broadcastReceiverDiff;
 	private ContentProviderDiff contentProviderDiff;
-
+	private PermissionDiff permissionDiff;	
+	private UsesPermissionDiff usesPermissionDiff;
+	
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
 				commit.getDate(), commit.getAuthorTimeZone(), commit.getCommitterDate(),
@@ -110,4 +114,17 @@ public class AndroidCommit extends Commit {
 		return contentProviderDiff;
 	}
 	
+	public PermissionDiff getPermissionDiff(){
+		if(permissionDiff == null){
+			permissionDiff = new PermissionDiff(getManifestDiff());
+		}
+		return permissionDiff;
+	}
+	
+	public UsesPermissionDiff getUsesPermissionDiff(){
+		if(usesPermissionDiff == null){
+			usesPermissionDiff = new UsesPermissionDiff(getManifestDiff());
+		}
+		return usesPermissionDiff;
+	}
 }

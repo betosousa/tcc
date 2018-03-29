@@ -21,6 +21,7 @@ import android.data.BroadcastReceiver;
 import android.data.Component;
 import android.data.ContentProvider;
 import android.data.IntentFilter;
+import android.data.Permission;
 import android.data.Service;
 
 public class AndroidManifestParser extends DefaultHandler {
@@ -36,6 +37,7 @@ public class AndroidManifestParser extends DefaultHandler {
 	static final String DATA_TAG = "data";
 	static final String USES_PERMISSIONS_TAG = "uses-permission";
 	static final String USES_SDK_TAG = "uses-sdk";
+	static final String PERMISSION_TAG = "permission";
 
 	static final String DATA_SCHEME_ATTR = "android:scheme";
 	static final String DATA_HOST_ATTR = "android:host";
@@ -90,6 +92,8 @@ public class AndroidManifestParser extends DefaultHandler {
 		String permission = attrs.getValue("android:permission");
 
 		switch (c.type) {
+		case PERMISSION:
+			break;
 		case CONTENT_PROVIDER:
 			c.permission = null == (permission) ? c.permission : permission;
 			break;
@@ -122,7 +126,8 @@ public class AndroidManifestParser extends DefaultHandler {
 
 		case USES_PERMISSIONS_TAG:
 			if (attributes != null) {
-				androidManifest.permissions.add(attributes.getValue("android:name"));
+				String name = attributes.getValue("android:name");
+				androidManifest.permissions.add(name);				
 			}
 			break;
 		case USES_SDK_TAG:
@@ -196,6 +201,19 @@ public class AndroidManifestParser extends DefaultHandler {
 						.equals(attributes.getValue("android:usesCleartextTraffic")) ? false : true;
 				androidManifest.application.vmSafeMode = ("true").equals(attributes.getValue("vmSafeMode")) ? true : false;
 				;
+			}
+			break;
+		case PERMISSION_TAG:
+			if (attributes != null) {
+				Permission permission = new Permission(attributes);
+				
+				this.currComponent = permission;
+				androidManifest.components.add(permission);
+
+				// TODO: remove the following line once we finish working on the
+				// rest of implementation
+				this.currentComponent = attributes.getValue("android:name");
+				androidManifest.intentFilters.put(this.currentComponent, new ArrayList<IntentFilter>());
 			}
 			break;
 		case ACTIVITY_TAG:
@@ -390,6 +408,7 @@ public class AndroidManifestParser extends DefaultHandler {
 			this.currComponent.intentFilters.add(this.currentIntentFilter);
 			if (currComponent.intentFilters.size() > 0) {
 				switch (currComponent.type) {
+				case PERMISSION:
 				case ACTIVITY:
 				case BROADCAST_RECEIVER:
 				case SERVICE:

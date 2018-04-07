@@ -10,6 +10,7 @@ import org.repodriller.scm.CommitVisitor;
 import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCMRepository;
 
+import utils.ProgressUtil;
 import utils.Strings;
 import android.AndroidManifest;
 import android.commit.AndroidCommit;
@@ -23,10 +24,15 @@ public abstract class AndroidVisitor implements CommitVisitor {
 	@Override
 	public void process(SCMRepository repo, Commit commit,
 			PersistenceMechanism writer) {
+		
 		String apkFilePath = "";
 		Map<String, String> manifests = new HashMap<>();
 		try {
 			repo.getScm().checkout(commit.getHash());
+			
+			ProgressUtil.getInstance().updateProgress(
+					repo.getScm().totalCommits(), commit.getHash());
+			
 			List<RepositoryFile> files = repo.getScm().files();
 			for (RepositoryFile repoFile : files) {
 				if (repoFile.fileNameEndsWith(Strings.APK)) {

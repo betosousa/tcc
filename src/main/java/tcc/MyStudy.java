@@ -17,8 +17,9 @@ import visitors.UsesPermissionAndroidVisitor;
 public class MyStudy implements Study {
 	
 	//https://github.com/betosousa/fooAndroidManifest
-	public static final String REPOSITORY_PATH = "D:\\11p\\TCC\\repos\\fooAndroidManifest";
-	public static final String OUTPUT_PATH = "D:\\11p\\TCC\\workspace\\tcc\\plots\\";
+	public static final String REPO_NAME = "fooAndroidManifest";
+	public static final String REPOSITORY_PATH = "D:\\11p\\TCC\\repos\\" + REPO_NAME;
+	public static final String OUTPUT_PATH = "D:\\11p\\TCC\\workspace\\tcc\\plots\\" + REPO_NAME + "\\";
 	
 	public static void main(String[] args) {
 		System.out.println("Start-Main");

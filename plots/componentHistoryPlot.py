@@ -1,11 +1,15 @@
 import plotly.offline as plotly
 import plotly.graph_objs as graph
+import sys
+
+repoName = ''
 
 def plot_history(component_type):
 	add = []
 	rem = []
 	mod = []
 	dates = []
+	component_type = repoName + component_type
 	f = open(component_type + 'Driller.csv', 'r')
 	for line in f:
 		commit = line.split(',')
@@ -25,10 +29,11 @@ def plot_history(component_type):
 	figure = graph.Figure(data = data, layout = layout)
 	plotly.plot(figure, image='png', auto_open=True,
 				filename = component_type + '_history.html',
-				image_filename = component_type + '_history')
+				image_filename = component_type.replace('\\','_') + '_history')
 
 
 if __name__ == '__main__':
+	repoName = sys.argv[1] + '\\'
 	plot_history('activity')
 	plot_history('service')
 	plot_history('broadcastReceiver')

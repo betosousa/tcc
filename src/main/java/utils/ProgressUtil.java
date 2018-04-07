@@ -45,4 +45,10 @@ public class ProgressUtil {
 		visit(commitHash);
 		showProgress();
 	}
+	
+	public void resetProgress(){
+		 lastUpdate = 0;
+		 totalCommits = 0;
+		 visitedCommits.clear();
+	}
 }

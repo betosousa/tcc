@@ -72,7 +72,7 @@ public class AndroidManifestParser extends DefaultHandler {
 				AndroidManifestParser mParser = new AndroidManifestParser();
 				SAXParser parser = SAXParserFactory.newInstance()
 						.newSAXParser();
-				parser.parse(new ByteArrayInputStream(manifestSrc.getBytes()) ,
+				parser.parse(new ByteArrayInputStream(getManifestByteArray(manifestSrc)) ,
 						mParser);
 				return mParser.androidManifest;
 			} catch (ParserConfigurationException | SAXException | IOException e) {
@@ -80,6 +80,12 @@ public class AndroidManifestParser extends DefaultHandler {
 			}
 		}
 		return null;
+	}
+	
+	
+	private static byte[] getManifestByteArray(String manifestSrc){
+		// Sometimes the manifests come with invalids (empty) chars before the xml tag
+		return manifestSrc.substring(manifestSrc.indexOf("<?xml")).getBytes();
 	}
 	
 	public void setCommonComponentsAttrs(Component c, Attributes attrs) {

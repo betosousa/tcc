@@ -6,8 +6,8 @@ public class MyStudy {
 	
 	static String[] repoNames = {
 		//Pequenos, menos de 100 commits
-		"2048-android",				
-		"AsciiCam",					
+//		"2048-android",				
+//		"AsciiCam",					
 		
 //		// Medios, 100 - 1000 commits
 //		"Telegram-FOSS",			

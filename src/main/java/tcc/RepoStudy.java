@@ -6,6 +6,7 @@ import org.repodriller.filter.range.Commits;
 import org.repodriller.persistence.csv.CSVFile;
 import org.repodriller.scm.GitRepository;
 
+import utils.CommitFilesManager;
 import utils.ProgressUtil;
 import visitors.ActivityAndroidVisitor;
 import visitors.BroadcastReceiverAndroidVisitor;
@@ -40,8 +41,9 @@ public class RepoStudy implements Study {
 				.process(new UsesPermissionAndroidVisitor(), new CSVFile(outputPath + "usesPermissionDriller.csv"))
 				.mine();
 		
-		System.out.println("\nEnd-Execute of "+repoName);
+		CommitFilesManager.reset();
 		ProgressUtil.getInstance().resetProgress();
+		System.out.println("\nEnd-Execute of " + repoName);
 	}
 
 }

@@ -5,17 +5,15 @@ import org.repodriller.RepoDriller;
 public class MyStudy {
 	
 	static String[] repoNames = {
-		//Pequenos, menos de 100 commits
-//		"2048-android",				
-//		"AsciiCam",					
+		// Nome 			// Commits - Tamanho (MB)
+//		"2048-android", 	// 70 - 7.89 				
+//		"AsciiCam",			// 56 - 0.623		
 		
-//		// Medios, 100 - 1000 commits
-//		"Telegram-FOSS",			
-//		"Timber",					
-//		
-//		// Grandes, mais de 1000 commits
-//		"Authorizer",				
-//		"Android-Terminal-Emulator",
+//		"Timber",			// 597 - 16.97					
+//		"Telegram-FOSS", 	// 710 - 125.25				
+//		"Android-Terminal-Emulator", // 1088 - 6.24
+		
+//		"Authorizer", 		// 1304 - 153.63			
 	};
 	
 	public static void main(String[] args) {

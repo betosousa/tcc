@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ public class ProgressUtil {
 	private long totalCommits = 0;
 	private Set<String> visitedCommits = new HashSet<>();
 	private long lastUpdate = 0;
+	
 	
 	private ProgressUtil(){}
 	
@@ -30,9 +32,10 @@ public class ProgressUtil {
 		visitedCommits.add(commitHash);
 	}
 	
-	private void showProgress() {
+	private void showProgress(Calendar date) {
 		if (visitedCommits.size() > lastUpdate) {
-			System.out.print("\nVisiting commit " + visitedCommits.size()
+			System.out.print("\nVisiting commit of "
+					+ Utils.formatCalendar(date) + " #" + visitedCommits.size()
 					+ " out of " + totalCommits);
 			lastUpdate = visitedCommits.size();
 		} else {
@@ -40,10 +43,10 @@ public class ProgressUtil {
 		}
 	}
 	
-	public void updateProgress(long totalCommits, String commitHash){
+	public void updateProgress(Calendar date, long totalCommits, String commitHash){
 		setTotalCommits(totalCommits);
 		visit(commitHash);
-		showProgress();
+		showProgress(date);
 	}
 	
 	public void resetProgress(){

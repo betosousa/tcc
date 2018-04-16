@@ -1,19 +1,17 @@
 package visitors;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.repodriller.domain.Commit;
 import org.repodriller.persistence.PersistenceMechanism;
 import org.repodriller.scm.CommitVisitor;
-import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCMRepository;
 
 import utils.CommitFilesManager;
+import utils.Logger;
 import utils.ProgressUtil;
 import utils.Strings;
-import android.AndroidManifest;
 import android.commit.AndroidCommit;
 
 public abstract class AndroidVisitor implements CommitVisitor {
@@ -29,20 +27,17 @@ public abstract class AndroidVisitor implements CommitVisitor {
 		String apkFilePath = "";
 		Map<String, String> manifests = new HashMap<>();
 		try {	
-			ProgressUtil.getInstance().updateProgress(
+			ProgressUtil.getInstance().updateProgress(commit.getDate(),
 					repo.getScm().totalCommits(), commit.getHash());
 
-			List<RepositoryFile> files = CommitFilesManager.getInstance(
-					repo.getScm()).getFiles(commit.getHash()); 
-			
-			for (RepositoryFile repoFile : files) {				
-				if (repoFile.fileNameEndsWith(Strings.APK)) {
-					apkFilePath = repoFile.getFile().getAbsolutePath();
-				} else if (repoFile.fileNameEndsWith(AndroidManifest.FILE_NAME)) {
-					manifests.put(repoFile.getFile().getPath(), repoFile.getSourceCode());
-				}
-			}
+			apkFilePath = CommitFilesManager.getInstance(repo.getScm())
+					.getApkFilePath(commit.getHash());
+
+			manifests = CommitFilesManager.getInstance(repo.getScm())
+					.getManifests(commit.getHash());
 		} catch(Exception e){ 
+			Logger.logMessage(Strings.VISIT_PROCCESS_ERROR, null);
+			Logger.logMessage(e.getMessage(), e);			
 			throw new RuntimeException(Strings.ERROR, e);
 		}
 		androidProcess(repo, new AndroidCommit(commit, apkFilePath, manifests, repo.getPath()), writer);

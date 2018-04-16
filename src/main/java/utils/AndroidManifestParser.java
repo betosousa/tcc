@@ -77,6 +77,10 @@ public class AndroidManifestParser extends DefaultHandler {
 				return mParser.androidManifest;
 			} catch (ParserConfigurationException | SAXException | IOException e) {
 				e.printStackTrace();
+				Logger.logMessage(Strings.PARSER_ERROR, null);
+				Logger.logMessage("::"+manifestSrc+"::", null);
+				Logger.logMessage(e.getMessage(), e);
+//				System.exit(-1);
 			}
 		}
 		return null;

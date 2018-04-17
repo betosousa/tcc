@@ -7,7 +7,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 public class Logger {
-
+	
+	private static final String LOGGER_FILE = "logger.txt";
+	private static final String FILE_ENCODING = "UTF-8";
+	
 	private static PrintWriter log;
 
 	public static void logMessage(String msg, Throwable e) {
@@ -15,6 +18,7 @@ public class Logger {
 			initLog();
 		}
 		log.println(new Date());
+		log.println(Strings.COMMIT_DATE_LOG + ProgressUtil.getInstance().getActualCommitDate());
 		if (msg != null)
 			log.println(msg);
 		if (e != null)
@@ -23,9 +27,9 @@ public class Logger {
 
 	public static void initLog(){
 		try {
-			File f = new File("logger.txt");
+			File f = new File(LOGGER_FILE);
 			f.delete();
-			log = new PrintWriter(f, "UTF-8");
+			log = new PrintWriter(f, FILE_ENCODING);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

@@ -11,7 +11,7 @@ public class ProgressUtil {
 	private long totalCommits = 0;
 	private Set<String> visitedCommits = new HashSet<>();
 	private long lastUpdate = 0;
-	
+	private Calendar date;
 	
 	private ProgressUtil(){}
 	
@@ -28,14 +28,15 @@ public class ProgressUtil {
 		}
 	}
 	
-	private void visit(String commitHash) {
+	private void visit(String commitHash, Calendar commitDate) {
 		visitedCommits.add(commitHash);
+		date = commitDate;
 	}
 	
-	private void showProgress(Calendar date) {
+	private void showProgress() {
 		if (visitedCommits.size() > lastUpdate) {
 			System.out.print("\nVisiting commit of "
-					+ Utils.formatCalendar(date) + " #" + visitedCommits.size()
+					+ getActualCommitDate() + " #" + visitedCommits.size()
 					+ " out of " + totalCommits);
 			lastUpdate = visitedCommits.size();
 		} else {
@@ -45,13 +46,21 @@ public class ProgressUtil {
 	
 	public void updateProgress(Calendar date, long totalCommits, String commitHash){
 		setTotalCommits(totalCommits);
-		visit(commitHash);
-		showProgress(date);
+		visit(commitHash, date);
+		showProgress();
 	}
 	
 	public void resetProgress(){
 		 lastUpdate = 0;
 		 totalCommits = 0;
 		 visitedCommits.clear();
+	}
+	
+	public String getActualCommitDate(){
+		if (date != null) {
+			return Utils.formatCalendar(date);
+		} else {
+			return Strings.NO_COMMIT_DATE_LOG;
+		}
 	}
 }

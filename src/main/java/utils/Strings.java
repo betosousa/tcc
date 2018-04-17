@@ -7,4 +7,6 @@ public class Strings {
 	public static final String APK = "apk";
 	public static final String VISIT_PROCCESS_ERROR = "VISIT PROCCESS Error:";
 	public static final String PARSER_ERROR = "Parser Error:";
+	public static final String NO_COMMIT_DATE_LOG = "dates: " + DATE_FORMAT;
+	public static final String COMMIT_DATE_LOG = "Commit date ";
 }

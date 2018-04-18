@@ -3,11 +3,9 @@ package utils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -67,29 +65,39 @@ public class AndroidManifestParser extends DefaultHandler {
 	}
 	
 	public static AndroidManifest parse(String manifestSrc){
+		AndroidManifest androidManifest = new AndroidManifest();
 		if (manifestSrc != null && !manifestSrc.isEmpty()) {
 			try {
-				AndroidManifestParser mParser = new AndroidManifestParser();
-				SAXParser parser = SAXParserFactory.newInstance()
-						.newSAXParser();
-				parser.parse(new ByteArrayInputStream(getManifestByteArray(manifestSrc)) ,
-						mParser);
-				return mParser.androidManifest;
-			} catch (ParserConfigurationException | SAXException | IOException e) {
-				e.printStackTrace();
+				byte[] manifestByteArray = getManifestByteArray(manifestSrc);
+				if (manifestByteArray != null) {
+					AndroidManifestParser mParser = new AndroidManifestParser();
+					SAXParser parser = SAXParserFactory.newInstance()
+							.newSAXParser();
+					parser.parse(new ByteArrayInputStream(manifestByteArray),
+							mParser);
+					androidManifest = mParser.androidManifest;
+				}
+			} catch (Exception e){ 
 				Logger.logMessage(Strings.PARSER_ERROR, null);
 				Logger.logMessage("::"+manifestSrc+"::", null);
 				Logger.logMessage(e.getMessage(), e);
-//				System.exit(-1);
 			}
 		}
-		return null;
+		return androidManifest;
 	}
 	
 	
 	private static byte[] getManifestByteArray(String manifestSrc){
-		// Sometimes the manifests come with invalids (empty) chars before the xml tag
-		return manifestSrc.substring(manifestSrc.indexOf("<?xml")).getBytes();
+		byte[] manifestByteArray = null;
+		
+		// Sometimes the manifests dont come with the xml tag
+		if (manifestSrc.contains("<?xml")) {
+			// Sometimes the manifests come with invalids (empty) chars before
+			// the xml tag
+			manifestByteArray = manifestSrc.substring(
+					manifestSrc.indexOf("<?xml")).getBytes();
+		} 
+		return manifestByteArray;
 	}
 	
 	public void setCommonComponentsAttrs(Component c, Attributes attrs) {

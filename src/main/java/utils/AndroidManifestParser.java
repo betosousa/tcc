@@ -92,10 +92,14 @@ public class AndroidManifestParser extends DefaultHandler {
 		
 		// Sometimes the manifests dont come with the xml tag
 		if (manifestSrc.contains("<?xml")) {
-			// Sometimes the manifests come with invalids (empty) chars before
-			// the xml tag
-			manifestByteArray = manifestSrc.substring(
-					manifestSrc.indexOf("<?xml")).getBytes();
+			// Sometimes the manifests come with invalids chars before and after 
+			// the xml and manifest tag
+			
+			manifestByteArray = ( manifestSrc.substring(manifestSrc.indexOf("<?xml"), manifestSrc.indexOf("?>") + "?>".length() ) 
+							+ manifestSrc.substring(
+									manifestSrc.indexOf("<manifest"),
+									manifestSrc.indexOf("</manifest>") + "</manifest>".length())
+							).getBytes();
 		} 
 		return manifestByteArray;
 	}

@@ -2,9 +2,7 @@ import plotly.offline as plotly
 import plotly.graph_objs as graph
 import sys
 
-repoName = ''
-
-def plot_history(component_type):
+def plot_history(component_type, repoName):
 	add = []
 	rem = []
 	mod = []
@@ -31,12 +29,19 @@ def plot_history(component_type):
 				filename = component_type + '_history.html',
 				image_filename = component_type.replace('\\','_') + '_history')
 
+def plot_repo(repo):
+	repoName = repo + '\\'
+	plot_history('activity', repoName)
+	plot_history('service', repoName)
+	plot_history('broadcastReceiver', repoName)
+	plot_history('contentProvider', repoName)
+	plot_history('permission', repoName)
+	plot_history('usesPermission', repoName)
+
 
 if __name__ == '__main__':
-	repoName = sys.argv[1] + '\\'
-	plot_history('activity')
-	plot_history('service')
-	plot_history('broadcastReceiver')
-	plot_history('contentProvider')
-	plot_history('permission')
-	plot_history('usesPermission')
+	repo = raw_input()
+	while repo != '##':
+		if '#' not in repo:
+			plot_repo(repo)
+		repo = raw_input()

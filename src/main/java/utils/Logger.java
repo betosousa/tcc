@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class Logger {
 	
-	private static final String LOGGER_FILE = "logger.txt";
+	private static final String LOGGER_FILE = "logger.log";
 	private static final String FILE_ENCODING = "UTF-8";
 	
 	private static PrintWriter log;

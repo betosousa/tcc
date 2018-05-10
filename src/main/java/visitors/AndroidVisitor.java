@@ -1,14 +1,10 @@
 package visitors;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.repodriller.domain.Commit;
 import org.repodriller.persistence.PersistenceMechanism;
 import org.repodriller.scm.CommitVisitor;
 import org.repodriller.scm.SCMRepository;
 
-import utils.CommitFilesManager;
 import utils.Logger;
 import utils.ProgressUtil;
 import utils.Strings;
@@ -24,23 +20,15 @@ public abstract class AndroidVisitor implements CommitVisitor {
 	public void process(SCMRepository repo, Commit commit,
 			PersistenceMechanism writer) {
 		
-		String apkFilePath = "";
-		Map<String, String> manifests = new HashMap<>();
 		try {	
 			ProgressUtil.getInstance().updateProgress(commit.getDate(),
 					repo.getScm().totalCommits(), commit.getHash());
-
-			apkFilePath = CommitFilesManager.getInstance(repo.getScm())
-					.getApkFilePath(commit.getHash());
-
-			manifests = CommitFilesManager.getInstance(repo.getScm())
-					.getManifests(commit.getHash());
 		} catch(Exception e){ 
 			Logger.logMessage(Strings.VISIT_PROCCESS_ERROR);
 			Logger.logMessage(e.getMessage(), e);			
 			throw new RuntimeException(Strings.ERROR, e);
 		}
-		androidProcess(repo, new AndroidCommit(commit, apkFilePath, manifests, repo.getPath()), writer);
+		androidProcess(repo, new AndroidCommit(commit, repo.getScm(), repo.getPath()), writer);
 	}
 
 }

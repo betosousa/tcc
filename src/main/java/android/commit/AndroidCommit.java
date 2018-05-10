@@ -4,13 +4,12 @@ import interfaces.IPermissionAnalyzer;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.repodriller.domain.Commit;
 import org.repodriller.domain.Modification;
+import org.repodriller.scm.SCM;
 
-import utils.AndroidManifestParser;
-import android.AndroidManifest;
+import utils.CommitFilesManager;
 import android.diff.ActivityDiff;
 import android.diff.BroadcastReceiverDiff;
 import android.diff.ContentProviderDiff;
@@ -27,7 +26,6 @@ public class AndroidCommit extends Commit {
 	private String apkFilePath;
 	private String androidManifestCode;
 	private IPermissionAnalyzer permissionAnalyzer;
-	private AndroidManifest androidManifest;
 	private Map<String, String> manifestsMap;
 	private String path;
 	private ManifestDiff manifestDiff;
@@ -39,39 +37,32 @@ public class AndroidCommit extends Commit {
 	private UsesPermissionDiff usesPermissionDiff;
 	
 	private List<Modification> manifestModifications;
+	private SCM repoSCM;
 	
-	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
+	
+	public AndroidCommit(Commit commit, SCM repoSCM, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
 				commit.getDate(), commit.getAuthorTimeZone(), commit.getCommitterDate(),
 				commit.getCommitterTimeZone(), commit.getMsg(), commit.getParent(), 
 				commit.isMerge(), commit.getBranches(), commit.isInMainBranch());
 		
-		this.apkFilePath = apkFilePath;
 		this.permissionAnalyzer = new PermissionAnalyzerWrapper();
-		this.manifestsMap =  manifestsMap;
 		this.path = path;
-		
-		if (manifestsMap != null && manifestsMap.entrySet().size() == 1) {
-			for(Entry<String, String> entry : manifestsMap.entrySet()){
-				this.androidManifestCode = entry.getValue();
-			}
-		}
-		
-		this.addModifications(commit.getModifications());
-		
+		this.addModifications(commit.getModifications());		
 		this.manifestModifications = ManifestDiff.getManifestModifications(getModifications());
+		this.repoSCM = repoSCM;		
 	}
 
 	private ManifestDiff getManifestDiff(){
 		if(manifestDiff == null){
-			manifestDiff = new ManifestDiff(manifestModifications, manifestsMap, path, false);
+			manifestDiff = new ManifestDiff(manifestModifications, getManifestsMap(), path, false);
 		}
 		return manifestDiff;
 	}
 	
 	public PermissionMap getPermissionMap() {
 		if (permissionMap == null) {
-			permissionMap = new PermissionMap(permissionAnalyzer.generateJSON(apkFilePath));
+			permissionMap = new PermissionMap(permissionAnalyzer.generateJSON(getApkFilePath()));
 		}
 		return permissionMap;
 	}
@@ -80,20 +71,25 @@ public class AndroidCommit extends Commit {
 		return !manifestModifications.isEmpty();
 	}
 	
+	public String getApkFilePath(){
+		if(apkFilePath == null){
+			apkFilePath = CommitFilesManager.getInstance(repoSCM)
+					.getApkFilePath(getHash());
+		}
+		return apkFilePath;
+	}
+	
 	public String getAndroidManifestCode() {
 		return androidManifestCode;
 	}
 	
 	
 	public Map<String, String> getManifestsMap() {
-		return manifestsMap;
-	}
-
-	public AndroidManifest getAndroidManifest() {
-		if (androidManifest == null && androidManifestCode != null) {
-			androidManifest = AndroidManifestParser.parse(androidManifestCode);
+		if(manifestsMap == null){
+			manifestsMap = CommitFilesManager.getInstance(repoSCM)
+					.getManifests(getHash());
 		}
-		return androidManifest;
+		return manifestsMap;
 	}
 	
 	public ActivityDiff getActivityDiff(){

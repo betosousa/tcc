@@ -78,8 +78,8 @@ public class AndroidManifestParser extends DefaultHandler {
 					androidManifest = mParser.androidManifest;
 				}
 			} catch (Exception e){ 
-				Logger.logMessage(Strings.PARSER_ERROR, null);
-				Logger.logMessage("::"+manifestSrc+"::", null);
+				Logger.logMessage(Strings.PARSER_ERROR);
+				Logger.logMessage("::"+manifestSrc+"::");
 				Logger.logMessage(e.getMessage(), e);
 			}
 		}

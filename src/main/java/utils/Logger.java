@@ -24,6 +24,10 @@ public class Logger {
 		if (e != null)
 			log.println(e.getStackTrace());
 	}
+	
+	public static void logMessage(String msg){
+		logMessage(msg, null);
+	}
 
 	public static void initLog(){
 		try {

@@ -18,12 +18,12 @@ public abstract class DiffAndroidVisitor extends AndroidVisitor {
 	public void androidProcess(SCMRepository repo, AndroidCommit commit,
 			PersistenceMechanism writer) {
 //		System.out.print(" "+getComponentName());
-		
-		writer.write(getDiff(commit).getAdded().size(),
-				getDiff(commit).getRemoved().size(),
-				getDiff(commit).getModified().size(),
-				new SimpleDateFormat(Strings.DATE_TIME_FORMAT).format(commit.getDate().getTime()));
-		
+		if(commit.hasAndroidModifications()){
+			writer.write(getDiff(commit).getAdded().size(),
+					getDiff(commit).getRemoved().size(),
+					getDiff(commit).getModified().size(),
+					new SimpleDateFormat(Strings.DATE_TIME_FORMAT).format(commit.getDate().getTime()));
+		}
 //		System.out.print(" "+getComponentName()+" end");
 
 	}

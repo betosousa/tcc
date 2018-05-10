@@ -2,10 +2,12 @@ package android.commit;
 
 import interfaces.IPermissionAnalyzer;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.repodriller.domain.Commit;
+import org.repodriller.domain.Modification;
 
 import utils.AndroidManifestParser;
 import android.AndroidManifest;
@@ -36,6 +38,8 @@ public class AndroidCommit extends Commit {
 	private PermissionDiff permissionDiff;	
 	private UsesPermissionDiff usesPermissionDiff;
 	
+	private List<Modification> manifestModifications;
+	
 	public AndroidCommit(Commit commit, String apkFilePath, Map<String, String> manifestsMap, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
 				commit.getDate(), commit.getAuthorTimeZone(), commit.getCommitterDate(),
@@ -54,11 +58,13 @@ public class AndroidCommit extends Commit {
 		}
 		
 		this.addModifications(commit.getModifications());
+		
+		this.manifestModifications = ManifestDiff.getManifestModifications(getModifications());
 	}
 
 	private ManifestDiff getManifestDiff(){
 		if(manifestDiff == null){
-			manifestDiff = new ManifestDiff(getModifications(), manifestsMap, path);
+			manifestDiff = new ManifestDiff(manifestModifications, manifestsMap, path, false);
 		}
 		return manifestDiff;
 	}
@@ -69,7 +75,11 @@ public class AndroidCommit extends Commit {
 		}
 		return permissionMap;
 	}
-
+	
+	public boolean hasAndroidModifications(){
+		return !manifestModifications.isEmpty();
+	}
+	
 	public String getAndroidManifestCode() {
 		return androidManifestCode;
 	}

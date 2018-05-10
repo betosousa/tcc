@@ -39,7 +39,7 @@ public class RepoStudy implements Study {
 	@Override
 	public void execute() {
 		System.out.println("Start-Execute of " + repoName);
-		Logger.logMessage("Init "+repoName, null);
+		Logger.logMessage("Init " + repoName);
 		new RepositoryMining()
 				.in(GitRepository.singleProject(repositoryPath))
 				.through(range)
@@ -53,7 +53,7 @@ public class RepoStudy implements Study {
 		
 		CommitFilesManager.reset();
 		ProgressUtil.getInstance().resetProgress();
-		Logger.logMessage("End "+repoName, null);
+		Logger.logMessage("End " + repoName);
 		System.out.println("\nEnd-Execute of " + repoName);
 	}
 

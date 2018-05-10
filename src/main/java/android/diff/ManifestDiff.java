@@ -9,11 +9,12 @@ import java.util.Map;
 import org.repodriller.domain.Modification;
 
 import utils.AndroidManifestParser;
+import utils.Logger;
 import android.AndroidManifest;
 
 public class ManifestDiff {
 	private static final String NULL_PATH = "/dev/null";
-	
+	private boolean isMerge;
 	private String path;
 	private Map<String, String> committedManifests = new HashMap<>();
 	private Map<String, String> beforeCommitManifests = new HashMap<>();
@@ -21,12 +22,13 @@ public class ManifestDiff {
 	private List<AndroidManifest> committedAndroidManifests = new ArrayList<>();
 	private List<AndroidManifest> beforeCommitAndroidManifests = new ArrayList<>();
 	
-	public ManifestDiff(List<Modification> modifications, Map<String, String> manifestsMap, String path){
+	public ManifestDiff(List<Modification> modifications, Map<String, String> manifestsMap, String path, boolean isMerge){
 		this.path = path + File.separator;
 		if (manifestsMap != null) {
 			this.committedManifests = new HashMap<String, String>(manifestsMap);
 			this.beforeCommitManifests = new HashMap<String, String>(manifestsMap);
 		}
+		this.isMerge = isMerge;
 		parseDiff(modifications);
 		parseManifests();
 	}
@@ -41,10 +43,15 @@ public class ManifestDiff {
 				int n = 0;
 				int qtdLines = 0;
 				int srcLineIndex = 0;
+				
 				String[] lines = mod.getDiff().split("\n");
 				// source file after commit
 				String newFile = mod.getSourceCode();
 				String[] sourceLines = newFile.split("\n");
+				
+				if(isMerge){
+					Logger.logMessage(mod.getDiff());
+				}
 				
 				// run through modified lines
 				for(String line : lines){
@@ -116,6 +123,16 @@ public class ManifestDiff {
 		for(String manifestCode : committedManifests.values()){
 			committedAndroidManifests.add(AndroidManifestParser.parse(manifestCode));
 		}
+	}
+	
+	public static List<Modification> getManifestModifications(List<Modification> commitModifications){
+		List<Modification> manifestModifications = new ArrayList<>();
+		for (Modification mod : commitModifications) {
+			if(mod.fileNameEndsWith(AndroidManifest.FILE_NAME)){
+				manifestModifications.add(mod);
+			}
+		}
+		return manifestModifications;
 	}
 	
 	public List<AndroidManifest> getCommittedAndroidManifests() {

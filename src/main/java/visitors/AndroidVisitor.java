@@ -9,6 +9,7 @@ import utils.Logger;
 import utils.ProgressUtil;
 import utils.Strings;
 import android.commit.AndroidCommit;
+import android.commit.AndroidCommitManager;
 
 public abstract class AndroidVisitor implements CommitVisitor {
 	
@@ -28,7 +29,7 @@ public abstract class AndroidVisitor implements CommitVisitor {
 			Logger.logMessage(e.getMessage(), e);			
 			throw new RuntimeException(Strings.ERROR, e);
 		}
-		androidProcess(repo, new AndroidCommit(commit, repo.getScm(), repo.getPath()), writer);
+		androidProcess(repo, AndroidCommitManager.getAndroidCommit(commit, repo), writer);
 	}
 
 }

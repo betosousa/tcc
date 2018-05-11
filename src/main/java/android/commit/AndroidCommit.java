@@ -55,7 +55,7 @@ public class AndroidCommit extends Commit {
 
 	private ManifestDiff getManifestDiff(){
 		if(manifestDiff == null){
-			manifestDiff = new ManifestDiff(manifestModifications, getManifestsMap(), path, false);
+			manifestDiff = new ManifestDiff(manifestModifications, getManifestsMap(), path, isMerge());
 		}
 		return manifestDiff;
 	}

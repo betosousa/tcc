@@ -1,8 +1,40 @@
+AsciiCam\ -> activity +6 -1 = 5 (6)
+AsciiCam\ -> service +1 -0 = 1 (0)
+AsciiCam\ -> broadcastReceiver +2 -0 = 2 (1)
+AsciiCam\ -> contentProvider +2 -1 = 1 (0)
+AsciiCam\ -> permission +0 -0 = 0 (0)
+AsciiCam\ -> usesPermission +3 -0 = 3 (0)
+
+
+2048-android\ -> activity +1 -0 = 1 (3)
+2048-android\ -> service +0 -0 = 0 (0)
+2048-android\ -> broadcastReceiver +0 -0 = 0 (0)
+2048-android\ -> contentProvider +0 -0 = 0 (0)
+2048-android\ -> permission +0 -0 = 0 (0)
+2048-android\ -> usesPermission +0 -0 = 0 (0)
+
+
 Timber\ -> activity +13 -3 = 10 (16)
 Timber\ -> service +2 -0 = 2 (0)
 Timber\ -> broadcastReceiver +17 -0 = 17 (0)
 Timber\ -> contentProvider +0 -0 = 0 (0)
 Timber\ -> permission +0 -0 = 0 (0)
 Timber\ -> usesPermission +9 -0 = 9 (0)
+
+
+Telegram-FOSS\ -> activity +0 -0 = 0 (0)
+Telegram-FOSS\ -> service +0 -0 = 0 (0)
+Telegram-FOSS\ -> broadcastReceiver +0 -0 = 0 (0)
+Telegram-FOSS\ -> contentProvider +0 -0 = 0 (0)
+Telegram-FOSS\ -> permission +0 -0 = 0 (0)
+Telegram-FOSS\ -> usesPermission +0 -0 = 0 (0)
+
+
+Android-Terminal-Emulator\ -> activity +31 -2 = 29 (28)
+Android-Terminal-Emulator\ -> service +3 -0 = 3 (4)
+Android-Terminal-Emulator\ -> broadcastReceiver +3 -0 = 3 (1)
+Android-Terminal-Emulator\ -> contentProvider +0 -0 = 0 (0)
+Android-Terminal-Emulator\ -> permission +12 -3 = 9 (0)
+Android-Terminal-Emulator\ -> usesPermission +24 -3 = 21 (0)
 
 

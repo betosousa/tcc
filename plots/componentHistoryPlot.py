@@ -7,6 +7,7 @@ def plot_history(component_type, repoName):
 	rem = []
 	mod = []
 	dates = []
+	total = []
 	component_type = repoName + component_type
 	f = open(component_type + 'Driller.csv', 'r')
 	for line in f:
@@ -14,12 +15,14 @@ def plot_history(component_type, repoName):
 		add.append(int(commit[0]))
 		rem.append(int(commit[1]))
 		mod.append(int(commit[2]))
-		dates.append(commit[3])
+		total.append(int(commit[3]))
+		dates.append(commit[4])
 	f.close()
 	addBar = graph.Bar(x = dates, y = add, name = 'Added', marker = dict(color='green'), text = add, textposition = 'outside') 
 	remBar = graph.Bar(x = dates, y = [-r for r in rem], name = 'Removed', marker = dict(color='red'), text = rem, textposition = 'outside')
 	modBar = graph.Bar(x = dates, y = mod, name = 'Modified', marker = dict(color='blue'), text = mod, textposition = 'outside') 
-	data = [addBar, remBar, modBar]
+	totalLine = graph.Scatter(x = dates, y = total, name = 'Total', mode = 'lines+markers', line = dict(color='orange'))
+	data = [addBar, remBar, modBar, totalLine]
 	layout = graph.Layout(
 		title = component_type + ' Commit History',
 		barmode = 'relative',

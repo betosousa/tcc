@@ -76,5 +76,9 @@ private ManifestDiff manifestDiff;
 	public List<T> getModified() {
 		return modified;
 	}
+	
+	public int getComponentTotal(){
+		return committed.size();
+	}
 
 }

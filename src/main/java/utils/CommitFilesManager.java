@@ -33,12 +33,13 @@ public class CommitFilesManager {
 	
 	private void getFiles(String commitHash){
 		if(commitFiles == null || !currentCommit.equals(commitHash)){
-			repo.reset();
+			resetRepo();
 			repo.checkout(commitHash);
 			commitFiles = repo.files();
 			currentCommit = commitHash;
 			manifests.clear();
 			searchFiles();
+			resetRepo();
 		}
 	}
 	
@@ -67,9 +68,11 @@ public class CommitFilesManager {
 	}
 	
 	public static  void reset(){
+		Logger.logMessage("reseting repo");
 		if(filesManager != null){
 			filesManager.resetRepo();
 			filesManager = null;
+			Logger.logMessage("repo reset successfull");
 		}
 	}
 }

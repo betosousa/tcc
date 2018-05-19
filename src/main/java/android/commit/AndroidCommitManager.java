@@ -1,18 +1,18 @@
 package android.commit;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.repodriller.domain.Commit;
 import org.repodriller.scm.SCMRepository;
 
 public class AndroidCommitManager {
-	private static Map<String, AndroidCommit> map = new HashMap<>();
+	
+	private static AndroidCommit currentCommit = null;
+	private static String currentHash = "";
 	
 	public static AndroidCommit getAndroidCommit(Commit commit, SCMRepository repo){
-		if(!map.containsKey(commit.getHash())){
-			map.put(commit.getHash(), new AndroidCommit(commit, repo.getScm(), repo.getPath()));
+		if(!currentHash.equals(commit.getHash())){
+			currentCommit = new AndroidCommit(commit, repo.getScm(), repo.getPath());
+			currentHash = commit.getHash();
 		}
-		return map.get(commit.getHash());
+		return currentCommit;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCM;
 
@@ -63,16 +64,19 @@ public class CommitFilesManager {
 		return manifests;
 	}
 	
-	void resetRepo(){
+	void resetRepo() {
 		repo.reset();
 	}
 	
-	public static  void reset(){
+	public static void reset() {
 		Logger.logMessage("reseting repo");
-		if(filesManager != null){
-			filesManager.resetRepo();
+		if (filesManager != null) {
+			try {
+				filesManager.resetRepo();
+			} catch (RuntimeException e) {
+				Logger.logMessage("ERROR RESETING REPO ", e);
+			}
 			filesManager = null;
-			Logger.logMessage("repo reset successfull");
 		}
 	}
 }

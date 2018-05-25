@@ -5,6 +5,7 @@ import org.repodriller.Study;
 import org.repodriller.filter.range.CommitRange;
 import org.repodriller.filter.range.Commits;
 import org.repodriller.persistence.csv.CSVFile;
+import org.repodriller.scm.CollectConfiguration;
 import org.repodriller.scm.GitRepository;
 
 import utils.CommitFilesManager;
@@ -31,8 +32,8 @@ public class RepoStudy implements Study {
 		this.outputPath = "D:\\11p\\TCC\\workspace\\tcc\\plots\\" + repoName + "\\";
 		
 //		range = Commits.betweenDates(
-//				Utils.calendarFromDateString("01/12/2016"),
-//				Utils.calendarFromDateString("30/09/2017")
+//				Utils.calendarFromDateString("01/11/2017"),
+//				Utils.calendarFromDateString("25/03/2018")
 //				);
 	}
 	
@@ -43,6 +44,7 @@ public class RepoStudy implements Study {
 		new RepositoryMining()
 				.in(GitRepository.singleProject(repositoryPath))
 				.through(range)
+				.collect(new CollectConfiguration().basicOnly().sourceCode().diffs())
 				.process(new ActivityAndroidVisitor(), new CSVFile(outputPath + "activityDriller.csv"))
 				.process(new ServiceAndroidVisitor(), new CSVFile(outputPath + "serviceDriller.csv"))
 				.process(new BroadcastReceiverAndroidVisitor(), new CSVFile(outputPath + "broadcastReceiverDriller.csv"))

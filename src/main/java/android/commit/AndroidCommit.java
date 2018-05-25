@@ -43,7 +43,7 @@ public class AndroidCommit extends Commit {
 	public AndroidCommit(Commit commit, SCM repoSCM, String path) {
 		super(commit.getHash(), commit.getAuthor(), commit.getCommitter(),
 				commit.getDate(), commit.getAuthorTimeZone(), commit.getCommitterDate(),
-				commit.getCommitterTimeZone(), commit.getMsg(), commit.getParent(), 
+				commit.getCommitterTimeZone(), commit.getMsg(), commit.getParents(), 
 				commit.isMerge(), commit.getBranches(), commit.isInMainBranch());
 		
 		this.permissionAnalyzer = new PermissionAnalyzerWrapper();

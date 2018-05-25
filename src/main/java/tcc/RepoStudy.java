@@ -27,8 +27,8 @@ public class RepoStudy implements Study {
 	
 	private CommitRange range = Commits.all();
 
-	public RepoStudy(String repoName, String repoURL) {
-		this.repoName = repoName;
+	public RepoStudy(String repoURL) {
+		this.repoName = getRepoName(repoURL);
 		this.repositoryPath = repoURL;
 		this.outputPath = "D:\\androidDriller\\output\\" + repoName + "\\";
 		
@@ -37,6 +37,13 @@ public class RepoStudy implements Study {
 //				Utils.calendarFromDateString("01/12/2016"),
 //				Utils.calendarFromDateString("30/09/2017")
 //				);
+	}
+	
+	private String getRepoName(String repoUrl){
+		if(repoUrl.endsWith(".git")){
+			return repoUrl.substring(repoUrl.lastIndexOf('/')+1, repoUrl.indexOf(".git"));
+		}
+		return repoUrl.substring(repoUrl.lastIndexOf('/')+1);
 	}
 	
 	@Override

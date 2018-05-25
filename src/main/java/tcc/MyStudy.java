@@ -1,43 +1,50 @@
 package tcc;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.repodriller.RepoDriller;
 
 import utils.Logger;
 
 public class MyStudy {
 	
-	static String[] repoNames = {
+	static List<String> repoURLs = Arrays.asList(
 		// Nome 			// Commits - Tamanho (MB)
 //		"AsciiCam",			// 56 - 0.623		
 //		"2048-android", 	// 70 - 7.89 				
 //		
 //		"Timber",			// 597 - 16.97					
 //		"Telegram-FOSS", 	// 704     - 125.25				
-//		"Android-Terminal-Emulator", // 1088 - 6.24 
-		
-//		"Authorizer", 		// 1304 - 153.63
-		"fooAndroidManifest",
-	};
-	
-	static String[] repoURLs = {
-		// Nome 			// Commits - Tamanho (MB)
-//		"AsciiCam",			// 56 - 0.623		
-//		"2048-android", 	// 70 - 7.89 				
-//		
-//		"Timber",			// 597 - 16.97					
-//		"Telegram-FOSS", 	// 704     - 125.25				
-//		"Android-Terminal-Emulator", // 1088 - 6.24 
+//		"https://github.com/jackpal/Android-Terminal-Emulator.git", // 1088 - 6.24 
 		
 //		"https://github.com/tejado/Authorizer.git", 		// 1304 - 153.63
-		"https://github.com/betosousa/fooAndroidManifest.git",
-	};
+		"https://github.com/betosousa/fooAndroidManifest.git"
+	);
+	
+	
+	private static List<String> getReposFromFile(){
+		
+		return new ArrayList<String>();
+	}
+	
+	private static void processRepos(List<String> repos){
+		for (String repo : repos){
+			new RepoDriller().start(new RepoStudy(repo));
+		}
+	}
 	
 	public static void main(String[] args) {
 		System.out.println("Start-Main");
 		Logger.initLog();
-		for (int i = 0; i < repoURLs.length; i++){
-			new RepoDriller().start(new RepoStudy(repoNames[i], repoURLs[i]));
+		
+		List<String> repos = getReposFromFile();
+		if (repos.isEmpty()) {
+			repos = repoURLs;
 		}
+		processRepos(repos);
+		
 		Logger.closeLog();
 		System.out.println("End-Main");
 	}

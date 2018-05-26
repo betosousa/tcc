@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.jgit.errors.CheckoutConflictException;
 import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCM;
 

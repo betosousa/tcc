@@ -1,6 +1,10 @@
 import plotly.offline as plotly
 import plotly.graph_objs as graph
 import sys
+import os
+
+outputdir = 'D:/11p/TCC/workspace/tcc/plots'
+auto_open_htmls = False
 
 def plot_history(component_type, repoName):
 	add = []
@@ -28,7 +32,7 @@ def plot_history(component_type, repoName):
 		barmode = 'relative',
 		)
 	figure = graph.Figure(data = data, layout = layout)
-	plotly.plot(figure, image='png', auto_open=True,
+	plotly.plot(figure, image = 'png', auto_open = auto_open_htmls,
 				filename = component_type + '_history.html',
 				image_filename = component_type.replace('\\','_') + '_history')
 
@@ -42,9 +46,21 @@ def plot_repo(repo):
 	plot_history('usesPermission', repoName)
 
 
-if __name__ == '__main__':
+def get_dirs():
+	return [t[1] for t in os.walk(outputdir)][0]
+
+def printAll():
+	repos = get_dirs()
+	for repo in repos:
+		plot_repo(repo)
+	
+def printOnly():
 	repo = raw_input()
 	while repo != '##':
 		if '#' not in repo:
 			plot_repo(repo)
 		repo = raw_input()
+
+if __name__ == '__main__':
+	printAll()
+	#printOnly()

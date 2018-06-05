@@ -23,7 +23,10 @@ public abstract class DiffAndroidVisitor extends AndroidVisitor {
 					getDiff(commit).getRemoved().size(),
 					getDiff(commit).getModified().size(),
 					getDiff(commit).getComponentTotal(),
-					new SimpleDateFormat(Strings.DATE_TIME_FORMAT).format(commit.getDate().getTime()));
+					new SimpleDateFormat(Strings.DATE_TIME_FORMAT).format(commit.getDate().getTime()),
+					commit.getHash(),
+					commit.getAuthor().getName()
+					);
 		}
 //		System.out.print(" "+getComponentName()+" end");
 

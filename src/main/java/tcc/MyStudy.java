@@ -11,10 +11,11 @@ import java.util.stream.Stream;
 
 import org.repodriller.RepoDriller;
 
-import utils.Logger;
+import utils.LoggerManager;
 
 public class MyStudy {
 	
+	public static final String MAIN = "Main";
 	private static final String INPUT_FILE = "androidDriller" + File.separator + "input" + File.separator
 			+ "repoURLs.in";
 	
@@ -37,7 +38,7 @@ public class MyStudy {
 		try (Stream<String> stream = Files.lines(Paths.get(INPUT_FILE))) {
 	        stream.forEach(repos::add);
 		} catch (IOException e) {
-			Logger.logMessage("Error reading input file", e);
+			LoggerManager.getLogger(MAIN).logMessage("Error reading input file", e);
 		}
 		return repos;
 	}
@@ -49,16 +50,13 @@ public class MyStudy {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("Start-Main");
-		Logger.initLog();
-		
+		LoggerManager.getLogger(MAIN).logMessage("Start Main");
 		List<String> repos = getReposFromFile();
 		if (repos.isEmpty()) {
 			repos = repoURLs;
 		}
-		processRepos(repos);
-		
-		Logger.closeLog();
-		System.out.println("End-Main");
+		processRepos(repos);		
+		LoggerManager.getLogger(MAIN).logMessage("End-Main");
+		LoggerManager.closeLogs();
 	}
 }

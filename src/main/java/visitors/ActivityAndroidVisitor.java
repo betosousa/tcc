@@ -6,6 +6,10 @@ import android.diff.ComponentDiff;
 public class ActivityAndroidVisitor extends ComponentAndroidVisitor {
 
 	
+	public ActivityAndroidVisitor(String repoName) {
+		super(repoName);
+	}
+
 	@Override
 	protected String getComponentName() {
 		return "Activity";

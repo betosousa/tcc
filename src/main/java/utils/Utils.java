@@ -44,7 +44,7 @@ public class Utils {
 		try {
 			fromDate = df.parse(dateString);
 		} catch (ParseException e) {
-			Logger.logMessage(e.getMessage(), e);
+			LoggerManager.getLogger("Utils").logMessage(e.getMessage(), e);
 		} 
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(fromDate);

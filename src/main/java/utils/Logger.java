@@ -8,12 +8,20 @@ import java.util.Date;
 
 public class Logger {
 	
-	private static final String LOGGER_FILE = "logger.log";
 	private static final String FILE_ENCODING = "UTF-8";
 	
-	private static PrintWriter log;
-
-	public static void logMessage(String msg, Throwable e) {
+	private String logger_file = "logger.log";	
+	private String repoName;
+	private PrintWriter log;
+	
+	public Logger(String filePath) {
+		this.logger_file = filePath+".log";
+		this.repoName = filePath;
+		initLog();
+	}
+	
+	
+	public void logMessage(String msg, Throwable e) {
 		if(log == null){
 			initLog();
 		}
@@ -25,21 +33,26 @@ public class Logger {
 			log.println(e.getStackTrace());
 	}
 	
-	public static void logMessage(String msg){
+	public void logMessage(String msg){
 		logMessage(msg, null);
 	}
 
-	public static void initLog(){
+	public void initLog(){
 		try {
-			File f = new File(LOGGER_FILE);
-			f.delete();
+			File f = new File(logger_file);
+//			f.delete();
 			log = new PrintWriter(f, FILE_ENCODING);
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void closeLog(){
+	public void closeLog(){
 		log.close();
+	}
+
+
+	public String getRepoName() {
+		return repoName;
 	}
 }

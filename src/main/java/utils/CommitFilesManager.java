@@ -8,6 +8,7 @@ import org.repodriller.scm.RepositoryFile;
 import org.repodriller.scm.SCM;
 
 import android.AndroidManifest;
+import tcc.MyStudy;
 
 public class CommitFilesManager {
 	
@@ -68,7 +69,7 @@ public class CommitFilesManager {
 	}
 		
 	public static void reset() {
-		Logger.logMessage("reseting repo");
+		LoggerManager.getLogger(MyStudy.MAIN).logMessage("reseting repo");
 		if (filesManager != null) {
 			filesManager = null;
 		}

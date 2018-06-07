@@ -11,6 +11,9 @@ import android.diff.Diff;
 
 public abstract class DiffAndroidVisitor extends AndroidVisitor {
 
+	public DiffAndroidVisitor(String repoName) {
+		super(repoName);
+	}
 	protected abstract Diff<?> getDiff(AndroidCommit commit);
 	protected abstract String getComponentName();
 	

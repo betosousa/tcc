@@ -5,6 +5,10 @@ import android.diff.ComponentDiff;
 
 public class ContentProviderAndroidVisitor extends ComponentAndroidVisitor {
 
+	public ContentProviderAndroidVisitor(String repoName) {
+		super(repoName);
+	}
+
 	@Override
 	protected ComponentDiff getComponentDiff(AndroidCommit commit) {
 		return commit.getContentProviderDiff();

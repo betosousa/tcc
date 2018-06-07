@@ -11,7 +11,7 @@ import org.repodriller.scm.CollectConfiguration;
 import org.repodriller.scm.GitRemoteRepository;
 
 import utils.CommitFilesManager;
-import utils.Logger;
+import utils.LoggerManager;
 import utils.ProgressUtil;
 import visitors.ActivityAndroidVisitor;
 import visitors.BroadcastReceiverAndroidVisitor;
@@ -49,24 +49,25 @@ public class RepoStudy implements Study {
 	
 	@Override
 	public void execute() {
-		System.out.println("Start-Execute of " + repoName);
-		Logger.logMessage("Init " + repoName);
+		LoggerManager.getLogger(MyStudy.MAIN).logMessage("Start-Execute of " + repoName);
+		LoggerManager.getLogger(repoName).logMessage("Init " + repoName);
 		new RepositoryMining()
 				.in(GitRemoteRepository.singleProject(repositoryPath))
 				.through(range)
 				.collect(new CollectConfiguration().basicOnly().sourceCode().diffs())
-				.process(new ActivityAndroidVisitor(), new CSVFile(outputPath + "activityDriller.csv"))
-				.process(new ServiceAndroidVisitor(), new CSVFile(outputPath + "serviceDriller.csv"))
-				.process(new BroadcastReceiverAndroidVisitor(), new CSVFile(outputPath + "broadcastReceiverDriller.csv"))
-				.process(new ContentProviderAndroidVisitor(), new CSVFile(outputPath + "contentProviderDriller.csv"))
-				.process(new PermissionAndroidVisitor(), new CSVFile(outputPath + "permissionDriller.csv"))
-				.process(new UsesPermissionAndroidVisitor(), new CSVFile(outputPath + "usesPermissionDriller.csv"))
+				.process(new ActivityAndroidVisitor(repoName), new CSVFile(outputPath + "activityDriller.csv"))
+				.process(new ServiceAndroidVisitor(repoName), new CSVFile(outputPath + "serviceDriller.csv"))
+				.process(new BroadcastReceiverAndroidVisitor(repoName), new CSVFile(outputPath + "broadcastReceiverDriller.csv"))
+				.process(new ContentProviderAndroidVisitor(repoName), new CSVFile(outputPath + "contentProviderDriller.csv"))
+				.process(new PermissionAndroidVisitor(repoName), new CSVFile(outputPath + "permissionDriller.csv"))
+				.process(new UsesPermissionAndroidVisitor(repoName), new CSVFile(outputPath + "usesPermissionDriller.csv"))
 				.mine();
 		
 		CommitFilesManager.reset();
 		ProgressUtil.getInstance().resetProgress();
-		Logger.logMessage("End " + repoName);
-		System.out.println("\nEnd-Execute of " + repoName);
+		LoggerManager.getLogger(repoName).logMessage("End " + repoName);
+		LoggerManager.closeLog(repoName);
+		LoggerManager.getLogger(MyStudy.MAIN).logMessage("\nEnd-Execute of " + repoName);
 	}
 
 }

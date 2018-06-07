@@ -66,15 +66,10 @@ public class CommitFilesManager {
 	void resetRepo() {
 		repo.reset();
 	}
-	
+		
 	public static void reset() {
 		Logger.logMessage("reseting repo");
 		if (filesManager != null) {
-			try {
-				filesManager.resetRepo();
-			} catch (RuntimeException e) {
-				Logger.logMessage("ERROR RESETING REPO ", e);
-			}
 			filesManager = null;
 		}
 	}

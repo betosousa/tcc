@@ -1,5 +1,6 @@
 package tcc;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,7 +15,8 @@ import utils.Logger;
 
 public class MyStudy {
 	
-	private static final String INPUT_FILE = "D:\\androidDriller\\input\\repoURLs.in";
+	private static final String INPUT_FILE = "androidDriller" + File.separator + "input" + File.separator
+			+ "repoURLs.in";
 	
 	static List<String> repoURLs = Arrays.asList(
 		// Nome 													// Commits - Tamanho (MB)

@@ -31,7 +31,7 @@ public class RepoStudy implements Study {
 	public RepoStudy(String repoURL) {
 		this.repoName = getRepoName(repoURL);
 		this.repositoryPath = repoURL;
-		this.outputPath = "D:\\androidDriller\\output\\" + repoName + "\\";
+		this.outputPath = "androidDriller" + File.separator + "output" + File.separator + repoName + File.separator;
 		
 		new File(outputPath).mkdirs();
 //		range = Commits.betweenDates(

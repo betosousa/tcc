@@ -21,7 +21,7 @@ import android.data.ContentProvider;
 import android.data.IntentFilter;
 import android.data.Permission;
 import android.data.Service;
-import tcc.MyStudy;
+import logger.LoggerManager;
 
 public class AndroidManifestParser extends DefaultHandler {
 	static final String MANIFEST_TAG = "manifest";
@@ -79,9 +79,9 @@ public class AndroidManifestParser extends DefaultHandler {
 					androidManifest = mParser.androidManifest;
 				}
 			} catch (Exception e){ 
-				LoggerManager.getLogger(MyStudy.MAIN).logMessage(Strings.PARSER_ERROR);
-				LoggerManager.getLogger(MyStudy.MAIN).logMessage("::"+manifestSrc+"::");
-				LoggerManager.getLogger(MyStudy.MAIN).logMessage(e.getMessage(), e);
+				LoggerManager.getLogger(Strings.MAIN).logMessage(Strings.PARSER_ERROR);
+				LoggerManager.getLogger(Strings.MAIN).logMessage("::"+manifestSrc+"::");
+				LoggerManager.getLogger(Strings.MAIN).logMessage(e.getMessage(), e);
 			}
 		}
 		return androidManifest;

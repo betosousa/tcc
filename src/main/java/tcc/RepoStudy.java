@@ -10,9 +10,10 @@ import org.repodriller.persistence.csv.CSVFile;
 import org.repodriller.scm.CollectConfiguration;
 import org.repodriller.scm.GitRemoteRepository;
 
+import logger.LoggerManager;
 import utils.CommitFilesManager;
-import utils.LoggerManager;
 import utils.ProgressUtil;
+import utils.Strings;
 import visitors.ActivityAndroidVisitor;
 import visitors.BroadcastReceiverAndroidVisitor;
 import visitors.ContentProviderAndroidVisitor;
@@ -49,7 +50,7 @@ public class RepoStudy implements Study {
 	
 	@Override
 	public void execute() {
-		LoggerManager.getLogger(MyStudy.MAIN).logMessage("Start-Execute of " + repoName);
+		LoggerManager.getLogger(Strings.MAIN).logMessage("Start-Execute of " + repoName);
 		LoggerManager.getLogger(repoName).logMessage("Init " + repoName);
 		new RepositoryMining()
 				.in(GitRemoteRepository.singleProject(repositoryPath))
@@ -67,7 +68,7 @@ public class RepoStudy implements Study {
 		ProgressUtil.getInstance().resetProgress();
 		LoggerManager.getLogger(repoName).logMessage("End " + repoName);
 		LoggerManager.closeLog(repoName);
-		LoggerManager.getLogger(MyStudy.MAIN).logMessage("\nEnd-Execute of " + repoName);
+		LoggerManager.getLogger(Strings.MAIN).logMessage("\nEnd-Execute of " + repoName);
 	}
 
 }

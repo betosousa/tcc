@@ -7,8 +7,7 @@ import org.repodriller.scm.SCMRepository;
 
 import android.commit.AndroidCommit;
 import android.commit.AndroidCommitManager;
-import utils.LoggerManager;
-import utils.ProgressUtil;
+import logger.LoggerManager;
 import utils.Strings;
 
 public abstract class AndroidVisitor implements CommitVisitor {
@@ -27,14 +26,14 @@ public abstract class AndroidVisitor implements CommitVisitor {
 			PersistenceMechanism writer) {
 		
 		try {	
-			ProgressUtil.getInstance().updateProgress(commit.getDate(),
-					repo.getScm().totalCommits(), commit.getHash());
+//			ProgressUtil.getInstance().updateProgress(commit.getDate(),
+//					repo.getScm().totalCommits(), commit.getHash());
+			androidProcess(repo, AndroidCommitManager.getAndroidCommit(commit, repo), writer);
 		} catch(Exception e){ 
 			LoggerManager.getLogger(repoName).logMessage(Strings.VISIT_PROCCESS_ERROR);
 			LoggerManager.getLogger(repoName).logMessage(e.getMessage(), e);			
 			throw new RuntimeException(Strings.ERROR, e);
 		}
-		androidProcess(repo, AndroidCommitManager.getAndroidCommit(commit, repo), writer);
 	}
 
 }

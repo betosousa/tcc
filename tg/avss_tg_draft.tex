@@ -1,0 +1,187 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage[parfill]{parskip} % Activate to begin paragraphs with an empty line rather than an indent
+
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{url} % support the url references
+
+\author{Alberto Vital Santos de Sousa}
+
+\begin{document}
+%================CAPA===================
+\pagenumbering{gobble} % turn off page numbering
+\begin{center}
+\begin{figure}[h]
+\centering
+\includegraphics[width=3cm]{ufpe.png}
+\includegraphics[width=4cm]{cin.png}
+\end{figure}
+%{\Large
+Universidade Federal de Pernambuco\\
+Centro de Informática\\
+Curso de Bacharelado em Engenharia da Computação
+%}
+\\[3cm]
+\textbf{\huge
+AndroidDriller:\\[3mm]
+Uma ferramenta de mineração de repositórios Android\\
+}
+\vfill
+\begin{flushleft}
+Aluno: Alberto Vital Santos de Sousa\\
+Orientador: Leopoldo Motta Teixeira\\[5mm]
+\end{flushleft}
+Recife, junho de 2018
+\end{center}
+
+%================CONTRACAPA===================
+\newpage
+\begin{center}
+Universidade Federal de Pernambuco\\
+Centro de Informática\\
+Curso de Bacharelado em Engenharia da Computação
+%}
+\\[3cm]
+\textbf{\huge
+AndroidDriller:\\[3mm]
+Uma ferramenta de mineração de repositórios Android\\
+}
+\vfill
+
+\begin{flushleft}
+{\small
+Monografia apresentada ao Centro de Informática (CIn)\\
+da Universidade Federal de Pernambuco (UFPE), como requisito\\
+parcial para conclusão do Curso de Engenharia da Computação,\\
+orientada pelo professor Leopoldo Motta Teixeira.
+}
+\end{flushleft}
+Recife, junho de 2018
+\end{center}
+
+
+%================RESUMO===================
+\newpage
+\section*{Agradecimentos}
+
+
+%================RESUMO===================
+\newpage
+\pagenumbering{arabic} % turn page numbering back on
+\section{Resumo}
+Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisadores de engenharia de software têm obtido um melhor conhecimento sobre o processo de desenvolvimento de software, em geral. Este trabalho propõe uma ferramenta capaz de minerar repositórios fazendo uso das características comuns de projetos Android para que se possa realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações para a plataforma. 
+
+%Palavras-chave: Android, Sistemas de controle de versão, Git, Mineração de repositórios
+
+%================ABSTRACT===================
+\newpage
+\section{Abstract}
+
+%Software Engineering researchers have been using tools capable of mining data from repositories to get a better understanding 
+%about the software development process. This work proposes a tool for mining repositories that uses the common caracteristics
+%of Android Projects so we can perform a preliminar investigation about how changes occur in the platform apps development.
+
+%================SUMARIO===================
+\newpage
+
+\tableofcontents
+
+%================INTRODUÇÃO===================
+\newpage
+\section{Introdução}
+
+Em engenharia de software, a análise de repositórios tem ajudado pesquisadores a
+obter um melhor conhecimento sobre o processo de desenvolvimento de um
+software \cite{miningGit}. Com isso, é possível predizer bugs e também analisar o padrão de
+desenvolvimento utilizado pelos colaboradores do projeto. Para tal fim, existem
+ferramentas capazes de minerar dados sobre repositórios, como por exemplo, o
+RepoDriller \cite{repodriller}.\\
+\\
+Ferramentas mais gerais, como o próprio RepoDriller, servem para analisar
+software em vários domínios. No desenvolvimento de aplicações Android, há
+diversas particularidades envolvidas. Por exemplo, o arquivo de manifesto contém
+informações sobre os vários componentes do projeto. Assim, as principais
+alterações feitas no repositório são refletidas em modificações desse arquivo.\\
+\\
+No estudo de repositórios Android, pesquisadores têm usado ferramentas capazes
+de extrair dados dos arquivos do tipo apk \cite{Calciati}, \cite{WhoAdded} e \cite{YLyu}. Para realizar estudos
+semelhantes, uma outra abordagem seria utilizar uma ferramenta capaz de
+minerar os repositórios das aplicações e extrair dados específicos levando em
+consideração não só o arquivo apk mas também as modificações dos arquivos de
+manifesto, por exemplo.\\
+
+
+%================OBJETIVOS===================
+\newpage
+\section{Objetivos}
+
+Este trabalho tem por objetivo realizar uma investigação preliminar de como as
+mudanças acontecem no desenvolvimento de aplicações Android para criar
+ferramentas de suporte à evolução de aplicativos, e assim, implementar uma
+ferramenta capaz de minerar estes repositórios, aproveitando-se das
+características particulares de projetos Android.\\
+
+%=============================
+%=      Desenvolvimento      =
+%=============================
+
+%================CONCEITOSBASICOS===================
+\newpage
+
+\section{Conceitos Básicos}
+
+\subsection{Android}
+\subsection{Sistemas de controle de versão}
+\subsubsection{Git}
+\subsection{Mineração de repositórios}
+\subsection{RepoDriller}
+\cite{repodriller}
+
+%================Trabalhos Relacionados===================
+\newpage
+\section{Trabalhos Relacionados / Contexto}
+%referencias
+Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais que poderiam se aproveitar da ferramenta proposta.
+%Gancho com a motivação
+%citar como seria o uso do androidDriller nesses estudos.
+
+
+%================Ferramenta===================
+\newpage
+\section{AndroidDriller}
+%Detalhamento geral da ferramenta
+
+\subsection{Metodologia}
+
+Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para
+percorrer os commits do repositório. Neste projeto foram implementadas as
+classes capazes de colher dados sobre os componentes específicos de Android e
+geração de relatórios em arquivos CSV. Para visualização dos dados, foi
+implementado um programa na linguagem Python capaz de produzir gráficos a
+partir dos arquivos CSV gerados pela ferramenta.\\
+
+\subsection{Implementação}
+%diagrama de classes
+Explicação mais detalhada de cada classe implementada
+\subsection{Experimento}
+Detalhamento do experimento realizado na máquina do Cin
+\subsection{Resultados}
+Análise dos resultados obtidos
+
+%=============================
+%=         Conclusão         =
+%=============================
+\newpage
+
+\section{Conclusão}
+%\subsection{Trabalhos Futuros}
+%Extender a ferramenta para analisar também o codigo fonte e valida-lo junto ao manifesto.
+
+%================Bibliografia===================
+\newpage
+%\bibliographystyle{IEEEtranS}
+\bibliographystyle{ieeetr}
+\bibliography{lib}
+
+\end{document}

@@ -2,3 +2,10 @@
 /target/*
 /plots/foo
 logger.*
+
+#latex generated files
+/tg/*.aux
+/tg/*.bbl
+/tg/*.blg
+/tg/*.log
+/tg/*.toc

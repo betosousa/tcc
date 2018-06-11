@@ -2,7 +2,7 @@
 
 ## About
 
-AndroidDriller is a tool that extends the RepoDriller (https://github.com/mauricioaniche/repodriller) tool for mining android repositories.
+AndroidDriller is a tool for mining android repositories that extends the RepoDriller tool (https://github.com/mauricioaniche/repodriller).
 
 
 ## Running the tool
@@ -36,5 +36,7 @@ The first 3 columns are the amount of added, removed and modified components (ma
      
 
 
+## Dependencies
 
+* Java 8
  

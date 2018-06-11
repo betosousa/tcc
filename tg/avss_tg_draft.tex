@@ -6,6 +6,13 @@
 \usepackage{graphicx} % support the \includegraphics command and options
 \usepackage{url} % support the url references
 
+%font
+\usepackage{mathptmx}
+%\usepackage{libertine}
+%\usepackage{libertinust1math}
+%\usepackage[T1]{fontenc}
+
+
 \author{Alberto Vital Santos de Sousa}
 
 \begin{document}
@@ -131,16 +138,24 @@ características particulares de projetos Android.\\
 
 \section{Conceitos Básicos}
 
-\subsection{Android}
-\subsection{Sistemas de controle de versão}
-\subsubsection{Git}
-\subsection{Mineração de repositórios}
-\subsection{RepoDriller}
+\subsection{Android}%10
+%o que é android
+O sistema operacional Android pode ser definido como uma pilha de softwares de código aberto desenvolvida para sistemas móveis \cite{androidSource}.
+\subsubsection{Principais componentes}
+%detalhamento dos componentes
+
+%\newpage
+\subsection{Sistemas de controle de versão}%11-15
+\subsubsection{Git}%11-17
+%\newpage
+\subsection{Mineração de repositórios}%11-15
+%\newpage
+\subsection{RepoDriller}%14-16
 \cite{repodriller}
 
 %================Trabalhos Relacionados===================
 \newpage
-\section{Trabalhos Relacionados / Contexto}
+\section{Trabalhos Relacionados / Contexto}%18-20
 %referencias
 Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais que poderiam se aproveitar da ferramenta proposta.
 %Gancho com a motivação
@@ -149,7 +164,7 @@ Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais
 
 %================Ferramenta===================
 \newpage
-\section{AndroidDriller}
+\section{AndroidDriller}%18-24
 %Detalhamento geral da ferramenta
 
 \subsection{Metodologia}
@@ -161,12 +176,12 @@ geração de relatórios em arquivos CSV. Para visualização dos dados, foi
 implementado um programa na linguagem Python capaz de produzir gráficos a
 partir dos arquivos CSV gerados pela ferramenta.\\
 
-\subsection{Implementação}
+\subsection{Implementação}%18-24
 %diagrama de classes
 Explicação mais detalhada de cada classe implementada
-\subsection{Experimento}
+\subsection{Experimento}%18-22
 Detalhamento do experimento realizado na máquina do Cin
-\subsection{Resultados}
+\subsection{Resultados}%22-24
 Análise dos resultados obtidos
 
 %=============================
@@ -174,7 +189,7 @@ Análise dos resultados obtidos
 %=============================
 \newpage
 
-\section{Conclusão}
+\section{Conclusão}%24-25
 %\subsection{Trabalhos Futuros}
 %Extender a ferramenta para analisar também o codigo fonte e valida-lo junto ao manifesto.
 

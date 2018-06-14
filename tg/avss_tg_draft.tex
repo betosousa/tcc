@@ -6,11 +6,25 @@
 \usepackage{graphicx} % support the \includegraphics command and options
 \usepackage{url} % support the url references
 
+
+
 %font
 \usepackage{mathptmx}
 %\usepackage{libertine}
 %\usepackage{libertinust1math}
 %\usepackage[T1]{fontenc}
+
+% to adjust figures numbering
+\usepackage{amsmath} 
+\numberwithin{figure}{section}
+
+% %figura 
+% \begin{figure}[h]
+% \centering
+% \includegraphics[width=\linewidth]{imgs/.png}
+% \label{fig:}
+% \caption{}
+% \end{figure}
 
 
 \author{Alberto Vital Santos de Sousa}
@@ -21,8 +35,8 @@
 \begin{center}
 \begin{figure}[h]
 \centering
-\includegraphics[width=3cm]{ufpe.png}
-\includegraphics[width=4cm]{cin.png}
+\includegraphics[width=3cm]{imgs/ufpe.png}
+\includegraphics[width=4cm]{imgs/cin.png}
 \end{figure}
 %{\Large
 Universidade Federal de Pernambuco\\
@@ -68,7 +82,7 @@ Recife, junho de 2018
 \end{center}
 
 
-%================RESUMO===================
+%================AGRADECIMENTOS===================
 \newpage
 \section*{Agradecimentos}
 
@@ -129,6 +143,7 @@ ferramentas de suporte à evolução de aplicativos, e assim, implementar uma
 ferramenta capaz de minerar estes repositórios, aproveitando-se das
 características particulares de projetos Android.\\
 
+
 %=============================
 %=      Desenvolvimento      =
 %=============================
@@ -140,9 +155,38 @@ características particulares de projetos Android.\\
 
 \subsection{Android}%10
 %o que é android
-O sistema operacional Android pode ser definido como uma pilha de softwares de código aberto desenvolvida para sistemas móveis \cite{androidSource}.
-\subsubsection{Principais componentes}
+O sistema operacional Android pode ser definido como uma pilha de softwares de código aberto desenvolvida para sistemas móveis \cite{androidSource}. A partir desta pilha, programadores são capazes de desenvolver aplicações para dispositivos móveis sem se preocupar com detalhes específicos de hardware, pois a própria plataforma trata essas diferenças em sua API. O fato de Android ter seu código aberto, também permite ao desenvolvedor implementar sua própria versão dos módulos da plataforma caso deseje.
+
+A pilha de software citada acima pode ser dividida em camadas, conforme a figura \ref{fig:androidStack}
+
+%figura dos modulos
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{imgs/android_framework_details.png}
+\label{fig:androidStack}
+\caption{Pilha de software dividida em camadas \cite{androidSource}}
+\end{figure}
+
+Este trabalho propõe uma ferramenta para extrair dados relativos à camada \textit{Android Framework}, onde estão os elementos de mais alto nível provido pela plataforma. Nesta camada estão as principais classes utilizadas pelos desenvolvedores para produzir suas aplicações (que estão na camada logo acima). Mais abaixo trataremos alguns dos principais elementos da camda de \textit{framework} e que são abordados pela ferramenta proposta.
+
 %detalhamento dos componentes
+%olhar pagina do android developer
+\subsubsection{AndroidManifest}
+%O core da ferramenta
+É um arquivo xml obrigatório que contém informações sobre os componentes da aplicação. Precisa ser criado com o nome \textit{AndroidManifest.xml}, dessa forma o framework é capaz de identificar, dentre ouras coisas, qual parte do código implementa a cada uma das entidades que compõem a aplicação.
+%Também se define aqui detalhes como o a versão do SDK, ...
+
+\subsubsection{Activity}
+Representa a interface visual de interação com o usuário. No arquivo de manifesto é representada pela tag \textit{activity} e precisa definir o atributo \textit{name}, que é utilizado para identificar a classe que a implementa.
+\subsubsection{Broadcast Receiver}
+Componente reponsável 
+\subsubsection{Content Provider}
+
+\subsubsection{Service}
+
+\subsubsection{Permission}
+%tratar uses-permission aqui
+
 
 %\newpage
 \subsection{Sistemas de controle de versão}%11-15
@@ -160,6 +204,8 @@ O sistema operacional Android pode ser definido como uma pilha de softwares de c
 Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais que poderiam se aproveitar da ferramenta proposta.
 %Gancho com a motivação
 %citar como seria o uso do androidDriller nesses estudos.
+
+
 
 
 %================Ferramenta===================

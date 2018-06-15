@@ -22,14 +22,14 @@ public class MyStudy {
 	
 	static List<String> repoURLs = Arrays.asList(
 		// Nome 													// Commits - Tamanho (MB)
-//		"https://github.com/dozingcat/AsciiCam",					// 56 	- 0.623		
-//		"https://github.com/uberspot/2048-android", 				// 70 	- 7.89 				
-//		
-//		"https://github.com/naman14/Timber",						// 597 	- 16.97					
-//		"https://github.com/Telegram-FOSS-Team/Telegram-FOSS", 		// 704 	- 125.25				
-//		"https://github.com/jackpal/Android-Terminal-Emulator.git",	// 1088	- 6.24 
-//		
-//		"https://github.com/tejado/Authorizer.git", 				// 1304	- 153.63
+		"https://github.com/dozingcat/AsciiCam",					// 56 	- 0.623		
+		"https://github.com/uberspot/2048-android", 				// 70 	- 7.89 				
+		
+		"https://github.com/naman14/Timber",						// 597 	- 16.97					
+		"https://github.com/Telegram-FOSS-Team/Telegram-FOSS", 		// 704 	- 125.25				
+		"https://github.com/jackpal/Android-Terminal-Emulator.git",	// 1088	- 6.24 
+		
+		"https://github.com/tejado/Authorizer.git", 				// 1304	- 153.63
 		"https://github.com/betosousa/fooAndroidManifest.git"		// 29	- 0.006
 		,"https://github.com/betosousa/fooAndroidManifest.git"		// 29	- 0.006
 	);
@@ -49,7 +49,11 @@ public class MyStudy {
 		int count = 1;
 		for (String repo : repos){
 			ProgressLogger.updateProgress(count++, repos.size());
-			new RepoDriller().start(new RepoStudy(repo));
+			try {
+				new RepoDriller().start(new RepoStudy(repo));
+			} catch(RuntimeException e) {
+				LoggerManager.getLogger(Strings.MAIN).logMessage("Error proccessing repo: " + repo, e);	
+			}
 		}
 	}
 	

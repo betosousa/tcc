@@ -1,5 +1,7 @@
 package utils;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,11 +68,17 @@ public class CommitFilesManager {
 	
 	void resetRepo() {
 		repo.reset();
-	}
 		
+	}
+	
+	void delete() {
+		repo.delete();		
+	}
+			
 	public static void reset() {
 		LoggerManager.getLogger(Strings.MAIN).logMessage("reseting repo");
 		if (filesManager != null) {
+			filesManager.delete();
 			filesManager = null;
 		}
 	}

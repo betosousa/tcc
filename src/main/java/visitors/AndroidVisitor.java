@@ -31,8 +31,7 @@ public abstract class AndroidVisitor implements CommitVisitor {
 			androidProcess(repo, AndroidCommitManager.getAndroidCommit(commit, repo), writer);
 		} catch(Exception e){ 
 			LoggerManager.getLogger(repoName).logMessage(Strings.VISIT_PROCCESS_ERROR);
-			LoggerManager.getLogger(repoName).logMessage(e.getMessage(), e);			
-			throw new RuntimeException(Strings.ERROR, e);
+			LoggerManager.getLogger(repoName).logMessage(e.getMessage(), e);
 		}
 	}
 

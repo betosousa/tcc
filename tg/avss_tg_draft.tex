@@ -178,14 +178,28 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
 
 \subsubsection{Activity}
 Representa a interface visual de interação com o usuário. No arquivo de manifesto é representada pela tag \textit{activity} e precisa definir o atributo \textit{name}, que é utilizado para identificar a classe que a implementa.
+
 \subsubsection{Broadcast Receiver}
-Componente reponsável 
+Ao iniciar o dispositivo, o sistema android dispara um evento de \textit{broadcast} chamado de ON\_BOOT\_COMPLETE. Para que a aplicação receba esse e outros eventos semelhantes é necessário implementar uma classe do tipo \textit{Broadcast Receiver} e registrá-la no evento desejado. Para isso, declara-se no manifesto a tag \textit{receiver} 
+
 \subsubsection{Content Provider}
+Componente reponsável por prover uma interface de acesso para outras aplicações aos dados da aplicação. No manifesto é representada pela tag \textit{provider}.
 
 \subsubsection{Service}
 
+Este componente não provê uma interface visual e roda em background. Dessa forma, é utilizado para implementar procedimentos  que não necessitam que a aplicação esteja ativa no momento. No manifesto é declarado com a tag \textit{service}.
+
 \subsubsection{Permission}
 %tratar uses-permission aqui
+O sistema de permissões da plataforma Android garante que certas ações só sejam executadas caso o usuário da aplicação conceda o privilégio necessário. Dessa forma, caso uma aplicação deseje ler os contatos do usuário, por exemplo, é necessário declarar a tag \textit{uses-permission} no manifesto com o atributo \textit{name} de valor igual a "android.permission.READ\_CONTACTS".
+
+%tratar das dangerous
+As permissões podem ser classificadas em: 
+\begin{itemize}
+	\item {Dangerous}
+	\item {Normal}
+\end{itemize}
+%tratar das permissoes criadas pela aplicação
 
 
 %\newpage
@@ -244,5 +258,6 @@ Análise dos resultados obtidos
 %\bibliographystyle{IEEEtranS}
 \bibliographystyle{ieeetr}
 \bibliography{lib}
+\nocite{developer}
 
 \end{document}

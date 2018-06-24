@@ -8,14 +8,16 @@
 
 \usepackage{fancyvrb} % better looking verbatim
 
+\usepackage{float}
+
 %font
 \usepackage{times}
 % \usepackage{mathptmx}
 % \usepackage[T1]{fontenc}
 
 % to adjust figures numbering
-\usepackage{amsmath}
-\numberwithin{figure}{section}
+% \usepackage{amsmath}
+% \numberwithin{figure}{section}
 
 % %figura
 % \begin{figure}[h]
@@ -166,8 +168,8 @@ A pilha de software citada acima pode ser dividida em camadas, conforme a figura
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.8\linewidth]{imgs/android_framework_details.png}
-\label{fig:androidStack}
 \caption{Pilha de software dividida em camadas \cite{androidSource}}
+\label{fig:androidStack}
 \end{figure}
 
 Este trabalho propõe uma ferramenta para extrair dados relativos à camada \textit{Applications}, onde estão as aplicações e as principais classes utilizadas pelos desenvolvedores para produzi-las. Mais abaixo trataremos alguns dos principais elementos da plataforma e que são abordados pela ferramenta proposta.
@@ -182,8 +184,8 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
  \begin{figure}[h]
  \centering
  \includegraphics[width=\linewidth]{imgs/manifest.png}
- \label{fig:manifest}
  \caption{Exemplo de arquivo AndroidManifest.xml}
+ \label{fig:manifest}
  \end{figure}
 
 
@@ -241,7 +243,7 @@ O atributo \textit{permission} define que para acessar os dados deste receiver, 
 
 
 
-Este componente não provê uma interface visual e roda em background. Dessa forma, é utilizado para implementar procedimentos  que não necessitam que a aplicação esteja ativa no momento. Em geral, operações mais pesadas como downloads de arquivos e reprodução de áudio são realizadas por estes componentes, uma vez que sua execução não é finalizada mesmo quando o usuário sai da aplicação. No manifesto é declarado com a tag \textit{service}, como pode ser visto no trecho abaixo retirado da figura \ref{fig:manifest}. 
+Este componente não provê uma interface visual e roda em background. Dessa forma, é utilizado para implementar procedimentos  que não necessitam que a aplicação esteja ativa no momento. Em geral, operações mais pesadas como downloads de arquivos e reprodução de áudio são realizadas por estes componentes, uma vez que sua execução não é finalizada mesmo quando o usuário sai da aplicação. No manifesto é declarado com a tag \textit{service}, como pode ser visto no trecho abaixo retirado da figura \ref{fig:manifest}.
 {\fontsize{9pt}{12pt}
 \begin{verbatim}
 <service android:name="br.ufpe.cin.avss.player.PodcastPlayer"/>
@@ -261,8 +263,8 @@ O sistema de permissões da plataforma Android garante que certas ações só se
 %tratar das dangerous
 As permissões podem ser classificadas em:
 \begin{itemize}
-    \item {Dangerous} 
-    \item {Normal} 
+    \item {Dangerous}
+    \item {Normal}
     \item {Signature}
     \item {Signature or System}
 \end{itemize}
@@ -296,21 +298,56 @@ São sistemas que controlam o versionamento de um software durante o estágio de
 
 \subsubsection{Git}%11-17
 %\newpage
-É um sistema de controle de versão descentralizado, baseado no kernel do linux. Utiliza uma estrutura baseada em grafos para registrar o histórico de um repositório. Os principais elementos que compõem esses grafos são:
+É um sistema de controle de versão descentralizado livre e de código aberto \cite{git}, onde cada desenvolvedor tem uma cópia completa do histórico do repositório. A cada conjunto de  alterações registrada  um \textit{snapshot} do projeto denominado \textit{commit} é armazenado. O git utiliza uma estrutura de grafos para organizar os commits em diversas linhas de desenvolvimento, cada uma sendo denominada \textit{branch} \cite{gitHandbook}.
+
+Abaixo estão listados alguns dos principais comandos git, juntamente com uma breve explicação de seu funcionamento.
 
 \begin{itemize}
-\item{Commit}
-\item{Branch}
+\item{\textit{git init} } Inicializa um repositório a partir de um diretório local.
+\item{\textit{git clone} } Copia um repositório remoto em um diretório local.
+\item{\textit{git pull} } Recupera as mudanças remotas para o repositório local.
+\item{\textit{git add} } Adiciona as mudanças locais num conjunto para que possam ser incluídas no próximo commit.
+\item{\textit{git commit} } Cria um commit com as mudanças selecionadas pelo comando git add.
+\item{\textit{git push} } Atualiza o repositório remoto remoto com as mudanças locais.
+\item{\textit{git branch} } Cria uma nova linha de desenvolvimento
+\item{\textit{git merge} } Unifica duas linhas de desenvolvimento em um novo commit que é denominado \textit{merge commit}
 \end{itemize}
 
+Para exemplificar o funcionamento de um merge commit, suponha o seguinte grafo de commits de um repositório representado pela figura \ref{fig:graphBefore}.
+
+ %figura
+ \begin{figure}[h]
+ \centering
+ \includegraphics[width=0.65\linewidth]{imgs/graph_before.png}
+ \caption{Grafo de commits com duas branches}
+ \label{fig:graphBefore}
+ \end{figure}
 
 
 
+Estando na branch master e executando o comando \textit{git merge teste} cria-se o commit \textit{E} na branch master e que unifica as modificações realizadas nas duas branches, resultando no grafo da figura \ref{fig:graphAfter}.
+
+ %figura
+ \begin{figure}[H]
+ \centering
+ \includegraphics[width=0.65\linewidth]{imgs/graph_after.png}
+ \caption{Grafo de commits após o merge commit 'E'.}
+ \label{fig:graphAfter}
+ \end{figure}
 
 
 \subsection{Mineração de repositórios}%11-15
 \label{sec:mining}
 
+
+
+A análise de software consiste em extrair dados para que gerentes e engenheiros de software possam melhorar o processo de desenvolvimento de software através do ganho e compartilhamento de ideias provenientes desses dados para uma melhor tomada de decisão \cite{soWhat}. Dessa forma, podemos definir como mineração de repositórios o processo de  extração desses dados. Devido ao tamanho e a quantidade de repositórios utilizados durante seus estudos, pesquisadores têm utilizado ferramentas de mineração para automatizar esse processo. %\cite{something I don't know yet}.
+\\
+\\
+Na próxima seção apresentamos uma ferramenta utilizada para minerar repositórios, e que foi utilizada como base para a ferramenta desenvolvida neste trabalho.
+
+%%%%%%%%%
+%citar crescente dos dados -> uso de ferramentas de mineração.
 
 %\newpage
 \subsubsection{RepoDriller}%14-16
@@ -327,8 +364,8 @@ Ainda no objeto \textit{RepositoryMining}, definimos o mecanismo de persistênci
  \begin{figure}[h]
  \centering
  \includegraphics[width=\linewidth]{imgs/repodrillerEx.png}
- \label{fig:repodrillerEx}
  \caption{Exemplo de inicialização de repositório com o objeto RepositoryMining.}
+ \label{fig:repodrillerEx}
  \end{figure}
 
 
@@ -339,16 +376,29 @@ Ainda no objeto \textit{RepositoryMining}, definimos o mecanismo de persistênci
 \section{AndroidDriller}%18-24
 %Detalhamento geral da ferramenta
 
-\subsection{Metodologia}
+Neste capítulo apresentamos a ferramenta desenvolvida ao longo deste trabalho. Na seção \ref{sec:metodologia} descrevemos o processo geral do que foi desenvolvido. Na seção \ref{sec:implementacao} detalhamos cada classe implementada. Em seguida, na seção \ref{sec:repoteste} comentamos sobre os repositórios escolhidos para validar e testar a implementação. Por fim, nas seções \ref{sec:experimentos} e \ref{sec:resultados} explicamos um experimento onde foram extraídos dados de repositórios Android com o AndroidDriller  e os resultados obtidos, respectivamente.
 
+\subsection{Metodologia}
+\label{sec:metodologia}
 Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para
 percorrer os commits do repositório. Neste projeto foram implementadas as
 classes capazes de colher dados sobre os componentes específicos de Android e
 geração de relatórios em arquivos CSV. Para visualização dos dados, foi
 implementado um programa na linguagem Python capaz de produzir gráficos a
-partir dos arquivos CSV gerados pela ferramenta.\\
+partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pela figura \ref{fig:workflow}.
+
+ %figura
+ \begin{figure}[h]
+ \centering
+ \includegraphics[width=0.65\linewidth]{imgs/work_flow.png}
+ \caption{Fluxo dos dados de um repositório até os gráficos gerados.}
+ \label{fig:workflow}
+ \end{figure}
+
+
 
 \subsection{Implementação}%18-24
+\label{sec:implementacao}
 %diagrama de classes
 Como visto anteriormente, para minerar um dado repositório, é preciso implementar uma interface provida pelo RepoDriller. Para que se pudesse utilizar a mesma implementação para os vários repositórios a serem minerados, foi criada a classe \textit{RepoStudy}, que implementa a interface \textit{Study}. Essa classe recebe a url do repositório a ser estudado e a partir disso inicializa o objeto \textit{RepositoryMining} com o repositório a ser minerado e registra os visitors específicos de repositórios android que serão mais detalhados à frente.
 
@@ -357,8 +407,8 @@ Como visto anteriormente, para minerar um dado repositório, é preciso implemen
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{imgs/repostudy.png}
+\caption{}%Exemplo do objeto RepositoryMining}
 \label{fig:repostudy}
-% \caption{Exemplo do objeto RepositoryMining}
 \end{figure}
 
 Na versão 1.4 do RepoDriller, pode-se definir uma configuração de coleta, para evitar que dados desnecessários sejam carregados a cada commit. Para o nosso caso em que vamos focar em informações básicas do commit e nas modificações do arquivo de manifesto, foi acrescentada a linha \textit{.collect(new CollectConfiguration().basicOnly().sourceCode().diffs())} como pode ser visto na figura \ref{fig:repostudy}.
@@ -369,6 +419,7 @@ Na versão 1.4 do RepoDriller, pode-se definir uma configuração de coleta, par
 
 %================repositórios de teste===================
 \subsection{Repositórios de Teste}%18-22
+\label{sec:repoteste}
 
 No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos AndroidManifest.xml em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à main e deletadas.
 
@@ -401,6 +452,7 @@ Dessa forma foi possível avaliar os resultados obtidos diretamente com o histó
 
 %================experimento===================
 \subsection{Experimento}%18-22
+\label{sec:experimentos}
 %Detalhamento do experimento realizado na máquina do Cin
 
 Para testar mais a fundo a aplicação implementada e também gerar dados para uma análise  mais profunda, foram listados 1195 repositórios presentes no F-Droid \cite{fdroid}, cujos endereços do código fonte apontavam para o github.
@@ -410,6 +462,7 @@ Alguns repositórios apresentaram falhas durante o experimento, 51 por não sere
 
 
 \subsection{Resultados}%22-24
+\label{sec:resultados}
 Análise dos resultados obtidos
 
 %=============================
@@ -442,14 +495,3 @@ Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais
 \nocite{developer}
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-

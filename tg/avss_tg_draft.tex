@@ -13,7 +13,7 @@
 %font
 \usepackage{times}
 % \usepackage{mathptmx}
-% \usepackage[T1]{fontenc}
+\usepackage[T1]{fontenc}
 
 % to adjust figures numbering
 % \usepackage{amsmath}
@@ -354,20 +354,20 @@ Na próxima seção apresentamos uma ferramenta utilizada para minerar repositó
 \label{sec:repodriller}
 Repodriller é um framework de mineração de repositórios feito em Java  \cite{repodriller}. Com esta ferramenta é possível extrair dados não só dos commits realizados (como por exemplo autor e mensagem) mas também dos arquivos contidos no repositório.
 
-Para escrever um programa que minere um dado repositório, é preciso implementar a interface \textit{Study} e no método \textit{execute} criar um objeto de estudo (uma instância da classe \textit{RepositoryMining}) utilizando o padrão builder e informando além do repositório a ser minerado, as implementações da interface \textit{CommitVisitor}. Essa interface define o método \textit{process} que é chamado pela API interna do RepoDriller a cada commit visitado.
+Para escrever um programa que minere um dado repositório, é preciso implementar a interface \textit{Study} e no método \textit{execute} criar um objeto de estudo (uma instância da classe \textit{RepositoryMining}) utilizando o padrão builder e informando além do repositório a ser minerado, as implementações da interface \textit{CommitVisitor}.  Para informar o repositório, utilizamos o método \textit{in} que recebe uma implementação de  \textit{SCMRepository}, podendo ser tanto Git quanto SVN. Neste trabalho foi utilizado a implementação \textit{GitRemoteRepository} que recebe uma URL referenciando o repositório remoto, ver figura \ref{fig:repostudy}.
 
-O método \textit{process} recebe como parâmetros \textit{SCMRepository}, \textit{Commit} e \textit{PersistenceMechanism}. O primeiro é um objeto representando o repositório estudado, podendo ser Git ou SVN. O segundo é uma representação do commit sendo visitado. E o terceiro é um objeto para tratar a persistência dos dados minerados ao longo dos vários commits visitados.
+A interface \textit{CommitVisitor} define o método \textit{process} que é chamado pela API interna do RepoDriller a cada commit visitado. O método \textit{process} recebe como parâmetros \textit{SCMRepository}, \textit{Commit} e \textit{PersistenceMechanism}. O primeiro é um objeto representando o repositório estudado, podendo ser Git ou SVN. O segundo é uma representação do commit sendo visitado. E o terceiro é um objeto para tratar a persistência dos dados minerados ao longo dos vários commits visitados.
 
-Ainda no objeto \textit{RepositoryMining}, definimos o mecanismo de persistência a ser passado para cada visitor. Em geral, escolhe-se um arquivo CSV.
+Ainda no objeto \textit{RepositoryMining}, definimos o mecanismo de persistência a ser passado para cada visitor. Em geral, escolhe-se um arquivo CSV. A partir da versão 1.4 do RepoDriller, pode-se definir uma configuração de coleta, para evitar que dados desnecessários sejam carregados a cada commit. Para o nosso caso em que vamos focar em informações básicas do commit e nas modificações do arquivo de manifesto, foi acrescentada a linha \textit{.collect(new CollectConfiguration().basicOnly().sourceCode().diffs())} como pode ser visto na figura \ref{fig:repostudy}.
 
-%figura exemplo de RepositoryMining
- \begin{figure}[h]
- \centering
- \includegraphics[width=\linewidth]{imgs/repodrillerEx.png}
- \caption{Exemplo de inicialização de repositório com o objeto RepositoryMining.}
- \label{fig:repodrillerEx}
- \end{figure}
 
+%figura do objeto RepositoryMining.
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{imgs/repostudy.png}
+\caption{Objeto RepositoryMining definido no método \textit{execute} da classe RepoStudy.}
+\label{fig:repostudy}
+\end{figure}
 
 
 
@@ -390,7 +390,7 @@ partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pe
  %figura
  \begin{figure}[h]
  \centering
- \includegraphics[width=0.65\linewidth]{imgs/work_flow.png}
+ \includegraphics[width=0.65\linewidth]{imgs/workflow.png}
  \caption{Fluxo dos dados de um repositório até os gráficos gerados.}
  \label{fig:workflow}
  \end{figure}
@@ -399,29 +399,87 @@ partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pe
 
 \subsection{Implementação}%18-24
 \label{sec:implementacao}
-%diagrama de classes
-Como visto anteriormente, para minerar um dado repositório, é preciso implementar uma interface provida pelo RepoDriller. Para que se pudesse utilizar a mesma implementação para os vários repositórios a serem minerados, foi criada a classe \textit{RepoStudy}, que implementa a interface \textit{Study}. Essa classe recebe a url do repositório a ser estudado e a partir disso inicializa o objeto \textit{RepositoryMining} com o repositório a ser minerado e registra os visitors específicos de repositórios android que serão mais detalhados à frente.
 
 
-%figura do objeto RepositoryMining.
-\begin{figure}[h]
+Primeiramente, vamos apresentar o modelo utilizado para representar as entidades da plataforma Android. Como pode ser visto na figura \ref{fig:model}, temos uma classe que representa o arquivo de manifesto e cada elemento do XML foi mapeado em uma classe Java. Para representar os componentes foi utilizado o padrão de herança entre classes. Dessa forma, a classe \textit{Component} contém os atributos comuns aos componentes Android, que foram representados cada um com uma classe filha de Component.\\
+
+%figura do diagrama do modelo
+\begin{figure}[H]
 \centering
-\includegraphics[width=\linewidth]{imgs/repostudy.png}
-\caption{}%Exemplo do objeto RepositoryMining}
-\label{fig:repostudy}
+\includegraphics[width=0.8\linewidth]{imgs/model.png}
+\caption{Diagrama das classes de modelo da plataforma Android.}
+\label{fig:model}
 \end{figure}
 
-Na versão 1.4 do RepoDriller, pode-se definir uma configuração de coleta, para evitar que dados desnecessários sejam carregados a cada commit. Para o nosso caso em que vamos focar em informações básicas do commit e nas modificações do arquivo de manifesto, foi acrescentada a linha \textit{.collect(new CollectConfiguration().basicOnly().sourceCode().diffs())} como pode ser visto na figura \ref{fig:repostudy}.
+
+A classe Component também define o método \textit{isModificationOf} que recebe outro componente e verifica se um é apenas uma modificação do outro ou se são componentes totalmente distintos. Para fazer essa verificação foi utilizado o atributo name como identificador do componente, ou seja, se dois componentes têm o mesmo valor de name mas valores diferentes para outros atributos, eles representam o mesmo componente apenas modificado, mas se dois componentes têm os mesmos valores de todos os atributos e diferem apenas no valor do name, eles representam componentes distintos. Dessa forma, cada uma das subclasses de Component podem sobrescrever este método e acrescentar seus atributos específicos. Este método será útil mais à frente quando comentarmos sobre a classe \textit{ComponentDiff}.
+
+Por conveniência, os atributos e métodos foram omitidos dos diagramas aqui apresentados. %No apêndice encontram-se mais detalhes da estruturas das classes.
 
 
+Seguindo uma arquitetura semelhante à das classes de modelo, foram implementadas classes de diff, conforme a figura \ref{fig:diff}. Essas classes tratam o diff específico de cada componente. \\
 
+
+%figura do diagrama dos diffs
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{imgs/diff.png}
+\caption{Diagrama das classes que tratam as alterações de cada commit.}
+\label{fig:diff}
+\end{figure}
+
+
+A classe ManifestDiff recebe uma lista de modificações registradas em cada commit, dessa lista, são filtradas as que se referem a qualquer arquivo com a denominação AndroidManifest.xml. A partir das alterações  nos manifestos, são criadas duas listas de versões dos arquivos, uma lista de arquivos anteriores e outra posteriores ao commit. De posse dessas versões utilizamos a classe AndroidManifestParser para criar duas listas de instâncias da classe AndroidManifest definida pelo modelo. As instâncias de AndroidManifest são então passadas para a classe parametrizada abstrata Diff<T> . \\
+
+De uma forma geral, em Diff são criadas duas listas de componentes, uma representando os componentes anteriores ao commits e outra os posteriores. A partir disso, mais três listas são criadas, uma com as adições, outra com as remoções e a terceira com os componentes modificados. Para reusar o código definido nesta classe, o parâmetro T define qual componente será analisado pela subclasse de Diff, pois esta define o método abstrato \textit{getElementsList} que recebe uma instância do  retorna uma lista de objetos do tipo T. A classe também define outro método abstrato, \textit{isModification}, que recebe um elemento T e verifica se ele foi modificado. Dessa forma, as subclasses só precisam implementar estes dois métodos para que se possa obter informações específicas de cada componentes desejado. \\
+
+Note que na figura \ref{fig:diff} a classe UsesPermissionDiff herda diretamente da classe Diff, enquanto que os outros componentes herdam da classe ComponentDiff. Isto ocorre porque o elemento uses-permission só define um atributo do tipo String, por isso, ele é representado apenas como uma String com o valor desse atributo. Por esta mesma razão este componente não está representado no diagrama de modelo da figura \ref{fig:model}. Enquanto isso, a classe abstrata ComponentDiff define o parâmetro T para ser o tipo Component, implementando o método getElementsList para retornar uma lista de Component que é recuperada pelo método abstrato \textit{getComponents}, e também implementa o método isModification para retornar o isModificationOf  definido pela instância de Component, conforme vimos anteriormente. Assim as subclasses podem implementar apenas o método getComponents de forma mais específica.
+
+%diagrama de classes
+Como visto anteriormente, para percorrer os commits de um dado repositório, é preciso implementar uma interface provida pelo RepoDriller. Para que se pudesse utilizar a mesma implementação para os vários repositórios a serem minerados, foi criada a classe \textit{RepoStudy}, que implementa a interface \textit{Study}, conforme figura \ref{fig:study}.
+
+%diagrama do objeto repostudy.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\linewidth, height=0.45\linewidth]{imgs/study.png}
+\caption{Diagrama de classe do objeto RepoStudy.}
+\label{fig:study}
+\end{figure}
+
+Essa classe recebe a url do repositório a ser estudado e a partir disso inicializa o objeto \textit{RepositoryMining} com o repositório a ser minerado e registra os visitors específicos de repositórios android que serão mais detalhados à frente.
+
+
+A exemplo do que foi visto na seção \ref{sec:repodriller}, para que possamos analisar cada commit, foram implementados visitors que extraem dados a respeito de cada componente separadamente. Esses visitors seguem a estrutura definida na figura \ref{fig:visitors}, onde um visitor abstrato implementa a interface CommitVisitor definida pelo RepoDriller, repassando a chamada do método process (que recebe um Commit) da interface para o método abstrato androidProcess (que recebe um AndroidCommit) conforme figura \ref{fig:diagram}. Dessa forma, o Commit provido pelo framework é convertido em uma instância de \textit{AndroidCommit}. Assim, a classe DiffAndroidVisitor implementa o método androidProcess e define o método abstrato \textit{getDiff}, repassando o AndroidCommit para as subclasses retornarem cada uma a instância da classe de diff do componente correspondente. Ainda no método androidProcess, são registrados os dados recuperados pela subclasse de Diff, retornada pelo método getDiff, no arquivo CSV definido pelo visitor utilizando a instância de PersistenceMechanism passada.
+
+A classe AndroidCommit estende a classe Commit do RepoDriller, adicionando informações específicas Android. No seu construtor, esta classe recebe o commit a ser estendido e o repositório a qual ele pertence, parâmetros que são utilizados para recuperar os manifestos do commit e a lista de modificações. A partir disso, é possível criar uma instância de ManifestDiff, que é utilizada como base para criação das instâncias das subclasses de Diff que serão recuperadas pelos visitors específicos, como visto anteriormente.
+
+
+%figura dos visitors
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{imgs/visitors.png}
+\caption{Diagrama das classes que implementam os visitors de cada componente.}
+\label{fig:visitors}
+\end{figure}
+
+
+%figura do diagrama .
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{imgs/diagram.png}
+\caption{Diagrama do encapsulamento do método process e da classe Commit.}
+\label{fig:diagram}
+\end{figure}
+
+
+Para que tudo isto funcione, foi implementada a classe MyStudy, que no seu método main,  lê o arquivo de entrada encontrado na pasta androidDriller/input com o nome repoURLs.in. Este arquivo deve conter uma lista de URLs de repositórios Android remotos do github. Para cada repositório, a classe MyStudy cria uma instância de RepoStudy passando a URL do repositório como parâmetro. Na classe RepoStudy, é criado o diretório de saída, androidDriller/output, no qual são criadas uma pasta para cada repositório minerado,  onde se encontrarão os arquivos CSV gerados. 
 
 
 %================repositórios de teste===================
 \subsection{Repositórios de Teste}%18-22
 \label{sec:repoteste}
 
-No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos AndroidManifest.xml em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à main e deletadas.
+No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos AndroidManifest.xml em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à master e deletadas.
 
 Para validar a implementação descrita anteriormente, foram escolhidos 6 repositórios de código livre presentes no F-Droid \cite{fdroid}, um catálogo de aplicações livre e de código aberto para a plataforma android. Juntamente com o repositório citado acima, foram listados 7 repositórios para formar uma base de testes.
 
@@ -441,7 +499,7 @@ https://github.com/jackpal/Android-Terminal-Emulator.git & 1088 & 6.24 \\
 https://github.com/tejado/Authorizer.git & 1304 & 153.63 \\
 https://github.com/betosousa/fooAndroidManifest.git & 29 & 0.006
 \end{tabular}
-\caption{Tabela de repositórios utilizados para validação, com quantidade total de commits e tamanho em MegaBytes.}
+\caption{Repositórios utilizados para validação, com quantidade total de commits e tamanho em MegaBytes.}
 \end{center}
 \end{table}
 
@@ -457,7 +515,7 @@ Dessa forma foi possível avaliar os resultados obtidos diretamente com o histó
 
 Para testar mais a fundo a aplicação implementada e também gerar dados para uma análise  mais profunda, foram listados 1195 repositórios presentes no F-Droid \cite{fdroid}, cujos endereços do código fonte apontavam para o github.
 
-Alguns repositórios apresentaram falhas durante o experimento, 51 por não serem acessíveis (ou por exigirem credenciais para clonar ou por não mais existirem) e 6 por terem arquivos de diff muito grandes que provocaram a interrupção da execução da ferramenta, e por isso foram desconsiderados da análise final. Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando y commits visitados.
+Alguns repositórios apresentaram falhas durante o experimento, 51 por não serem acessíveis (ou por exigirem credenciais para clonar ou por não mais existirem) e 6 por terem arquivos de diff muito grandes que provocaram a interrupção da execução da ferramenta, e por isso foram desconsiderados da análise final. Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando 49116 commits visitados.
 
 
 
@@ -495,3 +553,12 @@ Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais
 \nocite{developer}
 
 \end{document}
+
+
+
+
+
+
+
+
+

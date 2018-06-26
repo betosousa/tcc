@@ -87,13 +87,13 @@ Recife, junho de 2018
 \newpage
 \section*{Agradecimentos}
 
-%São muitos nomes para que eu me lembre de todos os que merecem aqui, mas gostaria de agradecer àqueles que de alguma forma contribuíram não só para este trabalho como também para a minha formação como pessoa. Em especial posso citar meus pais Antonio Vital Alves de Sousa e Maria Auxiliadora Santos Vital Alves de Sousa, que sempre me apoiaram e me incentivaram nas minhas decisões e a sempre seguir com meus estudos. Também agradeço ao meu orientador Leopoldo Motta Teixeira, pelos ensinamentos que me proporcionou durante este período. De uma maneira geral agradeço também a todos os meus colegas de graduação e do laboratório Oki Brasil, que estiveram ao meu lado durante os momentos difíceis da graduação e também nos de  descontração do dia a dia.
+São muitos nomes para que eu me lembre de todos os que merecem aqui, mas gostaria de agradecer àqueles que de alguma forma contribuíram não só para este trabalho como também para a minha formação como pessoa. Em especial posso citar meus pais Antonio Vital Alves de Sousa e Maria Auxiliadora Santos Vital Alves de Sousa, que sempre me apoiaram e me incentivaram nas minhas decisões e a sempre seguir com meus estudos. Também agradeço ao meu orientador Leopoldo Motta Teixeira, pelos suporte e ensinamentos que me proporcionou durante este período. De uma maneira geral agradeço também a todos os meus colegas de graduação e do laboratório Oki Brasil, que estiveram ao meu lado durante os momentos difíceis da graduação e também nos de  descontração do dia a dia.
 
 %================RESUMO===================
 \newpage
 \pagenumbering{arabic} % turn page numbering back on
 \section*{Resumo}
-Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisadores de engenharia de software têm obtido um melhor conhecimento sobre o processo de desenvolvimento de software, em geral. Este trabalho propõe uma ferramenta capaz de minerar repositórios fazendo uso das características comuns de projetos Android para que se possa realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações para a plataforma.
+Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisadores de engenharia de software têm obtido um melhor conhecimento sobre o processo de desenvolvimento de software, em geral. Este trabalho propõe uma ferramenta capaz de minerar repositórios fazendo uso das características comuns de projetos Android para que se possa realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações para a plataforma. Por fim, são apresentados os resultados da utilização da ferramenta sobre um conjunto de mais de 1100 repositórios Android livres e de código aberto retirados do catálogo do f-droid. 
 
 \textbf{Palavras-chave}: Android, Mineração de Repositórios, Sistema de Controle de Versão, Git
 
@@ -101,7 +101,7 @@ Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisador
 \newpage
 \section*{Abstract}
 
-Software Engineering researchers have been using tools capable of mining data from repositories to get a better understanding about the software development process. This work proposes a tool for mining repositories that uses the common characteristics of Android Projects so we can perform a preliminary investigation about how changes occur in the platform apps development.
+Software Engineering researchers have been using tools capable of mining data from repositories to get a better understanding about the software development process. This work proposes a tool for mining repositories that uses the common characteristics of Android Projects so we can perform a preliminary investigation about how changes occur in the platform apps development. In the end, we present the results of running the tool over a set of more than 1100 free and open source Android repositories taken from the f-droid catalogue. 
 
 \textbf{Keywords}: Android, Repository Mining, Version Control System, Git
 
@@ -114,18 +114,9 @@ Software Engineering researchers have been using tools capable of mining data fr
 \newpage
 \section{Introdução}
 
-Em engenharia de software, a análise de repositórios tem ajudado pesquisadores a
-obter um melhor conhecimento sobre o processo de desenvolvimento de um
-software \cite{miningGit}. Com isso, é possível predizer bugs e também analisar o padrão de
-desenvolvimento utilizado pelos colaboradores do projeto. Para tal fim, existem
-ferramentas capazes de minerar dados sobre repositórios, como por exemplo, o
-RepoDriller \cite{repodriller}.\\
+Em engenharia de software, a análise de repositórios tem ajudado pesquisadores a obter um melhor conhecimento sobre o processo de desenvolvimento de um software \cite{miningGit}, pois a análise de software consiste em extrair dados para que gerentes e engenheiros de software possam melhorar os processos de tomada de decisão e desenvolvimento de softwares \cite{soWhat}. Dessa forma, podemos definir como mineração de repositórios o processo de  extração desses dados. Com isso, é possível predizer bugs e também analisar o padrão de desenvolvimento utilizado pelos colaboradores do projeto. Para tal fim, existem ferramentas capazes de minerar dados sobre repositórios, como por exemplo, o RepoDriller \cite{repodriller}.\\
 \\
-Ferramentas mais gerais, como o próprio RepoDriller, servem para analisar
-software em vários domínios. No desenvolvimento de aplicações Android, há
-diversas particularidades envolvidas. Por exemplo, o arquivo de manifesto contém
-informações sobre os vários componentes do projeto. Assim, as principais
-alterações feitas no repositório são refletidas em modificações desse arquivo.\\
+Ferramentas mais gerais, como o próprio RepoDriller, servem para analisar software em vários domínios. No desenvolvimento de aplicações Android, há diversas particularidades envolvidas. Por exemplo, o arquivo de manifesto, chamado AndroidManifest, é obrigatório para qualquer aplicação da plataforma e contém informações sobre os vários componentes do projeto. Assim, qualquer componente não declarado aqui também não fará parte da aplicação final, da mesma forma que permissões utilizadas no código precisam ser declaradas neste arquivo para que funcionem corretamente. Com isso, as principais alterações feitas no repositório são refletidas em modificações desse arquivo, o que pode ser utilizado para mineração de dados relativos ao histórico de alterações do projeto.\\
 \\
 No estudo de repositórios Android, pesquisadores têm usado ferramentas capazes
 de extrair dados dos arquivos do tipo apk \cite{Calciati}, \cite{WhoAdded} e \cite{YLyu}. Para realizar estudos
@@ -139,11 +130,7 @@ manifesto, por exemplo.\\
 
 \subsection{Objetivos}
 
-Este trabalho tem por objetivo realizar uma investigação preliminar de como as
-mudanças acontecem no desenvolvimento de aplicações Android para criar
-ferramentas de suporte à evolução de aplicativos, e assim, implementar uma
-ferramenta capaz de minerar estes repositórios, aproveitando-se das
-características particulares de projetos Android.\\
+Este trabalho tem por objetivo realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações Android para criar ferramentas de suporte à evolução de aplicativos, e assim, implementar uma ferramenta capaz de minerar estes repositórios, aproveitando-se das características particulares de projetos Android.\\
 
 
 %=============================
@@ -178,7 +165,7 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
 %olhar pagina do android developer
 \subsubsection{AndroidManifest}
 %O core da ferramenta
-É um arquivo XML obrigatório que contém informações sobre os componentes da aplicação. Precisa ser criado com o nome \textit{AndroidManifest.xml}, dessa forma a plataforma é capaz de identificar, dentre outras coisas, qual parte do código implementa a cada uma das entidades que compõem a aplicação. Um exemplo desse arquivo pode ser visto na figura \ref{fig:manifest}.
+É um arquivo XML obrigatório que contém informações sobre os componentes da aplicação. Precisa ser criado com o nome \textit{AndroidManifest.xml}, dessa forma a plataforma é capaz de identificar, dentre outras coisas, qual parte do código implementa a cada uma das entidades que compõem a aplicação. Assim, qualquer componente utilizado no código precisa ser declarado neste arquivo para que funcione corretamente, analogamente, qualquer componente não declarado aqui também não fará parte da aplicação final. Um exemplo desse arquivo pode ser visto na figura \ref{fig:manifest}.
 
  %figura de manifesto
  \begin{figure}[h]
@@ -191,7 +178,7 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
 
 
 \subsubsection{Activity}
-Representa a interface visual de interação com o usuário. No arquivo de manifesto é representada pela tag \textit{activity} e precisa definir o atributo \textit{name}, que é utilizado para identificar a classe que a implementa.\\
+É o componente que representa a interface visual de interação com o usuário. No arquivo de manifesto é representada pela tag \textit{activity} e precisa definir o atributo \textit{name}, que é utilizado para identificar a classe que a implementa.\\
 
 Na figura \ref{fig:manifest} podemos ver duas activities sendo declaradas, uma delas possui o atributo \textit{name} definido como \textit{br.ufpe.cin.avss.ui.AnotherActivity}.
 {\fontsize{9pt}{12pt}
@@ -205,6 +192,7 @@ Dessa forma, a plataforma espera encontrar no pacote \textit{br.ufpe.cin.avss.ui
 \subsubsection{Broadcast Receiver}
 
 A plataforma Android utiliza um sistema de eventos similar ao padrão \textit{publish-subscribe}, onde a plataforma (ou outra aplicação) dispara um evento (\textit{broadcast}) e as aplicações registradas para o evento recebem a mensagem correspondente. O componente que recebe estes eventos é conhecido como \textit{broadcast receiver}.\\
+\\
 Ao iniciar o dispositivo, o sistema android dispara um evento de \textit{broadcast} chamado de ON\_BOOT\_COMPLETE. Para que a aplicação receba esse e outros eventos semelhantes é necessário implementar uma classe do tipo \textit{Broadcast Receiver} e registrá-la no evento desejado. Para isso, declara-se no manifesto a tag \textit{receiver}, conforme o trecho abaixo, que também pode ser visto na figura \ref{fig:manifest} onde foi declarado um componente receiver que espera eventos do tipo citado anteriormente.
 {\fontsize{9pt}{12pt}
 \begin{verbatim}
@@ -220,7 +208,8 @@ Ao iniciar o dispositivo, o sistema android dispara um evento de \textit{broadca
 \label{sec:provider}
 Componente responsável por prover uma interface de acesso para outras aplicações aos dados utilizados. Dessa forma, cria-se uma abstração da camada de dados que pode ser utilizada não só por outras aplicações como também pela própria aplicação, conectando os dados em um processo com o código em execução em outro.\\
 
-No manifesto é representada pela tag \textit{provider}. Na figura \ref{fig:manifest} temos um exemplo que foi replicado no trecho abaixo, onde a exemplo da tag activity, o atributo name define a classe com a implementação correspondente.
+No manifesto é representada pela tag \textit{provider}. Na figura \ref{fig:manifest} temos um exemplo que foi replicado no trecho abaixo, onde a exemplo da tag activity, o atributo name define a classe com a implementação correspondente.\\
+
 {\fontsize{9pt}{12pt}
 \begin{verbatim}
 <provider
@@ -229,10 +218,12 @@ No manifesto é representada pela tag \textit{provider}. Na figura \ref{fig:mani
     android:permission="br.ufpe.cin.avss.PERMISSAO_PODCAST"
     android:enabled="true"
     android:exported="true" />
+
 \end{verbatim}
 }
 
-Ao declarar este elemento é necessário definir o atributo \textit{authorities}, que seguindo a convenção de nomes em Java, identifica o provider declarado.\\
+
+Ao declarar este elemento é necessário definir o atributo \textit{authorities}, que seguindo a convenção de nomes em Java, identifica o provider declarado. Em geral, esse nome é baseado no package name da aplicação, que deve ser único dentre todas as aplicações da plataforma. Dessa forma, os providers declarados pelas aplicações podem ser exportados, pois, a plataforma irá identificá-los a partir do atributo authorities.\\
 
 O atributo \textit{permission} define que para acessar os dados deste receiver, é necessário possuir a permissão \textit{br.ufpe.cin.avss.PERMISSAO\_PODCAST}, um elemento que será discutido mais à frente.
 
@@ -252,16 +243,7 @@ Este componente não provê uma interface visual e roda em background. Dessa for
 
 \subsubsection{Permission}
 %tratar uses-permission aqui
-O sistema de permissões da plataforma Android garante que certas ações só sejam executadas caso o usuário da aplicação conceda o privilégio necessário. Dessa forma, caso uma aplicação deseje ler os contatos do usuário, por exemplo, é necessário declarar a tag \textit{uses-permission} no manifesto com o atributo \textit{name} de valor igual a "android.permission.READ\_CONTACTS", conforme pode ser visto na figura \ref{fig:manifest}.
-
-{\fontsize{9pt}{12pt}
-\begin{verbatim}
-<uses-permission android:name="android.permission.READ_CONTACTS"/>
-\end{verbatim}
-}
-
-%tratar das dangerous
-As permissões podem ser classificadas em:
+O sistema de permissões da plataforma Android garante que certas ações só sejam executadas caso o usuário da aplicação conceda o privilégio necessário. As permissões podem ser classificadas em:
 \begin{itemize}
     \item {Dangerous}
     \item {Normal}
@@ -269,9 +251,19 @@ As permissões podem ser classificadas em:
     \item {Signature or System}
 \end{itemize}
 
+
 As permissões consideradas \textit{dangerous} podem causar algum risco à privacidade do usuário ou ao funcionamento normal do dispositivo, por isso necessitam da validação do usuário. As \textit{normal}, por não trazerem esses riscos, são concedidas automaticamente pelo sistema ao serem declaradas no manifesto.\\
 
 Desde a versão 6.0 da plataforma android, a forma como as permissões são solicitadas foi alterada. Nas versões anteriores, qualquer permissão \textit{dangerous} é solicitada antes da instalação, e caso a aplicação precise ser atualizada, as permissões são solicitadas novamente. Caso o usuário não conceda alguma permissão, a aplicação não é instalada nem atualizada. A partir da versão 6.0, as permissões \textit{dangerous} são solicitadas em tempo de execução. Dessa forma, a aplicação pode ser instalada sem que o usuário tenha que conceder todos os privilégios solicitados. Assim,  a permissão associada com a funcionalidade ativada é solicitada sempre que o usuário desejar utilizar a funcionalidade.\\
+
+Dessa forma, caso uma aplicação deseje ler os contatos do usuário, por exemplo, é necessário declarar a tag \textit{uses-permission} no manifesto com o atributo \textit{name} de valor igual a "android.permission.READ\_CONTACTS", conforme pode ser visto na figura \ref{fig:manifest}.
+
+{\fontsize{9pt}{12pt}
+\begin{verbatim}
+<uses-permission android:name="android.permission.READ_CONTACTS"/>
+\end{verbatim}
+}
+
 
 %tratar das permissoes criadas pela aplicação
 Existe também a possibilidade da própria aplicação definir permissões de acesso ao seus conteúdos. Para isso, utiliza-se a tag \textit{permission}. Conforme foi visto na seção \ref{sec:provider}, o atributo \textit{permission} pode ser utilizado para definir uma permissão de acesso ao conteúdo provido pelo componente. Dessa forma, pode-se notar que a aplicação definida no arquivo da figura \ref{fig:manifest} não só define uma permissão própria, como também protege seu content provider com essa mesma permissão, de acordo com as tags do trecho abaixo.
@@ -294,7 +286,9 @@ Existe também a possibilidade da própria aplicação definir permissões de ac
 %\newpage
 \subsection{Sistemas de controle de versão}%11-15
 \label{sec:scv}
-São sistemas que controlam o versionamento de um software durante o estágio de desenvolvimento. Com estes sistemas é possível saber qual o estado exato do código fonte em um determinado período do processo de produção, pois a cada alteração realizada o SCV armazena quais arquivos e quais linhas foram modificadas naquele momento, além de também informar quem realizou as alterações.
+São sistemas que controlam o versionamento de um software durante o estágio de desenvolvimento. Com estes sistemas é possível saber qual o estado exato do código fonte em um determinado período do processo de produção, pois a cada alteração realizada o SCV armazena quais arquivos e quais linhas foram modificadas naquele momento, além de também informar quem realizou as alterações.\\
+
+Na próxima seção apresentamos o Git, um dos mais populares sistemas de controle de versão da atualidade.
 
 \subsubsection{Git}%11-17
 %\newpage
@@ -380,12 +374,7 @@ Neste capítulo apresentamos a ferramenta desenvolvida ao longo deste trabalho. 
 
 \subsection{Metodologia}
 \label{sec:metodologia}
-Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para
-percorrer os commits do repositório. Neste projeto foram implementadas as
-classes capazes de colher dados sobre os componentes específicos de Android e
-geração de relatórios em arquivos CSV. Para visualização dos dados, foi
-implementado um programa na linguagem Python capaz de produzir gráficos a
-partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pela figura \ref{fig:workflow}.
+Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para percorrer os commits do repositório. Neste projeto foram implementadas as classes capazes de colher dados sobre os componentes específicos de Android e geração de relatórios em arquivos CSV. Para visualização dos dados, foi implementado um programa na linguagem Python capaz de produzir gráficos a partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pela figura \ref{fig:workflow}.
 
  %figura
  \begin{figure}[h]
@@ -401,7 +390,7 @@ partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pe
 \label{sec:implementacao}
 
 
-Primeiramente, vamos apresentar o modelo utilizado para representar as entidades da plataforma Android. Como pode ser visto na figura \ref{fig:model}, temos uma classe que representa o arquivo de manifesto e cada elemento do XML foi mapeado em uma classe Java. Para representar os componentes foi utilizado o padrão de herança entre classes. Dessa forma, a classe \textit{Component} contém os atributos comuns aos componentes Android, que foram representados cada um com uma classe filha de Component.\\
+Primeiramente, vamos apresentar o modelo utilizado para representar as entidades da plataforma Android, que foi fortemente baseado no modelo utilizado em \cite{jptt}. Como pode ser visto na figura \ref{fig:model}, temos uma classe que representa o arquivo de manifesto e cada elemento do XML foi mapeado em uma classe Java. Para representar os componentes foi utilizado o padrão de herança entre classes. Dessa forma, a classe \textit{Component} contém os atributos comuns aos componentes Android, que foram representados cada um como uma classe filha de Component.\\
 
 %figura do diagrama do modelo
 \begin{figure}[H]
@@ -431,7 +420,7 @@ Seguindo uma arquitetura semelhante à das classes de modelo, foram implementada
 
 A classe ManifestDiff recebe uma lista de modificações registradas em cada commit, dessa lista, são filtradas as que se referem a qualquer arquivo com a denominação AndroidManifest.xml. A partir das alterações  nos manifestos, são criadas duas listas de versões dos arquivos, uma lista de arquivos anteriores e outra posteriores ao commit. De posse dessas versões utilizamos a classe AndroidManifestParser para criar duas listas de instâncias da classe AndroidManifest definida pelo modelo. As instâncias de AndroidManifest são então passadas para a classe parametrizada abstrata Diff<T> . \\
 
-De uma forma geral, em Diff são criadas duas listas de componentes, uma representando os componentes anteriores ao commits e outra os posteriores. A partir disso, mais três listas são criadas, uma com as adições, outra com as remoções e a terceira com os componentes modificados. Para reusar o código definido nesta classe, o parâmetro T define qual componente será analisado pela subclasse de Diff, pois esta define o método abstrato \textit{getElementsList} que recebe uma instância do  retorna uma lista de objetos do tipo T. A classe também define outro método abstrato, \textit{isModification}, que recebe um elemento T e verifica se ele foi modificado. Dessa forma, as subclasses só precisam implementar estes dois métodos para que se possa obter informações específicas de cada componentes desejado. \\
+De uma forma geral, em Diff são criadas duas listas de componentes, uma representando os componentes anteriores ao commits e outra os posteriores. A partir disso, mais três listas são criadas, uma com as adições, outra com as remoções e a terceira com os componentes modificados. Para reusar o código definido nesta classe, o parâmetro T define qual componente será analisado pela subclasse de Diff, pois esta define o método abstrato \textit{getElementsList} que recebe uma instância de AndroidManifest e retorna uma lista de objetos do tipo T. A classe também define outro método abstrato, \textit{isModification}, que recebe um elemento T e verifica se ele foi modificado. Dessa forma, as subclasses só precisam implementar estes dois métodos para que se possa obter informações específicas de cada componente desejado. \\
 
 Note que na figura \ref{fig:diff} a classe UsesPermissionDiff herda diretamente da classe Diff, enquanto que os outros componentes herdam da classe ComponentDiff. Isto ocorre porque o elemento uses-permission só define um atributo do tipo String, por isso, ele é representado apenas como uma String com o valor desse atributo. Por esta mesma razão este componente não está representado no diagrama de modelo da figura \ref{fig:model}. Enquanto isso, a classe abstrata ComponentDiff define o parâmetro T para ser o tipo Component, implementando o método getElementsList para retornar uma lista de Component que é recuperada pelo método abstrato \textit{getComponents}, e também implementa o método isModification para retornar o isModificationOf  definido pela instância de Component, conforme vimos anteriormente. Assim as subclasses podem implementar apenas o método getComponents de forma mais específica.
 
@@ -449,9 +438,9 @@ Como visto anteriormente, para percorrer os commits de um dado repositório, é 
 Essa classe recebe a url do repositório a ser estudado e a partir disso inicializa o objeto \textit{RepositoryMining} com o repositório a ser minerado e registra os visitors específicos de repositórios android que serão mais detalhados à frente.
 
 
-A exemplo do que foi visto na seção \ref{sec:repodriller}, para que possamos analisar cada commit, foram implementados visitors que extraem dados a respeito de cada componente separadamente. Esses visitors seguem a estrutura definida na figura \ref{fig:visitors}, onde um visitor abstrato implementa a interface CommitVisitor definida pelo RepoDriller, repassando a chamada do método process (que recebe um Commit) da interface para o método abstrato androidProcess (que recebe um AndroidCommit) conforme figura \ref{fig:diagram}. Dessa forma, o Commit provido pelo framework é convertido em uma instância de \textit{AndroidCommit}. Assim, a classe DiffAndroidVisitor implementa o método androidProcess e define o método abstrato \textit{getDiff}, repassando o AndroidCommit para as subclasses retornarem cada uma a instância da classe de diff do componente correspondente. Ainda no método androidProcess, são registrados os dados recuperados pela subclasse de Diff, retornada pelo método getDiff, no arquivo CSV definido pelo visitor utilizando a instância de PersistenceMechanism passada.
+A exemplo do que foi visto na seção \ref{sec:repodriller}, para que possamos analisar cada commit, foram implementados visitors que extraem dados a respeito de cada componente separadamente. Esses visitors seguem a estrutura definida na figura \ref{fig:visitors}, onde um visitor abstrato implementa a interface CommitVisitor definida pelo RepoDriller, repassando a chamada do método process (que recebe um Commit) da interface para o método abstrato androidProcess (que recebe um AndroidCommit) conforme figura \ref{fig:diagram}. Dessa forma, o Commit provido pelo framework é convertido em uma instância de \textit{AndroidCommit}. Assim, a classe DiffAndroidVisitor implementa o método androidProcess e define o método abstrato \textit{getDiff}, repassando o AndroidCommit para as subclasses retornarem cada uma a instância da classe de diff do componente correspondente. Ainda no método androidProcess, são registrados os dados recuperados pela subclasse de Diff, retornada pelo método getDiff, no arquivo CSV definido pelo visitor utilizando a instância de PersistenceMechanism passada. Essa escrita no CSV só ocorre nos commits em que são identificadas mudanças nos arquivos de manifesto, com isso, caso um repositório possua 100 commits mas apenas 10  alteraram os manifestos, os CSVs gerados terão 10 linhas cada.
 
-A classe AndroidCommit estende a classe Commit do RepoDriller, adicionando informações específicas Android. No seu construtor, esta classe recebe o commit a ser estendido e o repositório a qual ele pertence, parâmetros que são utilizados para recuperar os manifestos do commit e a lista de modificações. A partir disso, é possível criar uma instância de ManifestDiff, que é utilizada como base para criação das instâncias das subclasses de Diff que serão recuperadas pelos visitors específicos, como visto anteriormente.
+A classe AndroidCommit estende a classe Commit do RepoDriller, adicionando informações específicas Android, ver figura \ref{fig:diagram}. No seu construtor, esta classe recebe o commit a ser estendido e o repositório a qual ele pertence, parâmetros que são utilizados para recuperar os manifestos do commit e a lista de modificações. A partir disso, é possível criar uma instância de ManifestDiff, que é utilizada como base para criação das instâncias das subclasses de Diff que serão recuperadas pelos visitors específicos, como visto anteriormente.
 
 
 %figura dos visitors
@@ -479,9 +468,9 @@ Para que tudo isto funcione, foi implementada a classe MyStudy, que no seu méto
 \subsection{Repositórios de Teste}%18-22
 \label{sec:repoteste}
 
-No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos AndroidManifest.xml em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à master e deletadas.
+No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos AndroidManifest.xml em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à master e deletadas. Este repositório se encontra na URL {\fontsize{10pt}{12pt}\url{https://github.com/betosousa/fooAndroidManifest.git}}.
 
-Para validar a implementação descrita anteriormente, foram escolhidos 6 repositórios de código livre presentes no F-Droid \cite{fdroid}, um catálogo de aplicações livre e de código aberto para a plataforma android. Juntamente com o repositório citado acima, foram listados 7 repositórios para formar uma base de testes.
+Para validar a implementação descrita anteriormente, foram escolhidos 6 repositórios de código livre presentes no F-Droid \cite{fdroid}, um catálogo de aplicações livre e de código aberto para a plataforma android. Juntamente com o repositório citado acima, foram listados 7 repositórios para formar uma base de testes. Esses repositórios foram escolhidos aleatoriamente dentro do catálogo, levando em conta apenas a quantidade de commits, onde tentamos escolher repositórios em faixas variadas de quantidade de commits totais.
 
 %%%Tabela com informações dos repositórios:
 
@@ -489,23 +478,23 @@ Para validar a implementação descrita anteriormente, foram escolhidos 6 reposi
 \begin{center}
 \begin{tabular}{l|c|c}
 
- URL & commits & MB\\
+ URL & Total & Manifesto\\
 \hline
-https://github.com/dozingcat/AsciiCam & 56 & 0.623  \\
-https://github.com/uberspot/2048-android & 70 & 7.89 \\
-https://github.com/naman14/Timber & 597 & 16.97  \\
-https://github.com/Telegram-FOSS-Team/Telegram-FOSS & 704 & 125.25  \\
-https://github.com/jackpal/Android-Terminal-Emulator.git & 1088 & 6.24 \\
-https://github.com/tejado/Authorizer.git & 1304 & 153.63 \\
-https://github.com/betosousa/fooAndroidManifest.git & 29 & 0.006
+https://github.com/dozingcat/AsciiCam & 56 & 28 \\
+https://github.com/uberspot/2048-android & 70 & 21 \\
+https://github.com/naman14/Timber & 597 & 43 \\
+https://github.com/Telegram-FOSS-Team/Telegram-FOSS & 704 & 65 \\
+https://github.com/jackpal/Android-Terminal-Emulator.git & 1088 & 139 \\
+https://github.com/tejado/Authorizer.git & 1304 & 112 \\
+https://github.com/betosousa/fooAndroidManifest.git & 29 & 24
 \end{tabular}
-\caption{Repositórios utilizados para validação, com quantidade total de commits e tamanho em MegaBytes.}
+\caption{Repositórios utilizados para validação, com quantidade total de commits e commits com alteração do manifesto.}
 \end{center}
 \end{table}
 
 %%%fim Tabela%%%
 
-Dessa forma foi possível avaliar os resultados obtidos diretamente com o histórico dos repositórios e também corrigir eventuais bugs ocorridos.
+Dessa forma foi possível avaliar os resultados obtidos diretamente com o histórico dos repositórios. Assim, foi possível identificar que em repositórios com commits de merge, as modificações replicadas em mais de uma branch eram contadas de forma duplicada pela ferramenta. Com isso, ao tentar calcular o total de componentes no repositório com a simples diferença entre total somado ao longo do repositório com o total removido, observamos valores diferentes do total de componentes presentes no repositório.  Para resolver isso, foi acrescentado o total de componentes por commit, que é calculado na classe Diff e representa o total de componentes na lista de elementos posteriores ao commit.
 
 
 %================experimento===================
@@ -515,13 +504,68 @@ Dessa forma foi possível avaliar os resultados obtidos diretamente com o histó
 
 Para testar mais a fundo a aplicação implementada e também gerar dados para uma análise  mais profunda, foram listados 1195 repositórios presentes no F-Droid \cite{fdroid}, cujos endereços do código fonte apontavam para o github.
 
-Alguns repositórios apresentaram falhas durante o experimento, 51 por não serem acessíveis (ou por exigirem credenciais para clonar ou por não mais existirem) e 6 por terem arquivos de diff muito grandes que provocaram a interrupção da execução da ferramenta, e por isso foram desconsiderados da análise final. Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando 49116 commits visitados.
-
+Alguns repositórios apresentaram falhas durante o experimento, 51 por não serem acessíveis (ou por exigirem credenciais para clonar ou por não mais existirem) e 6 por terem arquivos de diff muito grandes que provocaram um estouro de memória e a interrupção da execução da ferramenta, e por isso foram desconsiderados da análise final. 
 
 
 \subsection{Resultados}%22-24
 \label{sec:resultados}
-Análise dos resultados obtidos
+Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando 49116 commits registrados com alterações no arquivo de manifesto.
+
+Para exemplificar as imagens geradas, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositórios foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
+
+Cada um dos históricos gerados pode ser conferido nas imagens de \ref{fig:repoactivity} a \ref{fig:repopermission}, onde as datas no eixo horizontal representam os commits em que o manifesto foi alterado e  as barras verdes representam os componentes adicionados, as barras vermelhas os removidos, as azuis os modificados e a linha laranja o total no commit. 
+
+%figura das activities .
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_activity_history.png}
+\caption{Histórico das activities do repositório NetGuard}
+\label{fig:repoactivity}
+\end{figure}
+
+
+%figura dos broadcasts.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_broadcastReceiver_history.png}
+\caption{Histórico dos broadcast receivers do repositório NetGuard}
+\label{fig:repobroadcast}
+\end{figure}
+
+%figura dos providers.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_contentProvider_history.png}
+\caption{Histórico dos content providers do repositório NetGuard}
+\label{fig:reporeceiver}
+\end{figure}
+
+%figura dos services.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_service_history.png}
+\caption{Histórico dos services do repositório NetGuard}
+\label{fig:reposervice}
+\end{figure}
+
+%figura das uses perm.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_usesPermission_history.png}
+\caption{Histórico das permissões utilizadas no repositório NetGuard}
+\label{fig:repouses}
+\end{figure}
+
+%figura das permissions.
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_permission_history.png}
+\caption{Histórico das permissões criadas pelo repositório NetGuard}
+\label{fig:repopermission}
+\end{figure}
+
+
+
 
 %=============================
 %=         Conclusão         =
@@ -532,12 +576,19 @@ Análise dos resultados obtidos
 %\subsection{Trabalhos Futuros}
 %Extender a ferramenta para analisar também o codigo fonte e valida-lo junto ao manifesto.
 
+Após os experimentos realizados, podemos concluir que a implementação da ferramenta proposta no começo do semestre foi bem sucedida. Por mais que alguns repositórios, 57 para ser exato, tenham apresentado problemas durante a mineração, outros 1138 foram processados com sucesso, conforme foi comentado em \ref{sec:experimentos}.
+
+Na seção a seguir, apresentamos alguns trabalhos que poderiam fazer uso de uma ferramenta deste tipo.
+
 
 %================TRABALHOSRELACIONADOS===================
 %\newpage
 \subsection{Trabalhos Relacionados}%18-20
 %referencias
-Em \cite{Calciati}, \cite{WhoAdded}, \cite{YLyu}, etc. Foram feitos estudos tais que poderiam se aproveitar da ferramenta proposta.
+Em \cite{Calciati}, Calciati e Gorla realizaram um estudo sobre como as requisições de permissões evoluíram ao longo das várias releases das aplicações. Eles extraíram essa informação do arquivo APK, a versão final da aplicação que é baixada pelos dispositivos dos usuários. Este trabalho poderia ser enriquecido com informações a respeito do desenvolvimento do código fonte das aplicações com o uso da ferramenta proposta. \\
+
+Isto pode ser visto em \cite{WhoAdded}, onde Krutz \textit{et al} desenvolveram uma ferramenta semelhante, denominada oSARA, para avaliar quem realizava as alterações nas permissões das aplicações. Em comparação com oSARA, a ferramenta proposta é capaz de coletar informações sobre outros componentes Android além das permissões.\\
+
 %Gancho com a motivação
 %citar como seria o uso do androidDriller nesses estudos.
 

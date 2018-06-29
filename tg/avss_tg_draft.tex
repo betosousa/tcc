@@ -575,10 +575,10 @@ Uses Permission & 4287 & 3635 & 770 & 0 \\
 
 
 
-Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca 4300 commits. Também podemos verificar que a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Note ainda que a quantidade de commits que adicionam pelo menos 1 componente é sempre maior que a quantidade de commits que removem, enquanto que apenas para as activities, a quantidade de commits de modificação é maior que a de remoção. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
+Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca de 4300 commits. Também podemos verificar que a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Note ainda que a quantidade de commits que adicionam pelo menos 1 componente é sempre maior que a quantidade de commits que removem, enquanto que apenas para as activities, a quantidade de commits de modificação é maior que a de remoção. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
 
 \sloppy
-Para exemplificar as imagens geradas, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/ NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositórios foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
+Para ilustrar os resultados possíveis de serem obtidos com a ferramenta, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositório foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
 
 Na Figura \ref{fig:repoactivity} temos o histórico das activities neste repositório, no eixo horizontal temos as datas dos commits que alteraram o manifesto e no eixo vertical temos a quantidade de activities. O total está representado pela linha laranja, a quantidade adicionada no commit está representada nas barras verdes, a removida nas barras vermelhas e as modificadas nas azuis. 
 
@@ -668,7 +668,8 @@ Em \cite{Calciati}, Calciati e Gorla realizaram um estudo sobre como as requisi�
 
 Isto pode ser visto em \cite{WhoAdded}, onde Krutz \textit{et al} desenvolveram uma ferramenta semelhante, denominada oSARA, para avaliar quem realizava as alterações nas permissões das aplicações. Em comparação com oSARA, a ferramenta proposta é capaz de coletar informações sobre outros componentes Android além das permissões.\\
 
-Uma base de dados semelhante, porém muito maior, foi implementada por Geiger \textit{et al} em \cite{graphDB}. Chamado de AndroidTimeMachine, o banco de dados baseado em grafos construído contém dados sobre o histórico completo de mais de 8000 repositórios Android de código aberto encontrados na Google Play Store.
+Uma base de dados semelhante, porém muito maior, foi implementada por Geiger \textit{et al} em \cite{graphDB}. Chamado de AndroidTimeMachine, o banco de dados baseado em grafos construído contém dados sobre o histórico completo de mais de 8000 repositórios Android de código aberto encontrados na Google Play Store. Diferentemente da ferramenta proposta, esta base de dados não entra em detalhes das modificações efetuadas nos commits. Ela está mais concentrada apenas em coletar informações do repositório github como um todo e linkar com o app na loja da play store.
+
 
 \subsection{Trabalhos Futuros}
 
@@ -684,7 +685,7 @@ Uma outra opção de melhoria da ferramenta seria utilizá-la para obter dados s
 
 %portar para python 
 
-Na Seção \ref{sec:resultados} apresentamos um resumo dos dados obtidos pela ferramenta que foi gerado por um script Python. Uma abordagem diferente seria utilizar os arquivos CSV para gerar um banco de dados baseado em grafos e a partir disso realizar querys relativas aos dados desejados. 
+Na Seção \ref{sec:resultados} apresentamos um resumo dos dados obtidos pela ferramenta que foi gerado por um script Python. Uma abordagem diferente seria utilizar os arquivos CSV para gerar um banco de dados baseado em grafos e a partir disso realizar queries relativas aos dados desejados. 
 
 
 %================Bibliografia===================

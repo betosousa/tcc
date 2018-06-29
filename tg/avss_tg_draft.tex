@@ -197,6 +197,7 @@ Dessa forma, a plataforma espera encontrar no pacote {\small\texttt{\textbf{br.u
 
 A plataforma Android utiliza um sistema de eventos similar ao padrão \textit{publish-subscribe}, onde a plataforma (ou outra aplicação) dispara um evento (\textit{broadcast}) e as aplicações registradas para o evento recebem a mensagem correspondente. O componente que recebe estes eventos é conhecido como \textit{broadcast receiver}.\\
 \\
+\sloppy
 Ao iniciar o dispositivo, o sistema android dispara um evento de \textit{broadcast} chamado de {\small\texttt{\textbf{ON\_BOOT\_COMPLETE}}}. Para que a aplicação receba esse e outros eventos semelhantes é necessário implementar uma classe do tipo {\small\texttt{\textbf{BroadcastReceiver}}} e registrá-la no evento desejado. Para isso, declara-se no manifesto a tag {\small\texttt{\textbf{receiver}}}, conforme o trecho abaixo, que também pode ser visto na Figura \ref{fig:manifest} onde foi declarado um componente receiver que espera eventos do tipo citado anteriormente.
 {\fontsize{9pt}{12pt}
 \begin{verbatim}
@@ -528,36 +529,59 @@ Alguns repositórios apresentaram falhas durante o experimento. Foram 51 por nã
 
 \subsection{Resultados}%22-24
 \label{sec:resultados}
-Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando 49116 commits registrados com alterações no arquivo de manifesto. Na Tabela \ref{tab:statistcs} vemos um resumo dos dados coletados pela ferramenta, com a quantidade de commits que alteraram o componente, a quantidade de componentes adicionados, removidos e modificados, além do total registrado no último manifesto do repositório. Esses dados foram coletados utilizando um script Python que percorreu cada um dos arquivos CSV gerados.
+
+Por fim, foram gerados 6 arquivos CSV para cada um dos 1138 repositórios minerados com sucesso, totalizando 49116 commits registrados com alterações no arquivo de manifesto. Nas tabelas a seguir, vemos um resumo dos dados coletados pela ferramenta,  que foram coletados utilizando um script Python que percorreu cada um dos arquivos CSV gerados. Na Tabela \ref{tab:statistcs} temos a coluna \textit{Adicionados}, que representa a quantidade de componentes adicionados ao longo dos históricos dos repositórios; as colunas \textit{Removidos} e \textit{Modificados} que representam a quantidade de removidos e modificados; além do total registrado no último manifesto do repositório, na coluna \textit{Total}.
 
 \begin{table}[h]
 \begin{center}
-\begin{tabular}{l|c|c|c|c|c}
+\begin{tabular}{l|c|c|c|c}
 
- Componente & Commits & Adições & Remoções & Modificações & Total \\
+ Componente &  Adicionados & Removidos & Modificados & Total \\
 \hline
-Activity & 16803 & 20024 & 9591 & 18419 & 6711 \\
-Broadcast Receiver & 2970 & 3252 & 1542 & 1025 & 1112 \\
-Content Provider & 973 & 868 & 293 & 197 & 349 \\
-Service & 3019 & 3155 & 1491 & 724 & 1095 \\
-Permission & 287 & 386 & 169 & 9 & 98 \\
-Uses Permission & 4287 & 7253 & 1289 & 0 & 4105 \\
+Activity &  20024 & 9591 & 18419 & 6711 \\
+Broadcast Receiver  & 3252 & 1542 & 1025 & 1112 \\
+Content Provider  & 868 & 293 & 197 & 349 \\
+Service & 3155 & 1491 & 724 & 1095 \\
+Permission  & 386 & 169 & 9 & 98 \\
+Uses Permission & 7253 & 1289 & 0 & 4105 \\
 \end{tabular}
-\caption{Resumo dos dados coletados.}
+\caption{Resumo dos dados coletados sobre os componentes.}
 \label{tab:statistcs}
 \end{center}
 \end{table}
 
 
-Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca 4300 commits. Também podemos verificar que a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
+Na Tabela \ref{tab:stat} temos a quantidade de commits que alteraram o componente, a quantidade de commits que adicionaram pelo menos 1 componente, a quantidade de commits que removeram pelo menos 1 componente e a quantidade de commits que modificaram pelo menos 1 componente, representadas nas colunas \textit{Commits, Adições, Remoções} e \textit{Modificações} respectivamente. 
 
-Para exemplificar as imagens geradas, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositórios foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{l|c|c|c|c}
+
+Componente & Commits & Adições & Remoções & Modificações \\
+\hline
+Activity & 16803 & 9130 & 3914 & 7929 \\
+Broadcast Receiver & 2970 & 2091 & 909 & 681 \\
+Content Provider & 973 & 751 & 259 & 153 \\
+Service & 3019 & 2251 & 1057 & 522 \\
+Permission & 287 & 231 & 103 & 6 \\
+Uses Permission & 4287 & 3635 & 770 & 0 \\
+\end{tabular}
+\caption{Resumo dos dados coletados sobre os commits por componente.}
+\label{tab:stat}
+\end{center}
+\end{table}
+
+
+
+
+Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca 4300 commits. Também podemos verificar que a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Note ainda que a quantidade de commits que adicionam pelo menos 1 componente é sempre maior que a quantidade de commits que removem, enquanto que apenas para as activities, a quantidade de commits de modificação é maior que a de remoção. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
+
+\sloppy
+Para exemplificar as imagens geradas, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/ NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositórios foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
 
 Na Figura \ref{fig:repoactivity} temos o histórico das activities neste repositório, no eixo horizontal temos as datas dos commits que alteraram o manifesto e no eixo vertical temos a quantidade de activities. O total está representado pela linha laranja, a quantidade adicionada no commit está representada nas barras verdes, a removida nas barras vermelhas e as modificadas nas azuis. 
 
-%TODO: definir 1 ou 2 métricas do tipo modificacoes em activity por X commits, quao frequentes são as mudancas em permissoes, etc. para ilustrar, e mencionar que outras podem ser calculadas.
-
-%TODO: explica ao menos 1 imagem em detalhes e depois plota as outras.
 %figura das activities .
 \begin{figure}[H]
 \centering
@@ -566,6 +590,7 @@ Na Figura \ref{fig:repoactivity} temos o histórico das activities neste reposit
 \label{fig:repoactivity}
 \end{figure}
 
+Observamos que até a metade da linha do tempo exibida na Figura \ref{fig:repoactivity}, há uma quantidade razoável de mudanças em activities, principalmente em modificações. A partir daí, existem mudanças esporádicas apenas modificando activities existentes, o que indica uma possível estabilidade do projeto.
 
 Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os históricos dos outros componentes para o mesmo repositório.
 
@@ -577,13 +602,18 @@ Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os
 \label{fig:repobroadcast}
 \end{figure}
 
+Já no gráfico da Figura \ref{fig:repobroadcast}, vemos que há uma distribuição diferente do caso de activities, onde percebemos mais mudanças e remoções associadas, inclusive recentemente. A quantidade maior de mudanças no período recente pode ter se dado por conta de uma possível necessidade de alterar os intent filters dos receivers para a adequação às novas versões Android.
+
 %figura dos providers.
 \begin{figure}[H]
 \centering
 \includegraphics[width=\linewidth,height=0.5\linewidth]{imgs/NetGuard_contentProvider_history.png}
 \caption{Histórico dos content providers do repositório NetGuard}
-\label{fig:reporeceiver}
+\label{fig:repoprovider}
 \end{figure}
+
+
+No gráfico da Figura \ref{fig:repoprovider} vemos apenas uma linha horizontal indicando que em todos os commits a quantidade total de providers é zero. Isto ocorre por que em nenhum momento a aplicação fez uso deste tipo de componente, muito provavelmente por não ser necessário neste tipo de aplicação.
 
 %figura dos services.
 \begin{figure}[H]
@@ -593,6 +623,8 @@ Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os
 \label{fig:reposervice}
 \end{figure}
 
+No histórico dos services, na Figura \ref{fig:reposervice}, percebemos várias adições seguidas de remoções, que podem indicar substituição de um service por outro, primeiro desenvolve um service,  depois deixa o que já existia deprecated, e então remove. Ou ainda apenas uma mudança no nome da classe que o implementa. Uma análise mais aprofundada do repositório pode revelar o que houve, a ideia é que a ferramenta proposta no trabalho está justamente permitindo algumas destas visualizações que podem dar insights para compreensão do processo de desenvolvimento do app.
+
 %figura das uses perm.
 \begin{figure}[H]
 \centering
@@ -600,6 +632,8 @@ Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os
 \caption{Histórico das permissões utilizadas no repositório NetGuard}
 \label{fig:repouses}
 \end{figure}
+
+Na Figura \ref{fig:repouses} podemos verificar a tendência de sempre adicionar mais permissões do que remover. Analisando os commits mais recentes, percebemos que algumas permissões foram removidas, isso pode ocorre por consequência de alguma API utilizada pela aplicação que após ser atualizada não necessita mais a requisição de algumas permissões.
 
 %figura das permissions.
 \begin{figure}[H]
@@ -609,7 +643,7 @@ Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os
 \label{fig:repopermission}
 \end{figure}
 
-
+Na Figura \ref{fig:repopermission} podemos verificar que apenas uma permissão foi definida pela aplicação. Após análise do commit, vimos que esta permissão foi criada para proteger os widgets criados pela aplicação, impedindo que outras aplicações tenham acesso a eles.
 
 
 %=============================
@@ -633,6 +667,8 @@ Na seção a seguir, apresentamos alguns trabalhos que poderiam fazer uso de uma
 Em \cite{Calciati}, Calciati e Gorla realizaram um estudo sobre como as requisições de permissões evoluíram ao longo das várias releases das aplicações. Eles extraíram essa informação do arquivo APK, a versão final da aplicação que é baixada pelos dispositivos dos usuários. Este trabalho poderia ser enriquecido com informações a respeito do desenvolvimento do código fonte das aplicações com o uso da ferramenta proposta. \\
 
 Isto pode ser visto em \cite{WhoAdded}, onde Krutz \textit{et al} desenvolveram uma ferramenta semelhante, denominada oSARA, para avaliar quem realizava as alterações nas permissões das aplicações. Em comparação com oSARA, a ferramenta proposta é capaz de coletar informações sobre outros componentes Android além das permissões.\\
+
+Uma base de dados semelhante, porém muito maior, foi implementada por Geiger \textit{et al} em \cite{graphDB}. Chamado de AndroidTimeMachine, o banco de dados baseado em grafos construído contém dados sobre o histórico completo de mais de 8000 repositórios Android de código aberto encontrados na Google Play Store.
 
 \subsection{Trabalhos Futuros}
 

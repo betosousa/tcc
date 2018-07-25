@@ -93,7 +93,7 @@ São muitos nomes para que eu me lembre de todos os que merecem aqui, mas gostar
 \newpage
 \pagenumbering{arabic} % turn page numbering back on
 \section*{Resumo}
-Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisadores de engenharia de software têm obtido um melhor conhecimento sobre o processo de desenvolvimento de software, em geral. Este trabalho propõe uma ferramenta capaz de minerar repositórios fazendo uso das características comuns de projetos Android para que se possa realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações para a plataforma. Por fim, são apresentados os resultados da utilização da ferramenta sobre um conjunto de mais de 1100 repositórios Android livres e de código aberto retirados do catálogo do f-droid. 
+Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisadores de engenharia de software têm obtido um melhor conhecimento sobre o processo de desenvolvimento de software, em geral. Este trabalho propõe uma ferramenta capaz de minerar repositórios fazendo uso das características comuns de projetos Android para que se possa realizar uma investigação preliminar de como as mudanças acontecem no desenvolvimento de aplicações para a plataforma. Por fim, são apresentados os resultados da utilização da ferramenta sobre um conjunto de mais de 1100 repositórios Android livres e de código aberto retirados do catálogo do F-Droid. 
 
 \textbf{Palavras-chave}: Android, Mineração de Repositórios, Sistema de Controle de Versão, Git
 
@@ -101,7 +101,7 @@ Utilizando ferramentas capazes de minerar dados sobre repositórios, pesquisador
 \newpage
 \section*{Abstract}
 
-Software Engineering researchers have been using tools capable of mining data from repositories to get a better understanding about the software development process. This work proposes a tool for mining repositories that uses the common characteristics of Android Projects so we can perform a preliminary investigation about how changes occur in the platform apps development. In the end, we present the results of running the tool over a set of more than 1100 free and open source Android repositories taken from the f-droid catalogue. 
+Software Engineering researchers have been using tools capable of mining data from repositories to get a better understanding about the software development process. This work proposes a tool for mining repositories that uses the common characteristics of Android Projects so we can perform a preliminary investigation about how changes occur in the platform apps development. In the end, we present the results of running the tool over a set of more than 1100 free and open source Android repositories taken from the F-Droid catalogue. 
 
 \textbf{Keywords}: Android, Repository Mining, Version Control System, Git
 
@@ -116,14 +116,17 @@ Software Engineering researchers have been using tools capable of mining data fr
 
 Em engenharia de software, a análise de repositórios tem ajudado pesquisadores a obter um melhor conhecimento sobre o processo de desenvolvimento de um software \cite{miningGit}, pois a análise de software consiste em extrair dados para que gerentes e engenheiros de software possam melhorar os processos de tomada de decisão e desenvolvimento de softwares \cite{soWhat}. Dessa forma, podemos definir como mineração de repositórios o processo de  extração desses dados. Com isso, é possível predizer bugs e também analisar o padrão de desenvolvimento utilizado pelos colaboradores do projeto. Para tal fim, existem ferramentas capazes de minerar dados sobre repositórios, como por exemplo, o RepoDriller \cite{repodriller}.\\
 \\
-Ferramentas mais gerais, como o próprio RepoDriller, servem para analisar software em vários domínios. No desenvolvimento de aplicações Android, há diversas particularidades envolvidas. Por exemplo, o arquivo de manifesto, chamado AndroidManifest, é obrigatório para qualquer aplicação da plataforma e contém informações sobre os vários componentes do projeto. Assim, qualquer componente não declarado aqui também não fará parte da aplicação final, da mesma forma que permissões utilizadas no código precisam ser declaradas neste arquivo para que funcionem corretamente. Com isso, as principais alterações feitas no repositório são refletidas em modificações desse arquivo, o que pode ser utilizado para mineração de dados relativos ao histórico de alterações do projeto.\\
+Ferramentas mais gerais, como o próprio RepoDriller, servem para analisar software em vários domínios. No desenvolvimento de aplicações Android \cite{developer}, há diversas particularidades envolvidas. Por exemplo, o arquivo de manifesto, chamado AndroidManifest, é obrigatório para qualquer aplicação da plataforma e contém informações sobre os vários componentes do projeto. Assim, qualquer componente não declarado aqui também não fará parte da aplicação final, da mesma forma que permissões (mecanismo utilizado pela plataforma para que as aplicações possam ter acesso a certas funcionalidades do dispositivo) utilizadas no código precisam ser declaradas neste arquivo para que funcionem corretamente. Com isso, as principais alterações feitas no repositório são refletidas em modificações desse arquivo, o que pode ser utilizado para mineração de dados relativos ao histórico de alterações do projeto.\\
 \\
 No estudo de repositórios Android, pesquisadores têm usado ferramentas capazes
-de extrair dados dos arquivos do tipo apk \cite{Calciati}, \cite{WhoAdded} e \cite{YLyu}. Para realizar estudos
+de extrair dados dos arquivos do tipo apk \cite{Calciati, WhoAdded, YLyu}. Para realizar estudos
 semelhantes, uma outra abordagem seria utilizar uma ferramenta capaz de
 minerar os repositórios das aplicações e extrair dados específicos levando em
 consideração não só o arquivo apk mas também as modificações dos arquivos de
-manifesto, por exemplo.\\
+manifesto, por exemplo. Uma vez que o arquivo apk seria a versão final da aplicação, o histórico do manifesto pode revelar informações sobre o histórico da aplicação durante seu processo de desenvolvimento.\\
+
+Com o intuito de testar a ferramenta implementada e também gerar dados para uma análise  mais profunda, foram analisados 1195 repositórios presentes no F-Droid \cite{fdroid}, cujos endereços do código fonte apontavam para o github. Desses 1195, 1138 foram minerados com sucesso. 
+
 
 
 %================OBJETIVOS===================
@@ -169,7 +172,7 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
 %olhar pagina do android developer
 \subsubsection{AndroidManifest}
 %O core da ferramenta
-É um arquivo XML obrigatório que contém informações sobre os componentes da aplicação. Precisa ser criado com o nome {\small\texttt{\textbf{AndroidManifest.xml}}}, dessa forma a plataforma é capaz de identificar, dentre outras coisas, qual parte do código implementa a cada uma das entidades que compõem a aplicação. Assim, qualquer componente utilizado no código precisa ser declarado neste arquivo para que funcione corretamente, analogamente, qualquer componente não declarado aqui também não fará parte da aplicação final. Um exemplo desse arquivo pode ser visto na Figura \ref{fig:manifest}.
+É um arquivo XML obrigatório que contém informações sobre os componentes da aplicação. Precisa ser criado com o nome {\small\texttt{\textbf{AndroidManifest.xml}}}, dessa forma a plataforma é capaz de identificar, dentre outras coisas, qual parte do código implementa cada uma das entidades que compõem a aplicação. Assim, qualquer componente utilizado no código precisa ser declarado neste arquivo para que funcione corretamente. Analogamente, qualquer componente não declarado aqui também não fará parte da aplicação final. Um exemplo desse arquivo pode ser visto na Figura \ref{fig:manifest}.\\
 
  %figura de manifesto
  \begin{figure}[h]
@@ -179,6 +182,7 @@ Este trabalho propõe uma ferramenta para extrair dados relativos à camada \tex
  \label{fig:manifest}
  \end{figure}
 
+Nas seções abaixo, descreveremos os elementos da Figura \ref{fig:manifest} em mais detalhes.\\
 
 
 \subsubsection{Activity}
@@ -198,7 +202,7 @@ Dessa forma, a plataforma espera encontrar no pacote {\small\texttt{\textbf{br.u
 A plataforma Android utiliza um sistema de eventos similar ao padrão \textit{publish-subscribe}, onde a plataforma (ou outra aplicação) dispara um evento (\textit{broadcast}) e as aplicações registradas para o evento recebem a mensagem correspondente. O componente que recebe estes eventos é conhecido como \textit{broadcast receiver}.\\
 \\
 \sloppy
-Ao iniciar o dispositivo, o sistema android dispara um evento de \textit{broadcast} chamado de {\small\texttt{\textbf{ON\_BOOT\_COMPLETE}}}. Para que a aplicação receba esse e outros eventos semelhantes é necessário implementar uma classe do tipo {\small\texttt{\textbf{BroadcastReceiver}}} e registrá-la no evento desejado. Para isso, declara-se no manifesto a tag {\small\texttt{\textbf{receiver}}}, conforme o trecho abaixo, que também pode ser visto na Figura \ref{fig:manifest} onde foi declarado um componente receiver que espera eventos do tipo citado anteriormente.
+Ao iniciar o dispositivo, o sistema Android dispara um evento de \textit{broadcast} chamado de {\small\texttt{\textbf{ON\_BOOT\_COMPLETE}}}. Para que a aplicação receba esse e outros eventos semelhantes é necessário implementar uma classe do tipo {\small\texttt{\textbf{BroadcastReceiver}}} e registrá-la no evento desejado. Para isso, declara-se no manifesto a tag {\small\texttt{\textbf{receiver}}}, conforme o trecho abaixo, que também pode ser visto na Figura \ref{fig:manifest} onde foi declarado um componente receiver que espera eventos do tipo citado anteriormente.
 {\fontsize{9pt}{12pt}
 \begin{verbatim}
 <receiver android:name="br.ufpe.cin.avss.download.BackgroundReceiver">
@@ -307,7 +311,7 @@ Abaixo estão listados alguns dos principais comandos git, juntamente com uma br
 \item{{\small\texttt{git pull}} } Recupera as mudanças remotas para o repositório local.
 \item{{\small\texttt{git add}} } Adiciona as mudanças locais num conjunto para que possam ser incluídas no próximo commit.
 \item{{\small\texttt{git commit}} } Cria um commit com as mudanças selecionadas pelo comando git add.
-\item{{\small\texttt{git push}} } Atualiza o repositório remoto remoto com as mudanças locais.
+\item{{\small\texttt{git push}} } Atualiza o repositório remoto com as mudanças locais.
 \item{{\small\texttt{git branch}} } Cria uma nova linha de desenvolvimento
 \item{{\small\texttt{git merge}} } Unifica duas linhas de desenvolvimento em um novo commit que é denominado \textit{merge commit}
 \end{itemize}
@@ -353,7 +357,7 @@ Na próxima seção apresentamos uma ferramenta utilizada para minerar repositó
 \label{sec:repodriller}
 RepoDriller é um framework de mineração de repositórios feito em Java  \cite{repodriller}. Com esta ferramenta é possível extrair dados não só dos commits realizados (como por exemplo autor e mensagem) mas também dos arquivos contidos no repositório.
 
-Para escrever um programa que minere um dado repositório, é preciso implementar a interface {\small\texttt{\textbf{Study}}} e no método {\small\texttt{\textbf{execute}}} criar um objeto de estudo (uma instância da classe {\small\texttt{\textbf{RepositoryMining}}}) utilizando o padrão builder e informando além do repositório a ser minerado, as implementações da interface {\small\texttt{\textbf{CommitVisitor}}}.  Para informar o repositório, utilizamos o método {\small\texttt{\textbf{in}}} que recebe uma implementação de  {\small\texttt{\textbf{SCMRepository}}}, podendo ser tanto Git quanto SVN. Neste trabalho foi utilizado a implementação {\small\texttt{\textbf{GitRemoteRepository}}} que recebe uma URL referenciando o repositório remoto, ver Figura \ref{fig:repostudy}.
+Para escrever um programa que minere um dado repositório, é preciso implementar a interface {\small\texttt{\textbf{Study}}} e no método {\small\texttt{\textbf{execute}}} criar um objeto de estudo (uma instância da classe {\small\texttt{\textbf{RepositoryMining}}}) utilizando o padrão builder e informando além do repositório a ser minerado, as implementações da interface {\small\texttt{\textbf{CommitVisitor}}}.  Para informar o repositório, utilizamos o método {\small\texttt{\textbf{in}}} que recebe uma implementação de  {\small\texttt{\textbf{SCMRepository}}}, podendo ser tanto Git quanto SVN. Neste trabalho foi utilizado a implementação {\small\texttt{\textbf{GitRemoteRepository}}} que recebe uma URL referenciando o repositório remoto (ver Figura \ref{fig:repostudy}).
 
 A interface {\small\texttt{\textbf{CommitVisitor}}} define o método {\small\texttt{\textbf{process}}} que é chamado pela API interna do RepoDriller a cada commit visitado. O método {\small\texttt{\textbf{process}}} recebe como parâmetros {\small\texttt{\textbf{SCMRepository}}}, {\small\texttt{\textbf{Commit}}} e {\small\texttt{\textbf{PersistenceMechanism}}}. O primeiro é um objeto representando o repositório estudado, podendo ser Git ou SVN. O segundo é uma representação do commit sendo visitado. E o terceiro é um objeto para tratar a persistência dos dados minerados ao longo dos vários commits visitados.
 
@@ -379,7 +383,7 @@ Neste capítulo apresentamos a ferramenta desenvolvida ao longo deste trabalho. 
 
 \subsection{Metodologia}
 \label{sec:metodologia}
-Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para percorrer os commits do repositório. Neste projeto foram implementadas as classes capazes de colher dados sobre os componentes específicos de Android e geração de relatórios em arquivos CSV. Para visualização dos dados, foi implementado um programa na linguagem Python capaz de produzir gráficos a partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pela Figura \ref{fig:workflow}. 
+Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para percorrer os commits do repositório. Neste projeto foram implementadas as classes capazes de colher dados sobre os componentes específicos de Android e geração de relatórios em arquivos CSV \footnote{\textit{Comma-separated values}, arquivo onde os valores são separados por vírgulas.}. Para visualização dos dados, foi implementado um programa na linguagem Python \cite{python} capaz de produzir gráficos a partir dos arquivos CSV gerados pela ferramenta. Este fluxo pode ser descrito pela Figura \ref{fig:workflow}. 
 
  %figura
  \begin{figure}[h]
@@ -395,7 +399,7 @@ Foi criada uma ferramenta Java que faz uso da API provida pelo RepoDriller para 
 \label{sec:implementacao}
 
 
-Primeiramente, vamos apresentar o modelo utilizado para representar as entidades da plataforma Android, que foi fortemente baseado no modelo utilizado em \cite{jptt}. Como pode ser visto na Figura \ref{fig:model}, temos uma classe que representa o arquivo de manifesto e cada elemento do XML foi mapeado em uma classe Java. Para representar os componentes foi utilizado o padrão de herança entre classes. Dessa forma, a classe {\small\texttt{\textbf{Component}}} contém os atributos comuns aos componentes Android, que foram representados cada um como uma classe filha de {\small\texttt{\textbf{Component}}}.\\
+Primeiramente, vamos apresentar o modelo utilizado para representar as entidades da plataforma Android, que foi fortemente baseado no modelo utilizado por Trindade \cite{jptt}. Como pode ser visto na Figura \ref{fig:model}, temos uma classe que representa o arquivo de manifesto e cada elemento do XML foi mapeado em uma classe Java. Para representar os componentes, foi utilizado o padrão de herança entre classes. Dessa forma, a classe {\small\texttt{\textbf{Component}}} contém os atributos comuns aos componentes Android, que foram representados cada um como uma classe filha de {\small\texttt{\textbf{Component}}}.\\
 
 %figura do diagrama do modelo
 \begin{figure}[H]
@@ -460,7 +464,7 @@ Essa classe recebe a URL do repositório a ser estudado e a partir disso inicial
 
 A exemplo do que foi visto na Seção \ref{sec:repodriller}, para que possamos analisar cada commit, foram implementados visitors que extraem dados a respeito de cada componente separadamente. Esses visitors seguem a estrutura definida na Figura \ref{fig:visitors}, onde um visitor abstrato implementa a interface {\small\texttt{\textbf{CommitVisitor}}} definida pelo RepoDriller, repassando a chamada do método {\small\texttt{\textbf{process}}} (que recebe um {\small\texttt{\textbf{Commit}}}) da interface para o método abstrato {\small\texttt{\textbf{androidProcess}}} (que recebe um {\small\texttt{\textbf{AndroidCommit}}}) conforme Figura \ref{fig:diagram}. Dessa forma, o {\small\texttt{\textbf{Commit}}} provido pelo framework é convertido em uma instância de {\small\texttt{\textbf{AndroidCommit}}}. Assim, a classe {\small\texttt{\textbf{DiffAndroidVisitor}}} implementa o {\small\texttt{\textbf{método androidProcess}}} e define o método abstrato {\small\texttt{\textbf{getDiff}}}, repassando o {\small\texttt{\textbf{AndroidCommit}}} para as subclasses retornarem cada uma a instância da subclasse de {\small\texttt{\textbf{Diff}}} do componente correspondente. Ainda no método {\small\texttt{\textbf{androidProcess}}}, são registrados os dados recuperados pela subclasse de {\small\texttt{\textbf{Diff}}}, retornada pelo método {\small\texttt{\textbf{getDiff}}}, no arquivo CSV definido pelo visitor utilizando a instância de {\small\texttt{\textbf{PersistenceMechanism}}} passada. Essa escrita no CSV só ocorre nos commits em que são identificadas mudanças nos arquivos de manifesto, com isso, caso um repositório possua 100 commits mas apenas 10  alteraram os manifestos, os arquivos CSV gerados terão 10 linhas cada.
 
-A classe {\small\texttt{\textbf{AndroidCommit}}} estende a classe {\small\texttt{\textbf{Commit}}} do RepoDriller, adicionando informações específicas Android, ver Figura \ref{fig:diagram}. No seu construtor, esta classe recebe o {\small\texttt{\textbf{Commit}}} a ser estendido e o repositório a qual ele pertence, parâmetros que são utilizados para recuperar os manifestos do commit e a lista de modificações. A partir disso, é possível criar uma instância de {\small\texttt{\textbf{ManifestDiff}}}, que é utilizada como base para criação das instâncias das subclasses de {\small\texttt{\textbf{Diff}}} que serão recuperadas pelos visitors específicos, como visto anteriormente.
+A classe {\small\texttt{\textbf{AndroidCommit}}} estende a classe {\small\texttt{\textbf{Commit}}} do RepoDriller, adicionando informações específicas Android (ver Figura \ref{fig:diagram}). No seu construtor, esta classe recebe o {\small\texttt{\textbf{Commit}}} a ser estendido e o repositório a qual ele pertence, parâmetros que são utilizados para recuperar os manifestos do commit e a lista de modificações. A partir disso, é possível criar uma instância de {\small\texttt{\textbf{ManifestDiff}}}, que é utilizada como base para criação das instâncias das subclasses de {\small\texttt{\textbf{Diff}}} que serão recuperadas pelos visitors específicos, como visto anteriormente.
 
 
 %figura dos visitors
@@ -490,7 +494,7 @@ Para que tudo isto funcione, foi implementada a classe {\small\texttt{\textbf{My
 
 No intuito de gerar um cenário pequeno, com poucos commits, mas que abrangesse os casos mais genéricos de commits que alterassem o manifesto de um aplicação, foi criado um repositório público no github apenas com 2 arquivos {\small\texttt{\textbf{AndroidManifest.xml}}} em diretórios diferentes. Neste repositório foram realizadas alterações nos dois arquivos e em branchs separadas que foram posteriormente agregadas à master e deletadas. Este repositório se encontra na URL {\fontsize{10pt}{12pt}\url{https://github.com/betosousa/fooAndroidManifest.git}}.
 
-Para validar a implementação descrita anteriormente, foram escolhidos 6 repositórios de código livre presentes no F-Droid \cite{fdroid}, um catálogo de aplicações livre e de código aberto para a plataforma android. Juntamente com o repositório citado acima, foram listados 7 repositórios para formar uma base de testes. Esses repositórios foram escolhidos aleatoriamente dentro do catálogo, levando em conta apenas a quantidade de commits, onde tentamos escolher repositórios em faixas variadas de quantidade de commits totais.
+Para validar a implementação descrita anteriormente, foram escolhidos 6 repositórios de código livre presentes no F-Droid \cite{fdroid}, um catálogo de aplicações livre e de código aberto para a plataforma Android. Juntamente com o repositório citado acima, foram listados 7 repositórios para formar uma base de testes. Esses repositórios foram escolhidos aleatoriamente dentro do catálogo, levando em conta apenas a quantidade de commits, onde tentamos escolher repositórios em faixas variadas de quantidade de commits totais. Estes repositórios estão listados na Tabela \ref{tab:repotest}.
 
 %%%Tabela com informações dos repositórios:
 
@@ -509,12 +513,13 @@ https://github.com/tejado/Authorizer.git & 1304 & 112 \\
 https://github.com/betosousa/fooAndroidManifest.git & 29 & 24
 \end{tabular}
 \caption{Repositórios utilizados para validação, com quantidade total de commits e commits com alteração do manifesto.}
+\label{tab:repotest}
 \end{center}
 \end{table}
 
 %%%fim Tabela%%%
 
-Dessa forma foi possível avaliar os resultados obtidos diretamente com o histórico dos repositórios. Assim, foi possível identificar que em repositórios com commits de merge, as modificações replicadas em mais de uma branch eram contadas de forma duplicada pela ferramenta. Com isso, ao tentar calcular o total de componentes no repositório com a simples diferença entre total somado ao longo do repositório com o total removido, observamos valores diferentes do total de componentes presentes no repositório.  Para resolver isso, foi acrescentado o total de componentes por commit, que é calculado na classe {\small\texttt{\textbf{Diff}}} e representa o total de componentes na lista de elementos posteriores ao commit.
+Dessa forma foi possível avaliar os resultados obtidos diretamente com o histórico dos repositórios. Assim, foi possível identificar que, em repositórios com commits de merge, as modificações replicadas em mais de uma branch eram contadas de forma duplicada pela ferramenta. Com isso, ao tentar calcular o total de componentes no repositório com a simples diferença entre total somado ao longo do repositório com o total removido, observamos valores diferentes do total de componentes presentes no repositório.  Para resolver isso, foi acrescentado o total de componentes por commit, que é calculado na classe {\small\texttt{\textbf{Diff}}} e representa o total de componentes na lista de elementos posteriores ao commit.
 
 
 %================experimento===================
@@ -575,12 +580,12 @@ Uses Permission & 4287 & 3635 & 770 & 0 \\
 
 
 
-Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca de 4300 commits. Também podemos verificar que a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Note ainda que a quantidade de commits que adicionam pelo menos 1 componente é sempre maior que a quantidade de commits que removem, enquanto que apenas para as activities, a quantidade de commits de modificação é maior que a de remoção. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
+Com esses dados, podemos verificar que os componentes mais alterados são as activities, com mais de 16800 commits, quase 4 vezes mais que o segundo componente, o uses permission, com cerca de 4300 commits. Também podemos verificar que, a cada 3 commits que alteram o manifesto, 1 altera activities, enquanto que as permissions só são alteradas a cada 171 commits no manifesto. Note ainda que a quantidade de commits que adicionam pelo menos 1 componente é sempre maior que a quantidade de commits que removem, enquanto que apenas para as activities, a quantidade de commits de modificação é maior que a de remoção. Essas métricas servem para demonstrar que tipo de informações podemos extrair dos repositórios Android utilizando a ferramenta proposta. 
 
 \sloppy
 Para ilustrar os resultados possíveis de serem obtidos com a ferramenta, o repositório {\fontsize{10pt}{12pt}\url{https://github.com/M66B/NetGuard}} foi escolhido aleatoriamente dentre os 1138 minerados. Neste repositório foram registrados 3235 commits dos quais 95 alteraram o arquivo de manifesto.
 
-Na Figura \ref{fig:repoactivity} temos o histórico das activities neste repositório, no eixo horizontal temos as datas dos commits que alteraram o manifesto e no eixo vertical temos a quantidade de activities. O total está representado pela linha laranja, a quantidade adicionada no commit está representada nas barras verdes, a removida nas barras vermelhas e as modificadas nas azuis. 
+Na Figura \ref{fig:repoactivity} temos o histórico das activities neste repositório. No eixo horizontal temos as datas dos commits que alteraram o manifesto e no eixo vertical temos a quantidade de activities. O total está representado pela linha laranja, a quantidade adicionada no commit está representada nas barras verdes, a removida nas barras vermelhas e as modificadas nas azuis. 
 
 %figura das activities .
 \begin{figure}[H]
@@ -590,7 +595,7 @@ Na Figura \ref{fig:repoactivity} temos o histórico das activities neste reposit
 \label{fig:repoactivity}
 \end{figure}
 
-Observamos que até a metade da linha do tempo exibida na Figura \ref{fig:repoactivity}, há uma quantidade razoável de mudanças em activities, principalmente em modificações. A partir daí, existem mudanças esporádicas apenas modificando activities existentes, o que indica uma possível estabilidade do projeto.
+Observamos que, até a metade da linha do tempo exibida na Figura \ref{fig:repoactivity}, há uma quantidade razoável de mudanças em activities, principalmente em modificações. A partir daí, existem mudanças esporádicas apenas modificando activities existentes, o que indica uma possível estabilidade do projeto.
 
 Nas Figuras de \ref{fig:repobroadcast} a \ref{fig:repopermission} podemos ver os históricos dos outros componentes para o mesmo repositório.
 
@@ -623,7 +628,7 @@ No gráfico da Figura \ref{fig:repoprovider} vemos apenas uma linha horizontal i
 \label{fig:reposervice}
 \end{figure}
 
-No histórico dos services, na Figura \ref{fig:reposervice}, percebemos várias adições seguidas de remoções, que podem indicar substituição de um service por outro, primeiro desenvolve um service,  depois deixa o que já existia deprecated, e então remove. Ou ainda apenas uma mudança no nome da classe que o implementa. Uma análise mais aprofundada do repositório pode revelar o que houve, a ideia é que a ferramenta proposta no trabalho está justamente permitindo algumas destas visualizações que podem dar insights para compreensão do processo de desenvolvimento do app.
+No histórico dos services, na Figura \ref{fig:reposervice}, percebemos várias adições seguidas de remoções, que podem indicar substituição de um service por outro: primeiro desenvolve um service,  depois deixa o que já existia deprecated, e então remove. Ou ainda apenas uma mudança no nome da classe que o implementa. Uma análise mais aprofundada do repositório pode revelar o que houve, a ideia é que a ferramenta proposta no trabalho está justamente permitindo algumas destas visualizações que podem dar insights para compreensão do processo de desenvolvimento do app.
 
 %figura das uses perm.
 \begin{figure}[H]
@@ -655,7 +660,7 @@ Na Figura \ref{fig:repopermission} podemos verificar que apenas uma permissão f
 %\subsection{Trabalhos Futuros}
 %Extender a ferramenta para analisar também o codigo fonte e valida-lo junto ao manifesto.
 
-Após os experimentos realizados, podemos concluir que a implementação da ferramenta proposta no começo do semestre foi bem sucedida. Por mais que alguns repositórios, 57 para ser exato, tenham apresentado problemas durante a mineração, outros 1138 foram processados com sucesso, conforme foi comentado em \ref{sec:experimentos}.
+Após os experimentos realizados, podemos concluir que a implementação da ferramenta proposta no começo do semestre foi bem sucedida. Por mais que alguns repositórios, 57 para ser exato, tenham apresentado problemas durante a mineração, outros 1138 foram processados com sucesso, conforme foi comentado na Seção \ref{sec:experimentos}.
 
 Na seção a seguir, apresentamos alguns trabalhos que poderiam fazer uso de uma ferramenta deste tipo. E na seção seguinte, sugerimos alguns trabalhos futuros que visam evoluir a ferramenta proposta.
 
@@ -664,11 +669,11 @@ Na seção a seguir, apresentamos alguns trabalhos que poderiam fazer uso de uma
 %\newpage
 \subsection{Trabalhos Relacionados}%18-20
 
-Em \cite{Calciati}, Calciati e Gorla realizaram um estudo sobre como as requisições de permissões evoluíram ao longo das várias releases das aplicações. Eles extraíram essa informação do arquivo APK, a versão final da aplicação que é baixada pelos dispositivos dos usuários. Este trabalho poderia ser enriquecido com informações a respeito do desenvolvimento do código fonte das aplicações com o uso da ferramenta proposta. \\
+Calciati e Gorla \cite{Calciati} realizaram um estudo sobre como as requisições de permissões evoluíram ao longo das várias releases das aplicações. Eles extraíram essa informação do arquivo APK, a versão final da aplicação que é baixada pelos dispositivos dos usuários. Este trabalho poderia ser enriquecido com informações a respeito do desenvolvimento do código fonte das aplicações com o uso da ferramenta proposta. \\
 
-Isto pode ser visto em \cite{WhoAdded}, onde Krutz \textit{et al} desenvolveram uma ferramenta semelhante, denominada oSARA, para avaliar quem realizava as alterações nas permissões das aplicações. Em comparação com oSARA, a ferramenta proposta é capaz de coletar informações sobre outros componentes Android além das permissões.\\
+Krutz \textit{et al} \cite{WhoAdded} desenvolveram uma ferramenta semelhante, denominada oSARA, para avaliar quem realizava as alterações nas permissões das aplicações. Em comparação com oSARA, a ferramenta proposta é capaz de coletar informações sobre outros componentes Android além das permissões.\\
 
-Uma base de dados semelhante, porém muito maior, foi implementada por Geiger \textit{et al} em \cite{graphDB}. Chamado de AndroidTimeMachine, o banco de dados baseado em grafos construído contém dados sobre o histórico completo de mais de 8000 repositórios Android de código aberto encontrados na Google Play Store. Diferentemente da ferramenta proposta, esta base de dados não entra em detalhes das modificações efetuadas nos commits. Ela está mais concentrada apenas em coletar informações do repositório github como um todo e linkar com o app na loja da play store.
+Uma base de dados semelhante, porém muito maior, foi implementada por Geiger \textit{et al} \cite{graphDB}. Chamado de AndroidTimeMachine, o banco de dados baseado em grafos contém dados sobre o histórico completo de mais de 8000 repositórios Android de código aberto encontrados na Google Play Store. Diferentemente da ferramenta proposta, esta base de dados não entra em detalhes das modificações efetuadas nos commits. Ela está mais concentrada apenas em coletar informações do repositório github como um todo e linkar com o app na loja da play store.
 
 
 \subsection{Trabalhos Futuros}

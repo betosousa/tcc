@@ -40,3 +40,9 @@ The first 3 columns are the amount of added, removed and modified components (ma
 
 * Java 8
  
+ 
+## License
+
+This software is licensed under the MIT License.
+
+ 
